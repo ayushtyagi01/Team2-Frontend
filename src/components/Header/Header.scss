@@ -1,0 +1,47 @@
+@import "../../styles/variables.scss";
+
+.header-container {
+  position: sticky;
+  top: 0;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1% 2%;
+    .header-title {
+      display: flex;
+      flex-basis: 50%;
+      .img-container {
+        padding: 0;
+        img {
+          width: 120px;
+        }
+      }
+      .title {
+        text-align: center;
+        padding: 1.5%;
+        color: $primary-color;
+      }
+    }
+    .convertor-div {
+      display: flex;
+      width: auto;
+      flex-basis: 15%;
+      .lang-icon {
+        margin-top: 0.8rem;
+      }
+      select {
+        border: none;
+        background-color: $white-color;
+        margin-right: 20%;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: "";
+        padding: 0.5rem;
+        .options {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
