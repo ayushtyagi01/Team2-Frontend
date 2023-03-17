@@ -3,7 +3,7 @@ import { RootState } from "../store";
 
 const initState = {
   lang: "en",
-  currency: "usd",
+  currency_factor: 1,
 };
 
 export const InternationalisationSlice = createSlice({
@@ -13,11 +13,15 @@ export const InternationalisationSlice = createSlice({
     changeLang: (state, action) => {
       state.lang = action.payload;
     },
+    currencyFactor:(state, action) => {
+      state.currency_factor = action.payload;
+    }
   },
 });
 
 export const setLang = (state: RootState) => state.convertor.lang;
+export const setcurrFactor = (state: RootState) => state.convertor.currency_factor;
 
-export const { changeLang } = InternationalisationSlice.actions;
+export const { changeLang,currencyFactor } = InternationalisationSlice.actions;
 
 export default InternationalisationSlice.reducer;

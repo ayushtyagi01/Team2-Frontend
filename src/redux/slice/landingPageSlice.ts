@@ -30,7 +30,10 @@ export const getLandingData = createAsyncThunk(
   "landingPage/getData",
   async () => {
     if (landingPageUrl) {
-      const response = await axios.get(landingPageUrl.substring(1,landingPageUrl.length-2));
+      console.log(landingPageUrl);
+      const response = await axios.get(landingPageUrl.replace(";","")); 
+      console.log(response.data);
+         
       return response.data;
     }
   }
