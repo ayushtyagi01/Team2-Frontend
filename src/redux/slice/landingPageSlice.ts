@@ -25,15 +25,12 @@ const initialState: LandingPage = {
   typeofGuests: {},
   accessability: null,
 };
-const landingPageUrl:string|undefined = process.env.REACT_APP_LANDING_PAGE_URL;
+const landingPageUrl:string|undefined = process.env.REACT_APP_LANDING_PAGE_URL
 export const getLandingData = createAsyncThunk(
   "landingPage/getData",
   async () => {
     if (landingPageUrl) {
-      console.log(landingPageUrl);
       const response = await axios.get(landingPageUrl.replace(";","")); 
-      console.log(response.data);
-         
       return response.data;
     }
   }
