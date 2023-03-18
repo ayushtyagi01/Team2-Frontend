@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { selectedFactor } from "../../redux/slice/InternationalisationSlice";
+import { useAppSelector } from "../../redux/hooks";
 
 const LandingPage = () => {
   const [response, setResponse] = useState<string>("");
@@ -13,8 +15,14 @@ const LandingPage = () => {
       })
       .catch((error) => console.error(error.message));
   }, []);
+  const priceFactor = useAppSelector(selectedFactor);
 
-  return <div>{response}</div>;
+  return (
+    <>
+      <h2>{response}</h2>
+      <h2>{100 * priceFactor}</h2>
+    </>
+  );
 };
 
 export default LandingPage;
