@@ -7,8 +7,11 @@ import {
 import LanguageIcon from "@mui/icons-material/Language";
 import "./Header.scss";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { languages } from "../../util/constants/languages";
+import { currencies } from "../../util/constants/currencies";
+import { FormattedMessage } from "react-intl";
 
-function Header() {
+const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
 
   useEffect(() => {
@@ -18,9 +21,7 @@ function Header() {
   const headerLogoHere = useAppSelector(headerLogo);
   const pageTitlehere = useAppSelector(pageTitle);
 
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-   
-  };
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {};
   const handleCurrencyChange = () => {};
 
   return (
@@ -28,42 +29,43 @@ function Header() {
       <div className="header">
         <div className="header-title">
           <div className="img-container">
-            <img src={headerLogoHere} alt="" />
+            <img className="header-logo" src={headerLogoHere} alt="" />
           </div>
           <div className="title">
-            {pageTitlehere}
+            <FormattedMessage id="pageTitle" defaultMessage={pageTitlehere} />
           </div>
         </div>
+
         <div className="convertor-div">
           <LanguageIcon className="lang-icon" key="language-icon" />
-          <select onChange={(e) => handleLanguageChange(e)}>
-            <option className="options" value="en">
-              En
-            </option>
-            ;
-            <option className="options" value="fr">
-              Fr
-            </option>
-            ;
+
+          <select className="header-select" onChange={handleLanguageChange}>
+            {languages.map((language) => (
+              <option
+                key={language.value}
+                value={language.value}
+                className="options"
+              >
+                {language.label}
+              </option>
+            ))}
           </select>
-          <select onChange={handleCurrencyChange}>
-            <option className="options" value="Dollor">
-              $ USD
-            </option>
-            
-            <option className="options" value="Rupee">
-              ₹ INR
-            </option>
-            
-            <option className="options" value="Euro">
-              € EUR
-            </option>
-            
+
+          <select className="header-select" onChange={handleCurrencyChange}>
+            {currencies.map((currency) => (
+              <option
+                key={currency.value}
+                value={currency.value}
+                className="options"
+              >
+                {currency.label}
+              </option>
+            ))}
           </select>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Header;

@@ -1,12 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import LandingPage from "../LandingPage/LandingPage";
 
-function Router() {
+const Router: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        
-      </Routes>
-    </BrowserRouter>
+    <>
+      <Header />
+        <Routes>
+          <Route path="/" element={<LandingPage />}/>
+        </Routes>
+      <Footer />
+    </>
   );
 }
 

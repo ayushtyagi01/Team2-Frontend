@@ -1,12 +1,18 @@
 import "./App.scss";
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
+import { IntlProvider } from "react-intl";
+import { useAppSelector } from "./redux/hooks";
+import { setLang, translations } from "./redux/slice/InternationalisationSlice";
+import Router from "./components/Router/Router";
 
 function App() {
+  const browserLanguage = navigator.language;
+  const currentLang = useAppSelector(setLang);
+  const messages = useAppSelector(translations);
   return (
     <>
-        <Header />
-        <Footer />
+       <IntlProvider locale={browserLanguage} messages={messages[currentLang]}>
+        <Router />
+      </IntlProvider>
     </>
   );
 }
