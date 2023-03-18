@@ -8,6 +8,7 @@ function App() {
   const browserLanguage = navigator.language;
   const currentLang = useAppSelector(setLang);
   const messages = useAppSelector(translations);
+
   return (
     <>
        <IntlProvider locale={browserLanguage} messages={messages[currentLang]}>
