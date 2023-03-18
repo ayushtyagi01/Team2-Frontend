@@ -14,7 +14,7 @@ interface LandingPage {
   bannerImage: string;
   lengthOfStay: number;
   typeofGuests: GuestType;
-  accessability: "wheelchair" | null;
+  accessability: "wheelchair" | "";
 }
 
 const initialState: LandingPage = {
@@ -23,15 +23,19 @@ const initialState: LandingPage = {
   bannerImage: "",
   lengthOfStay: 0,
   typeofGuests: {},
-  accessability: null,
+  accessability: "",
 };
-const landingPageUrl:string|undefined = process.env.REACT_APP_LANDING_PAGE_URL
+const landingPageUrl: string | undefined =
+  process.env.REACT_APP_LANDING_PAGE_URL;
 export const getLandingData = createAsyncThunk(
   "landingPage/getData",
   async () => {
     if (landingPageUrl) {
-      const response = await axios.get(landingPageUrl.replace(";","")); 
-      return response.data;
+      const response = await axios
+        .get(landingPageUrl)
+        .then((response) => response.data)
+        .catch((error) => console.error(error.message));
+      return response;
     }
   }
 );

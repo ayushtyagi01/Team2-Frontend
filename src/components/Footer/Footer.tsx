@@ -2,13 +2,13 @@ import { useAppSelector } from "../../redux/hooks";
 import { headerLogo } from "../../redux/slice/landingPageSlice";
 import "./Footer.scss";
 
-function Footer() {
+const Footer: React.FC = () => {
   const footerLogo = useAppSelector(headerLogo);
 
   return (
     <div className="footer">
       <div className="footer-logo">
-        <img src={footerLogo} alt="" />
+        <img className = "footer-img" src={footerLogo} alt="" />
       </div>
       <div className="footer-content">
         <div className="footer-text">© Kickdrum Technology Group LLC.</div>

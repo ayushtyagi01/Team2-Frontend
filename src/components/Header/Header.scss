@@ -13,7 +13,7 @@
       flex-basis: 50%;
       .img-container {
         padding: 0;
-        img {
+        .header-logo {
           width: 120px;
         }
       }
@@ -21,7 +21,7 @@
         text-align: center;
         padding: 0.6rem;
         font-size: 1.5rem;
-        color: $primary-color;
+        color: $primary-dark-blue-color;
       }
     }
     .convertor-div {
@@ -31,7 +31,7 @@
       .lang-icon {
         margin-top: 0.8rem;
       }
-      select {
+      .header-select {
         border: none;
         background-color: $white-color;
         margin-right: 20%;

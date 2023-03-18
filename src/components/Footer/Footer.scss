@@ -1,12 +1,12 @@
 @import "../../styles/variables.scss";
 
 .footer {
-  background-color: $primary-color;
+  background-color: $primary-dark-blue-color;
   display: flex;
   justify-content: space-between;
   .footer-logo {
     padding: 1% 2%;
-    img {
+    .footer-img {
       width: 120px;
       filter: brightness(0) invert(1);
     }

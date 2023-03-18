@@ -1,9 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import enMessages from "../../util/translation/en.json";
+import frMessages from "../../util/translation/fr.json";
 
-const initState = {
-  lang: "en",
+interface InitState {
+  lang: string;
+  messages: {
+    [key: string]: any;
+  };
+  currency_factor: number[];
+  selected_currency: string;
+  selected_factor: number;
+}
+
+const initState: InitState = {
+  lang: navigator.language,
+  messages:{
+    en: enMessages,
+    fr: frMessages,
+  },
   currency_factor: [],
   selected_currency: "",
   selected_factor: 1,
@@ -12,10 +28,11 @@ const initState = {
 export const getCurrencyData = createAsyncThunk(
   "currency/getData",
   async () => {
-    const response = await axios.get(
-      process.env.REACT_APP_CURRENCY_CONVERTOR_API!.replace(";", "")
-    );
-    return response.data.rates;
+    const response = await axios
+      .get(process.env.REACT_APP_CURRENCY_CONVERTOR_API!)
+      .then((response) => response.data)
+      .catch((error) => console.error(error.message));
+    return response.rates;
   }
 );
 
@@ -42,6 +59,7 @@ export const InternationalisationSlice = createSlice({
 });
 
 export const setLang = (state: RootState) => state.convertor.lang;
+export const translations = (state: RootState) => state.convertor.messages;
 export const setSelectedFactor = (state: RootState) =>
   state.convertor.selected_factor;
 
