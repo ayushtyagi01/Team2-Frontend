@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <IntlProvider locale={browserLanguage} messages={messages[currentLang]}>
+       <IntlProvider locale={browserLanguage} messages={messages[currentLang]}>
         <Router />
       </IntlProvider>
     </>

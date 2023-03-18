@@ -12,9 +12,10 @@ import {
 import LanguageIcon from "@mui/icons-material/Language";
 import "./Header.scss";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { FormattedMessage } from "react-intl";
 import { languages } from "../../util/constants/languages";
 import { currencies } from "../../util/constants/currencies";
+import { FormattedMessage } from "react-intl";
+
 
 const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
@@ -83,6 +84,7 @@ currency type in redux
               </option>
             ))}
           </select>
+
 
           <select className="header-select"onChange={handleCurrencyChange}>
             {currencies.map((currency) => (
