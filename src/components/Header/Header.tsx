@@ -16,7 +16,6 @@ import { languages } from "../../util/constants/languages";
 import { currencies } from "../../util/constants/currencies";
 import { FormattedMessage } from "react-intl";
 
-
 const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
 
@@ -63,14 +62,16 @@ currency type in redux
       <div className="header">
         <div className="header-title">
           <div className="img-container">
-            <img className = "header-logo" src={headerLogoHere} alt="" />
+            <img className="header-logo" src={headerLogoHere} alt="" />
           </div>
-          <div className="title">
-            <FormattedMessage id="pageTitle" defaultMessage={pageTitlehere} />
-          </div>
+          <div className="title">{pageTitlehere}</div>
         </div>
 
         <div className="convertor-div">
+          <div className="booking">
+            <FormattedMessage id="my_booking" defaultMessage="My Booking" />
+          </div>
+
           <LanguageIcon className="lang-icon" key="language-icon" />
 
           <select className="header-select" onChange={handleLanguageChange}>
@@ -85,8 +86,7 @@ currency type in redux
             ))}
           </select>
 
-
-          <select className="header-select"onChange={handleCurrencyChange}>
+          <select className="header-select" onChange={handleCurrencyChange}>
             {currencies.map((currency) => (
               <option
                 key={currency.value}
@@ -97,6 +97,9 @@ currency type in redux
               </option>
             ))}
           </select>
+          <button className="login-btn">
+            <FormattedMessage id="login" defaultMessage="Login" />
+          </button>
         </div>
       </div>
     </div>

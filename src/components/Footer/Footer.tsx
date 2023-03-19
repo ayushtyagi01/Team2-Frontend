@@ -6,6 +6,7 @@ const Footer: React.FC = () => {
   const footerLogo = useAppSelector(headerLogo);
 
   return (
+    <div className="footer-container">
     <div className="footer">
       <div className="footer-logo">
         <img className = "footer-img" src={footerLogo} alt="" />
@@ -14,6 +15,7 @@ const Footer: React.FC = () => {
         <div className="footer-text">© Kickdrum Technology Group LLC.</div>
         <div className="footer-text">All rights reserved</div>
       </div>
+    </div>
     </div>
   );
 };

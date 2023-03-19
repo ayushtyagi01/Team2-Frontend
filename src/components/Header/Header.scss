@@ -3,6 +3,10 @@
 .header-container {
   position: sticky;
   top: 0;
+  width: 100%;
+  webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
   .header {
     display: flex;
     justify-content: space-between;
@@ -11,7 +15,6 @@
       display: flex;
       flex-basis: 50%;
       .img-container {
-        padding: 0;
         .header-logo {
           width: 120px;
         }
@@ -25,23 +28,37 @@
     }
     .convertor-div {
       display: flex;
-      width: auto;
-      flex-basis: 15%;
+      flex-basis: 40%;
+      .booking {
+        margin-right: 5rem;
+        width: 10rem;
+        color: $primary-dark-blue-color;
+        font-size: 1.5rem;
+        padding-top: 0.8rem;
+      }
       .lang-icon {
         margin-top: 0.8rem;
       }
       .header-select {
         border: none;
         background-color: $white-color;
-        margin-right: 20%;
+        margin-right: 5rem;
         -webkit-appearance: none;
         -moz-appearance: none;
         text-indent: 1px;
         text-overflow: "";
         padding: 0.5rem;
+        font-size: 1rem;
         .options {
           font-size: 1rem;
         }
+      }
+      .login-btn {
+        background-color: $primary-dark-blue-color;
+        color: $white-color;
+        padding: 0.2rem 0.8rem;
+        border-radius: 5px;
+        margin-top: 0.4%;
       }
     }
   }
