@@ -16,7 +16,6 @@ const LandingPage = () => {
       .catch((error) => console.error(error.message));
   }, []);
   const priceFactor = useAppSelector(selectedFactor);
-  console.log("hello");
 
   return (
     <>
