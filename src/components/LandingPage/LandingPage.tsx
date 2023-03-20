@@ -6,14 +6,18 @@ import { useAppSelector } from "../../redux/hooks";
 const LandingPage = () => {
   const [response, setResponse] = useState<string>("");
 
-  useEffect(() => {
-    axios
+  const fetchData=async ()=>{
+    await axios
       .get(process.env.REACT_APP_HEALTH_API!)
       .then((res) => {
         console.log("response",res.data);
         setResponse(res.data);
       })
       .catch((error) => console.error(error.message));
+  }
+  
+  useEffect(() => {
+    fetchData();
   }, []);
   const priceFactor = useAppSelector(selectedFactor);
 
