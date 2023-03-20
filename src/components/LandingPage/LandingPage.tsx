@@ -10,7 +10,7 @@ const LandingPage = () => {
     axios
       .get(process.env.REACT_APP_HEALTH_API!)
       .then((res) => {
-        console.log(res.data);
+        console.log("response",res.data);
         setResponse(res.data);
       })
       .catch((error) => console.error(error.message));
