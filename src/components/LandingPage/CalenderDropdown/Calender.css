@@ -1,0 +1,123 @@
+.calender {
+  box-sizing: border-box;
+  /* margin: 1vw; */
+  width: 40vw;
+  height: 60vh;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  /* display: absolute;
+    top: 10%; */
+}
+.rdrDayStartOfMonth .rdrInRange,
+.rdrDayStartOfMonth .rdrEndEdge,
+.rdrDayStartOfWeek .rdrInRange,
+.rdrDayStartOfWeek .rdrEndEdge {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  left: 2px;
+}
+.rdrDayEndOfMonth .rdrInRange,
+.rdrDayEndOfMonth .rdrStartEdge,
+.rdrDayEndOfWeek .rdrInRange,
+.rdrDayEndOfWeek .rdrStartEdge {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  right: 2px;
+}
+.price {
+  color: black;
+  position: relative;
+  z-index: 2;
+}
+.rdrDefinedRangesWrapper,
+.rdrDateDisplayWrapper {
+  display: none !important;
+}
+.rdrSelected,
+.rdrInRange,
+.rdrStartEdge,
+.rdrEndEdge {
+  background-color: #c0c3c2 !important;
+  color: white !important;
+}
+.rdrStartEdge {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  left: 2px;
+  background-color: #27276d !important;
+}
+.rdrEndEdge {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  right: 2px;
+  background-color: #27276d !important;
+}
+.open {
+  display: grid !important;
+}
+.close {
+  display: none !important;
+}
+.rdrDay {
+  width: 2.35rem !important;
+  height: 3.5rem !important;
+  margin: 0.2rem !important;
+  font-size: 0.8rem !important;
+  justify-content: space-between !important;
+}
+.rdrDayPassive {
+  opacity: 0 !important;
+}
+.rdrDayNumber {
+  width: 100% !important;
+  height: 100% !important;
+}
+.rdrStartEdge + .rdrDayNumber .day-tag,
+.rdrEndEdge + .rdrDayNumber .day-tag {
+  color: white !important;
+}
+.day-tag {
+  color: black;
+  height: 100%;
+  width: 100%;
+}
+.day-tag-date {
+  height: 30%;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+.day-tag-price {
+  height: 30%;
+}
+.apply-dates-button {
+  min-height: 2.5rem;
+  min-width: 8rem;
+  font-size: 0.9rem;
+  background-color: #27276d;
+  color: white;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-right: 10%;
+  margin-bottom: 1vh;
+  margin-top: -2rem;
+}
+.apply-dates-button:disabled {
+  opacity: 0.4;
+}
+.calender-footer-text {
+  color: red;
+  max-width: 25%;
+  align-self: flex-end;
+  margin-right: 10%;
+}
+.day-tag:hover {
+  background-color: #27276d;
+  color: white !important;
+}
+.rdrDayDisabled {
+  pointer-events: none !important;
+}

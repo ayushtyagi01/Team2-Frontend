@@ -1,0 +1,16 @@
+.guest-containers{
+    display: flex;
+    margin: 1rem 1rem;
+    .title-container{
+        flex-basis: 40%;
+        font-weight: bold;
+    }
+    .count-container{
+        display: flex;
+        flex-basis: 40%;
+        justify-content: space-around;
+        .guest-box{
+            padding: 0.2rem;
+        }
+    }
+}
