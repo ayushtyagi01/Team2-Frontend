@@ -9,7 +9,12 @@ import CalenderDropdown from "./CalenderDropdown/CalenderDropdown";
 import { useDispatch } from "react-redux";
 import { isWheelchair } from "../../redux/slice/SearchFormSlice";
 import { useAppSelector } from "../../redux/hooks";
-import { bannerImage } from "../../redux/slice/landingPageSlice";
+import {
+  accessibility,
+  availableTypeOfGuests,
+  bannerImage,
+  rooms,
+} from "../../redux/slice/landingPageSlice";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import { schema } from "../../util/constants/formSchema";
 
@@ -25,10 +30,14 @@ const LandingPage = () => {
   };
   const reduxDispatch = useDispatch();
   const banner_image = useAppSelector(bannerImage);
+  const room = useAppSelector(rooms);
+  const guest = useAppSelector(availableTypeOfGuests);
+  const accessable = useAppSelector(accessibility);
 
   const handleWheelchair = (e: React.ChangeEvent<HTMLInputElement>) => {
     reduxDispatch(isWheelchair(e.target.checked));
   };
+
   return (
     <>
       <div
@@ -48,31 +57,47 @@ const LandingPage = () => {
             errors={errors}
           />
           <Box className="search-box">Select dates</Box>
-          <CalenderDropdown
-            register={register}
-            required={true}
-            errors={errors}
-          />
+          <CalenderDropdown />
           <div className="guest-room-container">
-            <div className="guest-container">
-              <Box className="search-box">Guests</Box>
-              <GuestDropdown />
-            </div>
-            <div className="room-container">
-              <Box className="search-box">Room</Box>
-              <RoomDropdown />
-            </div>
-            <FormControlLabel
-              className="checkbox-container"
-              value="end"
-              control={<Checkbox onChange={(e) => handleWheelchair(e)} />}
-              label={
-                <span>
-                  <AccessibleIcon /> I need an accessible room
-                </span>
-              }
-              labelPlacement="end"
-            />
+            {guest.length === 0 ? (
+              ""
+            ) : (
+              <div
+                className={`guest-container ${
+                  room === "true" ? "" : "full-guest"
+                }`}
+              >
+                <Box className="search-box">Guests</Box>
+                <GuestDropdown />
+              </div>
+            )}
+            {room === "true" ? (
+              <div
+                className={`room-container ${
+                  guest.length !== 0 ? "" : "full-room"
+                }`}
+              >
+                <Box className="search-box">Room</Box>
+                <RoomDropdown />
+              </div>
+            ) : (
+              ""
+            )}
+            {accessable.length === 0 ? (
+              ""
+            ) : (
+              <FormControlLabel
+                className="checkbox-container"
+                value="end"
+                control={<Checkbox onChange={(e) => handleWheelchair(e)} />}
+                label={
+                  <span>
+                    <AccessibleIcon /> I need an accessible room
+                  </span>
+                }
+                labelPlacement="end"
+              />
+            )}
           </div>
 
           <Button type="submit" variant="contained" className="btn-submit">

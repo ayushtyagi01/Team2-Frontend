@@ -1,13 +1,28 @@
 import "./Calender.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addDays, format, isBefore, isSameDay } from "date-fns";
-import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
 import { useDispatch } from "react-redux";
 import { setEndDate, setStartDate } from "../../../redux/slice/SearchFormSlice";
+import axios from "axios";
+import { useAppSelector } from "../../../redux/hooks";
+import {
+  selectedcurrency,
+  selectedFactor,
+} from "../../../redux/slice/InternationalisationSlice";
+import { getCurrencyLogo } from "../../../util/GetCurrencyLogo";
+
 export default function Calender() {
   const reduxDispatch = useDispatch();
+  const priceFactor = useAppSelector(selectedFactor);
+  const currency = useAppSelector(selectedcurrency);
+
+  const [minimumNightlyRates, setMinimumNightlyRates] = useState<any>({});
+  const [minimumRate, setMinimumRate] = useState<number>(Number.MAX_VALUE);
+  const [currencyLogo, setCurrencyLogo] = useState<string>("$");
+
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -15,14 +30,40 @@ export default function Calender() {
       key: "selection",
     },
   ]);
+  useEffect(() => {
+    setCurrencyLogo(getCurrencyLogo(currency));
+  }, []);
 
   const getMinNightlyRates = (day: Date) => {
-    if (isBefore(addDays(new Date(), -1), day)) {
-      return "$122";
+    if (
+      isBefore(addDays(new Date(), -1), day) &&
+      minimumNightlyRates[format(day, "yyyy-MM-dd")]
+    ) {
+      const formattedDate = format(day, "yyyy-MM-dd");
+      setMinimumRate(
+        Math.min(
+          minimumRate,
+          Math.round(minimumNightlyRates[formattedDate] * priceFactor)
+        )
+      );
+      return `${currencyLogo} ${Math.round(
+        minimumNightlyRates[formattedDate] * priceFactor
+      )}`;
     } else {
       return "_";
     }
   };
+  const fetchMinimumNightlyRates = async () => {
+    const minimumNightlyRatesFetched = await axios.get(
+      process.env.REACT_APP_NIGHTLY_RATES!
+    );
+    setMinimumNightlyRates(minimumNightlyRatesFetched.data);
+  };
+
+  useEffect(() => {
+    fetchMinimumNightlyRates();
+  }, []);
+
   function customDayContent(day: any) {
     return (
       <div className="day-tag">
@@ -48,12 +89,12 @@ export default function Calender() {
         calendarFocus="forwards"
         dayContentRenderer={customDayContent}
         minDate={
-          state[0].startDate === state[0].endDate
+          isSameDay(state[0].startDate, state[0].endDate)
             ? state[0].startDate
             : new Date()
         }
         maxDate={
-          state[0].startDate === state[0].endDate
+          isSameDay(state[0].startDate, state[0].endDate)
             ? addDays(state[0].startDate, 14)
             : new Date("2023-05-31")
         }
@@ -62,13 +103,18 @@ export default function Calender() {
       <button
         className="apply-dates-button"
         onClick={(e) => handleClick(e)}
-        disabled={isSameDay(state[0].startDate,state[0].endDate)}
+        disabled={isSameDay(state[0].startDate, state[0].endDate)}
       >
         APPLY DATES
       </button>
-      <p className="calender-footer-text">
-        Please select end date. Max. length of stay: {14} days
-      </p>
+      {isSameDay(state[0].startDate, state[0].endDate) && (
+        <p className="calender-footer-text">
+          Please select end date. Max. length of stay: {14} days
+        </p>
+      )}
+      {!isSameDay(state[0].startDate, state[0].endDate) && (
+        <p className="calender-footer-price">from ${minimumRate}/night</p>
+      )}
     </div>
   );
 }

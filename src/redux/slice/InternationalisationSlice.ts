@@ -21,7 +21,7 @@ const initState: InitState = {
     fr: frMessages,
   },
   currency_factor: [],
-  selected_currency: "",
+  selected_currency: "$",
   selected_factor: 1,
 };
 
@@ -61,8 +61,8 @@ export const InternationalisationSlice = createSlice({
 export const setLang = (state: RootState) => state.convertor.lang;
 export const translations = (state: RootState) => state.convertor.messages;
 export const selectedFactor = (state: RootState) => state.convertor.selected_factor;
-export const setSelectedFactor = (state: RootState) =>
-  state.convertor.selected_factor;
+export const selectedcurrency = (state: RootState) =>
+  state.convertor.selected_currency;
 
 
 export const { changeLang, currencyFactor, selectedCurrency} =

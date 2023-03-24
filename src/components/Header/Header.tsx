@@ -23,6 +23,8 @@ const Header: React.FC = () => {
     reduxDispatch(getLandingData());
   }, [reduxDispatch]);
 
+  
+
   /**
     useEffect to make a call to API to get currency factors
   */

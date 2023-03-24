@@ -114,6 +114,11 @@
   align-self: flex-end;
   margin-right: 10%;
 }
+.calender-footer-price{
+  max-width: 25%;
+  align-self: flex-end;
+  margin-right: 10%;
+}
 .day-tag:hover {
   background-color: #27276d;
   color: white !important;

@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addDays } from "date-fns";
 import { RootState } from "../store";
 
 interface SearchForm {
   property_name: string[];
-  start_date: "";
-  end_date: "";
+  start_date: string,
+  end_date: string;
   guests: number[];
   noOfRooms: number;
   wheelchair: boolean;
@@ -12,8 +13,8 @@ interface SearchForm {
 
 const initialState: SearchForm = {
   property_name: [],
-  start_date: "",
-  end_date: "",
+  start_date: new Date().toISOString(),
+  end_date: addDays(new Date(),2).toISOString(),
   guests: [1, 0],
   noOfRooms: 1,
   wheelchair: false,
@@ -28,7 +29,6 @@ export const SearchFormSlice = createSlice({
     },
     setStartDate: (state, action) => {
       state.start_date = action.payload;
-      console.log("cdskjlkdflk",state.start_date)
     },
     setEndDate: (state, action) => {
       state.end_date = action.payload;
