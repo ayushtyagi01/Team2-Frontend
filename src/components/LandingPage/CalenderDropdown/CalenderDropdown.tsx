@@ -7,31 +7,40 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "./CalenderDropdown.scss";
 import Calender from "./Calender";
 import { useAppSelector } from "../../../redux/hooks";
-import { end_date, start_date } from "../../../redux/slice/SearchForm";
-import { useEffect } from "react";
+import { end_date, start_date } from "../../../redux/slice/SearchFormSlice";
+import { useEffect, useState } from "react";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { Alert } from "@mui/material";
 
-const CalenderDropdown: React.FC = () => {
-  const [showSelect, setShowSelect] = React.useState(false);
+interface CalenderDropdownProps {
+  register: UseFormRegister<FieldValues>;
+  required: boolean;
+  errors: FieldErrors<FieldValues>;
+}
+const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
+
+  const [showSelect, setShowSelect] = useState(false);
   const startDate = useAppSelector(start_date);
   const endDate = useAppSelector(end_date);
-  console.log("start", startDate);
   const startdate = startDate !== ""?format(new Date(startDate), "yyyy-MM-dd"):"";
   const enddate = endDate !== ""?format(new Date(endDate), "yyyy-MM-dd"):"";
 
   useEffect(() => {
     if (startDate !== "") setShowSelect(false);
   }, [startDate]);
+  console.log("startDate",props.errors.startDate);
   return (
     <div>
       <FormControl sx={{ m: 3, width: "90%", mt: -1.5 }}>
         <Select
-          className="select-calender"
+          className="select-calenders"
           displayEmpty
           value="Select dates"
           open={showSelect}
           onOpen={() => setShowSelect(true)}
           onClose={() => setShowSelect(false)}
           inputProps={{ IconComponent: () => null }}
+          {...props.register("startdate", { required: props.required })}
           MenuProps={{
             anchorOrigin: {
               vertical: "bottom",
@@ -55,6 +64,11 @@ const CalenderDropdown: React.FC = () => {
         >
           <Calender />
         </Select>
+        {props.errors.startDate && (
+          <Alert severity="error">
+            This field is required
+          </Alert>
+        )}
       </FormControl>
     </div>
   );

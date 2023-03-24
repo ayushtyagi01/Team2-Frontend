@@ -3,9 +3,9 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Alert, Checkbox, ListItemText } from "@mui/material";
-import { useAppDispatch } from "../../redux/hooks";
-import { setProperty } from "../../redux/slice/SearchForm";
+import { Alert, Box, Checkbox, ListItemText } from "@mui/material";
+import { useAppDispatch } from "../../../redux/hooks";
+import { setProperty } from "../../../redux/slice/SearchFormSlice";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 const names = ["Property 2"];
@@ -26,6 +26,7 @@ const PropertyDropdown: React.FC<PropertyDropdownProps> = (props) => {
     setPropertyName(typeof value === "string" ? value.split(",") : value);
     reduxDispatch(setProperty(propertyName));
   };
+  console.log("error",props.errors.property);
 
   return (
     <>

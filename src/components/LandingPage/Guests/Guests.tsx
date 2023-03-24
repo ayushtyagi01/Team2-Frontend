@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../redux/hooks";
-import { guestsCount, setGuests, setRooms } from "../../../redux/slice/SearchForm";
+import { guestsCount, setGuests, setRooms } from "../../../redux/slice/SearchFormSlice";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import './Guests.scss';

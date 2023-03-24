@@ -62,5 +62,6 @@ export const landingPageSlice = createSlice({
 export const headerLogo = (state: RootState) => state.landingData.headerLogo;
 export const pageTitle = (state: RootState) => state.landingData.pageTitle;
 export const guests = (state: RootState) => state.landingData.typeOfGuest;
+export const bannerImage = (state: RootState) => state.landingData.bannerImage;
 
 export default landingPageSlice.reducer;

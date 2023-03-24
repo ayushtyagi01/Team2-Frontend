@@ -1,12 +1,13 @@
 import "./Calender.css";
 import { useState } from "react";
 import { addDays, format, isBefore, isSameDay } from "date-fns";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
 import { useDispatch } from "react-redux";
-import { setEndDate, setStartDate } from "../../../redux/slice/SearchForm";
+import { setEndDate, setStartDate } from "../../../redux/slice/SearchFormSlice";
 export default function Calender() {
+  const reduxDispatch = useDispatch();
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -15,7 +16,7 @@ export default function Calender() {
     },
   ]);
 
-  const call = (day: any) => {
+  const getMinNightlyRates = (day: Date) => {
     if (isBefore(addDays(new Date(), -1), day)) {
       return "$122";
     } else {
@@ -26,13 +27,11 @@ export default function Calender() {
     return (
       <div className="day-tag">
         <div className="day-tag-date">{format(day, "d")}</div>
-        <div className="day-tag-price">{call(day)}</div>
+        <div className="day-tag-price">{getMinNightlyRates(day)}</div>
       </div>
     );
   }
-  const reduxDispatch = useDispatch();
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log("handle",state[0].startDate);
     reduxDispatch(setStartDate(state[0].startDate));
     reduxDispatch(setEndDate(state[0].endDate));
   };
@@ -40,7 +39,6 @@ export default function Calender() {
     <div className="calender">
       <DateRangePicker
         onChange={(item: any) => setState([item.selection])}
-        // showSelectionPreview={true}
         showPreview={false}
         moveRangeOnFirstSelection={false}
         months={2}
@@ -57,7 +55,7 @@ export default function Calender() {
         maxDate={
           state[0].startDate === state[0].endDate
             ? addDays(state[0].startDate, 14)
-            : undefined
+            : new Date("2023-05-31")
         }
         fixedHeight={true}
       />

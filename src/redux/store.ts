@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import landingPageReducer from "./slice/landingPageSlice";
 import convertorReducer from "./slice/InternationalisationSlice";
-import searchFormReducer from "./slice/SearchForm";
+import searchFormReducer from "./slice/SearchFormSlice";
 
 export const store = configureStore({
   reducer: {

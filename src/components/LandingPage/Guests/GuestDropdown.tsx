@@ -4,7 +4,7 @@ import Select from "@mui/material/Select";
 import Guests from "./Guests";
 import { useAppSelector } from "../../../redux/hooks";
 import { guests } from "../../../redux/slice/landingPageSlice";
-import { guestsCount } from "../../../redux/slice/SearchForm";
+import { guestsCount } from "../../../redux/slice/SearchFormSlice";
 
 const RoomDropdown: React.FC = () => {
   const typeofGuests = useAppSelector(guests);
