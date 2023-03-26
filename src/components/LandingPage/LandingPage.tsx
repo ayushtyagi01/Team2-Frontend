@@ -17,6 +17,7 @@ import {
 } from "../../redux/slice/landingPageSlice";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import { schema } from "../../util/constants/formSchema";
+import { FormattedMessage } from "react-intl";
 
 const LandingPage = () => {
   const {
@@ -50,13 +51,13 @@ const LandingPage = () => {
         }}
       >
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <Box className="search-box">Property Name*</Box>
+          <Box className="search-box"><FormattedMessage id="propertyName" defaultMessage="Property Name*" /></Box>
           <PropertyDropdown
             register={register}
             required={true}
             errors={errors}
           />
-          <Box className="search-box">Select dates</Box>
+          <Box className="search-box"><FormattedMessage id="Selectdates" defaultMessage="Select dates" /></Box>
           <CalenderDropdown />
           <div className="guest-room-container">
             {guest.length === 0 ? (
@@ -67,7 +68,7 @@ const LandingPage = () => {
                   room === "true" ? "" : "full-guest"
                 }`}
               >
-                <Box className="search-box">Guests</Box>
+                <Box className="search-box"><FormattedMessage id="Guests" defaultMessage="Guests" /></Box>
                 <GuestDropdown />
               </div>
             )}
@@ -77,7 +78,7 @@ const LandingPage = () => {
                   guest.length !== 0 ? "" : "full-room"
                 }`}
               >
-                <Box className="search-box">Room</Box>
+                <Box className="search-box"><FormattedMessage id="Room" defaultMessage="Room" /></Box>
                 <RoomDropdown />
               </div>
             ) : (
@@ -92,7 +93,7 @@ const LandingPage = () => {
                 control={<Checkbox onChange={(e) => handleWheelchair(e)} />}
                 label={
                   <span>
-                    <AccessibleIcon /> I need an accessible room
+                    <AccessibleIcon /> <FormattedMessage id="wheelchair" defaultMessage="I need an accessible room" />
                   </span>
                 }
                 labelPlacement="end"
@@ -101,7 +102,7 @@ const LandingPage = () => {
           </div>
 
           <Button type="submit" variant="contained" className="btn-submit">
-            Search
+          <FormattedMessage id="Search" defaultMessage="Search" />
           </Button>
         </form>
       </div>

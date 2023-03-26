@@ -1,4 +1,4 @@
-import "./Calender.css";
+import "./Calender.scss";
 import { useEffect, useState } from "react";
 import { addDays, format, isBefore, isSameDay } from "date-fns";
 import "react-date-range/dist/styles.css";
@@ -13,6 +13,7 @@ import {
   selectedFactor,
 } from "../../../redux/slice/InternationalisationSlice";
 import { getCurrencyLogo } from "../../../util/GetCurrencyLogo";
+import { FormattedMessage } from "react-intl";
 
 export default function Calender() {
   const reduxDispatch = useDispatch();
@@ -109,11 +110,14 @@ export default function Calender() {
       </button>
       {isSameDay(state[0].startDate, state[0].endDate) && (
         <p className="calender-footer-text">
-          Please select end date. Max. length of stay: {14} days
+          <FormattedMessage id="errorMessageEndDate" defaultMessage="Please select end date. Max. length of stay: {14} days" />
         </p>
       )}
       {!isSameDay(state[0].startDate, state[0].endDate) && (
-        <p className="calender-footer-price">from ${minimumRate}/night</p>
+        <p className="calender-footer-price">
+          from {currencyLogo}
+          {minimumRate}<FormattedMessage id="night" defaultMessage="/night"/>
+        </p>
       )}
     </div>
   );

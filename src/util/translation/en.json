@@ -1,4 +1,12 @@
 {
   "my_booking": "My Booking",
-  "login":"Login"
+  "login":"Login",
+  "propertyName":"Property Name*",
+  "Selectdates":"Select dates",
+  "Guests":"Guests",
+  "Room":"Room",
+  "Search":"SEARCH",
+  "wheelchair":"I need an accessible room",
+  "errorMessageEndDate":"Please select end date. Max. length of stay: 14 days",
+  "night":"/night"
 }
