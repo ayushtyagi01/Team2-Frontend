@@ -3,27 +3,42 @@ import axios from "axios";
 import { RootState } from "../store";
 
 interface GuestType {
-  [key: string]: {
-    title: string;
-    min: number;
-  };
+  title: string;
+  min: number;
+  exists: string;
+  max: number;
+  maxAge: string;
 }
 interface LandingPage {
+  propertyName: string[];
   headerLogo: string;
   pageTitle: string;
   bannerImage: string;
-  lengthOfStay: number;
-  typeofGuests: GuestType;
-  accessability: "wheelchair" | "";
+  maxLengthOfStay: number;
+  typeOfGuest: GuestType[];
+  availableTypeOfGuests: [];
+  accessibility: string[];
+  rooms: string;
 }
 
 const initialState: LandingPage = {
+  propertyName: [],
   headerLogo: "",
   pageTitle: "",
   bannerImage: "",
-  lengthOfStay: 0,
-  typeofGuests: {},
-  accessability: "",
+  typeOfGuest: [
+    {
+      title: "",
+      min: 1,
+      max: 1,
+      exists: "true",
+      maxAge: "0",
+    },
+  ],
+  maxLengthOfStay: 0,
+  accessibility: [],
+  availableTypeOfGuests: [],
+  rooms: "true",
 };
 const landingPageUrl: string | undefined =
   process.env.REACT_APP_LANDING_PAGE_URL;
@@ -48,14 +63,28 @@ export const landingPageSlice = createSlice({
       state.headerLogo = action.payload.headerLogo;
       state.pageTitle = action.payload.pageTitle;
       state.bannerImage = action.payload.bannerImage;
-      state.lengthOfStay = action.payload.lengthOfStay;
-      state.typeofGuests = action.payload.typeofGuests;
-      state.accessability = action.payload.accessability;
+      state.maxLengthOfStay = action.payload.lengthOfStay;
+      state.typeOfGuest = action.payload.typeOfGuest;
+      state.accessibility = action.payload.accessibility;
+      state.availableTypeOfGuests = action.payload.availableTypeOfGuests;
+      state.rooms = action.payload.rooms;
+      state.propertyName = action.payload.propertyName;
     });
   },
 });
 
 export const headerLogo = (state: RootState) => state.landingData.headerLogo;
 export const pageTitle = (state: RootState) => state.landingData.pageTitle;
+export const guests = (state: RootState) => state.landingData.typeOfGuest;
+export const bannerImage = (state: RootState) => state.landingData.bannerImage;
+export const maxLengthOfStay = (state: RootState) =>
+  state.landingData.maxLengthOfStay;
+export const accessibility = (state: RootState) =>
+  state.landingData.accessibility;
+export const availableTypeOfGuests = (state: RootState) =>
+  state.landingData.availableTypeOfGuests;
+export const rooms = (state: RootState) => state.landingData.rooms;
+export const propertyname = (state: RootState) =>
+  state.landingData.propertyName;
 
 export default landingPageSlice.reducer;
