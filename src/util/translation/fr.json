@@ -1,4 +1,12 @@
 {
   "my_booking": "Ma réservation",
-  "login":"Connexion"
+  "login":"Connexion",
+  "propertyName":"Nom de la propriété*",
+  "Selectdates":"Sélectionnez des dates",
+  "Guests":"Invités",
+  "Room":"Chambre",
+  "Search":"Recherche",
+  "wheelchair":"J'ai besoin d'une chambre accessible",
+  "errorMessageEndDate":"Veuillez sélectionner la date de fin. Max. durée du séjour : 14 jours",
+  "night":"/nuit"
 }
