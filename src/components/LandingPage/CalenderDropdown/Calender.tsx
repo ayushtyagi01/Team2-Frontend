@@ -14,11 +14,13 @@ import {
 } from "../../../redux/slice/InternationalisationSlice";
 import { getCurrencyLogo } from "../../../util/GetCurrencyLogo";
 import { FormattedMessage } from "react-intl";
+import { maxLengthOfStay } from "../../../redux/slice/landingPageSlice";
 
 export default function Calender() {
   const reduxDispatch = useDispatch();
   const priceFactor = useAppSelector(selectedFactor);
   const currency = useAppSelector(selectedcurrency);
+  const maxLengthofStay = useAppSelector(maxLengthOfStay);
 
   const [minimumNightlyRates, setMinimumNightlyRates] = useState<any>({});
   const [minimumRate, setMinimumRate] = useState<number>(Number.MAX_VALUE);
@@ -96,7 +98,7 @@ export default function Calender() {
         }
         maxDate={
           isSameDay(state[0].startDate, state[0].endDate)
-            ? addDays(state[0].startDate, 14)
+            ? addDays(state[0].startDate, maxLengthofStay)
             : new Date("2023-05-31")
         }
         fixedHeight={true}
@@ -110,7 +112,7 @@ export default function Calender() {
       </button>
       {isSameDay(state[0].startDate, state[0].endDate) && (
         <p className="calender-footer-text">
-          <FormattedMessage id="errorMessageEndDate" defaultMessage="Please select end date. Max. length of stay: {14} days" />
+          <FormattedMessage id="errorMessageEndDate" defaultMessage="Please select end date. Max. length of stay: {maxLengthofStay} days" values={{ maxLengthofStay }}/>
         </p>
       )}
       {!isSameDay(state[0].startDate, state[0].endDate) && (

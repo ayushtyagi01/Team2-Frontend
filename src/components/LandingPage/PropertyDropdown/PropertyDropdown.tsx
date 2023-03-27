@@ -7,6 +7,7 @@ import { Alert, Checkbox, ListItemText } from "@mui/material";
 import { useAppDispatch } from "../../../redux/hooks";
 import { setProperty } from "../../../redux/slice/SearchFormSlice";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
 interface PropertyDropdownProps {
   register: UseFormRegister<FieldValues>;
@@ -55,7 +56,7 @@ const PropertyDropdown: React.FC<PropertyDropdownProps> = (props) => {
         </Select>
         {props.errors.property && (
           <Alert severity="error">
-            This field is required
+            <FormattedMessage id="errorMessage" defaultMessage="This field is required" />
           </Alert>
         )}
       </FormControl>
