@@ -9,9 +9,17 @@ import Calender from "./Calender";
 import { useAppSelector } from "../../../redux/hooks";
 import { end_date, start_date } from "../../../redux/slice/SearchFormSlice";
 import { useEffect, useState } from "react";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { Alert } from "@mui/material";
 
-const CalenderDropdown: React.FC = () => {
+interface CalenderDropdownProps {
+  register: UseFormRegister<FieldValues>;
+  required: boolean;
+  errors: FieldErrors<FieldValues>;
+}
+const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
   const [showSelect, setShowSelect] = useState(false);
+  const [showDate, setshowDate] = useState<number>(0);
   const startDate = useAppSelector(start_date);
   const endDate = useAppSelector(end_date);
   const startdate = format(new Date(startDate), "yyyy-MM-dd");
@@ -25,6 +33,7 @@ const CalenderDropdown: React.FC = () => {
       enddate !== startdate
     ) {
       setShowSelect(false);
+      setshowDate(1);
     }
   }, [startdate, enddate]);
   return (
@@ -35,9 +44,11 @@ const CalenderDropdown: React.FC = () => {
           displayEmpty
           value="Select dates"
           open={showSelect}
-          onOpen={() => setShowSelect(true)}
-          onClose={() => setShowSelect(false)}
+          onOpen={() => {setShowSelect(true);}}
+          onClose={() => {setShowSelect(false);}}
           inputProps={{ IconComponent: () => null }}
+          id = "calender"
+          {...props.register("calender", { required: props.required })}
           MenuProps={{
             anchorOrigin: {
               vertical: "bottom",
@@ -51,13 +62,13 @@ const CalenderDropdown: React.FC = () => {
           renderValue={() => {
             return (
               <div className="calender-content">
-                {startDate === "" ? (
+                {!showDate? (
                   <div>Check-in</div>
                 ) : (
                   <div>{startdate}</div>
                 )}
                 <ArrowForwardIcon />
-                {endDate === "" ? <div>Check-out</div> : <div>{enddate}</div>}
+                {!showDate ? <div>Check-out</div> : <div>{enddate}</div>}
                 <CalendarMonthIcon />
               </div>
             );
@@ -65,6 +76,11 @@ const CalenderDropdown: React.FC = () => {
         >
           <Calender />
         </Select>
+        {(
+          showDate === 0 && props.errors.startDate && <Alert severity="error">
+            This field is required
+          </Alert>
+        )}
       </FormControl>
     </div>
   );

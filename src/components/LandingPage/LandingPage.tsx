@@ -43,6 +43,7 @@ const LandingPage = () => {
     <>
       <div
         className="search-container"
+        data-testid="LandingPage"
         style={{
           backgroundImage: `url(${banner_image})`,
           backgroundRepeat: "no-repeat",
@@ -51,14 +52,25 @@ const LandingPage = () => {
         }}
       >
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <Box className="search-box"><FormattedMessage id="propertyName" defaultMessage="Property Name*" /></Box>
+          <Box className="search-box">
+            <FormattedMessage
+              id="propertyName"
+              defaultMessage="Property Name*"
+            />
+          </Box>
           <PropertyDropdown
             register={register}
             required={true}
             errors={errors}
           />
-          <Box className="search-box"><FormattedMessage id="Selectdates" defaultMessage="Select dates" /></Box>
-          <CalenderDropdown />
+          <Box className="search-box">
+            <FormattedMessage id="Selectdates" defaultMessage="Select dates" />
+          </Box>
+          <CalenderDropdown
+            register={register}
+            required={true}
+            errors={errors}
+          />
           <div className="guest-room-container">
             {guest.length === 0 ? (
               ""
@@ -68,7 +80,9 @@ const LandingPage = () => {
                   room === "true" ? "" : "full-guest"
                 }`}
               >
-                <Box className="search-box"><FormattedMessage id="Guests" defaultMessage="Guests" /></Box>
+                <Box className="search-box">
+                  <FormattedMessage id="Guests" defaultMessage="Guests" />
+                </Box>
                 <GuestDropdown />
               </div>
             )}
@@ -78,7 +92,9 @@ const LandingPage = () => {
                   guest.length !== 0 ? "" : "full-room"
                 }`}
               >
-                <Box className="search-box"><FormattedMessage id="Room" defaultMessage="Room" /></Box>
+                <Box className="search-box">
+                  <FormattedMessage id="Room" defaultMessage="Room" />
+                </Box>
                 <RoomDropdown />
               </div>
             ) : (
@@ -93,7 +109,11 @@ const LandingPage = () => {
                 control={<Checkbox onChange={(e) => handleWheelchair(e)} />}
                 label={
                   <span>
-                    <AccessibleIcon /> <FormattedMessage id="wheelchair" defaultMessage="I need an accessible room" />
+                    <AccessibleIcon />{" "}
+                    <FormattedMessage
+                      id="wheelchair"
+                      defaultMessage="I need an accessible room"
+                    />
                   </span>
                 }
                 labelPlacement="end"
@@ -102,7 +122,7 @@ const LandingPage = () => {
           </div>
 
           <Button type="submit" variant="contained" className="btn-submit">
-          <FormattedMessage id="Search" defaultMessage="Search" />
+            <FormattedMessage id="Search" defaultMessage="Search" />
           </Button>
         </form>
       </div>

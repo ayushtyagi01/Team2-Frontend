@@ -24,7 +24,7 @@
     "react": "^18.2.0",
     "react-date-range": "^1.4.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.43.7",
+    "react-hook-form": "^7.43.8",
     "react-intl": "^6.3.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
@@ -40,18 +40,13 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  
+    "type": "module",
+  
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!@shotgunjed)/"
     ]
   },
   "browserslist": {
@@ -66,8 +61,8 @@
       "last 1 safari version"
     ]
   },
+  
   "devDependencies": {
-    "@types/enzyme": "^3.10.12",
     "@types/react-date-range": "^1.4.4"
   }
 }

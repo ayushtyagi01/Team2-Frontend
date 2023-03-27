@@ -3,7 +3,7 @@ import { headerLogo } from "../../redux/slice/landingPageSlice";
 import "./Footer.scss";
 
 const Footer: React.FC = () => {
-  const footerLogo = useAppSelector(headerLogo);
+   const footerLogo = useAppSelector(headerLogo);
 
   return (
     <div className="footer-container">
