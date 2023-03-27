@@ -11,6 +11,7 @@ import { end_date, start_date } from "../../../redux/slice/SearchFormSlice";
 import { useEffect, useState } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { Alert } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 interface CalenderDropdownProps {
   register: UseFormRegister<FieldValues>;
@@ -78,7 +79,7 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
         </Select>
         {(
           showDate === 0 && props.errors.startDate && <Alert severity="error">
-            This field is required
+            <FormattedMessage id="errorMessage" defaultMessage="This field is required" />
           </Alert>
         )}
       </FormControl>

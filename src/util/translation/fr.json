@@ -7,6 +7,7 @@
   "Room":"Chambre",
   "Search":"Recherche",
   "wheelchair":"J'ai besoin d'une chambre accessible",
-  "errorMessageEndDate":"Veuillez sélectionner la date de fin. Max. durée du séjour : 14 jours",
-  "night":"/nuit"
+  "errorMessageEndDate":"Veuillez sélectionner la date de fin. Max. durée du séjour : {maxLengthofStay} jours",
+  "night":"/nuit",
+  "errorMessage":"Ce champ est obligatoire"
 }
