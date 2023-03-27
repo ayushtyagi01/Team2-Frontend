@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { languages } from "../../util/constants/languages";
 import { currencies } from "../../util/constants/currencies";
 import { FormattedMessage } from "react-intl";
+import { Button } from "@mui/material";
 
 const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
@@ -99,9 +100,12 @@ currency type in redux
               </option>
             ))}
           </select>
-          <button className="login-btn">
+          <Button type="submit" variant = "contained" className="login-btn">
+          <FormattedMessage id="login" defaultMessage="Login" />
+          </Button>
+          {/* <button className="login-btn">
             <FormattedMessage id="login" defaultMessage="Login" />
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

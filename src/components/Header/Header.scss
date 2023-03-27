@@ -22,7 +22,7 @@
       .title {
         text-align: center;
         padding: 0.6rem;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         color: $primary-dark-blue-color;
       }
     }
@@ -33,8 +33,8 @@
         margin-right: 5rem;
         width: 10rem;
         color: $primary-dark-blue-color;
-        font-size: 1.5rem;
-        padding-top: 0.8rem;
+        font-size: 1.3rem;
+        padding-top: 0.6rem;
       }
       .lang-icon {
         margin-top: 0.8rem;
@@ -56,9 +56,9 @@
       .login-btn {
         background-color: $primary-dark-blue-color;
         color: $white-color;
-        padding: 0.2rem 0.8rem;
+        padding: 0 2rem;
         border-radius: 5px;
-        margin-top: 0.4%;
+        font-size: 0.8rem;
       }
     }
   }
