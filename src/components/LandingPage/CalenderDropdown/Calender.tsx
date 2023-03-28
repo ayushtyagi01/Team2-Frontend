@@ -76,8 +76,8 @@ export default function Calender() {
     );
   }
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    reduxDispatch(setStartDate(state[0].startDate));
-    reduxDispatch(setEndDate(state[0].endDate));
+    reduxDispatch(setStartDate(format(state[0].startDate,"yyyy-MM-dd")));
+    reduxDispatch(setEndDate(format(state[0].endDate,"yyyy-MM-dd")));
   };
   return (
     <div className="calender">

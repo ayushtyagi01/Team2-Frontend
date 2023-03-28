@@ -18,8 +18,10 @@ import {
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import { schema } from "../../util/constants/formSchema";
 import { FormattedMessage } from "react-intl";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -27,7 +29,8 @@ const LandingPage = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = () => {
-    console.log("submited");
+    console.log("onSubmit");
+    navigate('/room-search-results');
   };
   const reduxDispatch = useDispatch();
   const banner_image = useAppSelector(bannerImage);
@@ -83,7 +86,7 @@ const LandingPage = () => {
                 <Box className="search-box">
                   <FormattedMessage id="Guests" defaultMessage="Guests" />
                 </Box>
-                <GuestDropdown />
+                <GuestDropdown isInside={false} margin={3} width={'100%'} top={-1.5} />
               </div>
             )}
             {room === "true" ? (
@@ -95,7 +98,7 @@ const LandingPage = () => {
                 <Box className="search-box">
                   <FormattedMessage id="Room" defaultMessage="Room" />
                 </Box>
-                <RoomDropdown />
+                <RoomDropdown isInside={false} margin={2.5} width={'100%'} top={-1.5}/>
               </div>
             ) : (
               ""
