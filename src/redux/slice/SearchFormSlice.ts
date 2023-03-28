@@ -28,6 +28,7 @@ export const SearchFormSlice = createSlice({
       state.property_name = action.payload;
     },
     setStartDate: (state, action) => {
+      console.log(action.payload);
       state.start_date = action.payload;
     },
     setEndDate: (state, action) => {
