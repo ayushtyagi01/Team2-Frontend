@@ -37,6 +37,7 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
       setshowDate(1);
     }
   }, [startdate, enddate]);
+  console.log("error",props.errors.startDate);
   return (
     <div>
       <FormControl sx={{ m: 3, width: "90%", mt: -1.5 }}>

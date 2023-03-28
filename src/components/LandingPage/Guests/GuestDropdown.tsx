@@ -8,20 +8,28 @@ import {
   availableTypeOfGuests,
 } from "../../../redux/slice/landingPageSlice";
 import { guestsCount } from "../../../redux/slice/SearchFormSlice";
+import { Box } from "@mui/material";
 
-const RoomDropdown: React.FC = () => {
+interface title {
+  isInside:boolean;
+  margin:number;
+  width:string;
+  top:number;
+}
+const RoomDropdown: React.FC<title> = (props) => {
   const typeofGuest = useAppSelector(guests);
   const availableTypeOfGuest = useAppSelector(availableTypeOfGuests);
   const guestCount = useAppSelector(guestsCount);
 
   return (
-    <div>
-      <FormControl sx={{ m: 3, width: "100%", mt: -1.5 }}>
+    <>
+      <FormControl sx={{ m: props.margin, width: props.width, mt: props.top }}>
         <Select
           value="none"
           renderValue={() => {
             return (
               <div>
+                {props.isInside?<Box>Guests</Box>:""}
                 {guestCount[0]} Adult {guestCount[1]} Child
               </div>
             );
@@ -39,7 +47,7 @@ const RoomDropdown: React.FC = () => {
           })}
         </Select>
       </FormControl>
-    </div>
+    </>
   );
 };
 export default RoomDropdown;
