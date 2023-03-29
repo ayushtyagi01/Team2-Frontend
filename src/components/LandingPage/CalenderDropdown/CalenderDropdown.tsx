@@ -15,8 +15,13 @@ import { FormattedMessage } from "react-intl";
 
 interface CalenderDropdownProps {
   register: UseFormRegister<FieldValues>;
-  required: boolean;
   errors: FieldErrors<FieldValues>;
+  isInside: boolean;
+  margin: number;
+  width: string;
+  top: number;
+  start: string;
+  end: string;
 }
 const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
   const [showSelect, setShowSelect] = useState(false);
@@ -37,20 +42,23 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
       setshowDate(1);
     }
   }, [startdate, enddate]);
-  console.log("error",props.errors.startDate);
   return (
-    <div>
-      <FormControl sx={{ m: 3, width: "90%", mt: -1.5 }}>
+    <>
+      <FormControl sx={{ m: props.margin, width: props.width, mt: props.top }}>
         <Select
           className="select-calenders"
           displayEmpty
           value="Select dates"
           open={showSelect}
-          onOpen={() => {setShowSelect(true);}}
-          onClose={() => {setShowSelect(false);}}
+          onOpen={() => {
+            setShowSelect(true);
+          }}
+          onClose={() => {
+            setShowSelect(false);
+          }}
           inputProps={{ IconComponent: () => null }}
-          id = "calender"
-          {...props.register("calender", { required: props.required })}
+          id="calender"
+          {...props.register("calender", { required: true })}
           MenuProps={{
             anchorOrigin: {
               vertical: "bottom",
@@ -64,13 +72,35 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
           renderValue={() => {
             return (
               <div className="calender-content">
-                {!showDate? (
-                  <div>Check-in</div>
-                ) : (
-                  <div>{startdate}</div>
-                )}
+                <div>
+                  {props.isInside ? <div>Check-in</div> : ""}
+                  {props.isInside ? (
+                    <b>
+                      {!showDate ? (
+                        <div>{props.start}</div>
+                      ) : (
+                        <div>{startdate}</div>
+                      )}
+                    </b>
+                  ) : (
+                    <div>{!showDate ? props.start : startdate}</div>
+                  )}
+                </div>
                 <ArrowForwardIcon />
-                {!showDate ? <div>Check-out</div> : <div>{enddate}</div>}
+                <div>
+                  {props.isInside ? <div>Check-out</div> : ""}
+                  {props.isInside ? (
+                    <b>
+                      {!showDate ? (
+                        <div>{props.end}</div>
+                      ) : (
+                        <div>{enddate}</div>
+                      )}
+                    </b>
+                  ) : (
+                    <div>{!showDate ? props.end : enddate}</div>
+                  )}
+                </div>
                 <CalendarMonthIcon />
               </div>
             );
@@ -78,13 +108,16 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
         >
           <Calender />
         </Select>
-        {(
-          showDate === 0 && props.errors.startDate && <Alert severity="error">
-            <FormattedMessage id="errorMessage" defaultMessage="This field is required" />
+        {showDate === 0 && props.errors.startDate && (
+          <Alert severity="error">
+            <FormattedMessage
+              id="errorMessage"
+              defaultMessage="This field is required"
+            />
           </Alert>
         )}
       </FormControl>
-    </div>
+    </>
   );
 };
 export default CalenderDropdown;

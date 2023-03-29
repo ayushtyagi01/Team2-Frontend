@@ -4,7 +4,7 @@ import { addDays, format, isBefore, isSameDay } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { useDispatch } from "react-redux";
-import {DateRangePicker} from "react-date-range";
+import { DateRange } from "react-date-range";
 import { setEndDate, setStartDate } from "../../../redux/slice/SearchFormSlice";
 import axios from "axios";
 import { useAppSelector } from "../../../redux/hooks";
@@ -26,7 +26,7 @@ export default function Calender() {
   const [minimumRate, setMinimumRate] = useState<number>(Number.MAX_VALUE);
   const [currencyLogo, setCurrencyLogo] = useState<string>("$");
 
-  const [state, setState] = useState([
+  const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
       endDate: addDays(new Date(), 2),
@@ -43,12 +43,7 @@ export default function Calender() {
       minimumNightlyRates[format(day, "yyyy-MM-dd")]
     ) {
       const formattedDate = format(day, "yyyy-MM-dd");
-      setMinimumRate(
-        Math.min(
-          minimumRate,
-          Math.round(minimumNightlyRates[formattedDate] * priceFactor)
-        )
-      );
+
       return `${currencyLogo} ${Math.round(
         minimumNightlyRates[formattedDate] * priceFactor
       )}`;
@@ -56,6 +51,13 @@ export default function Calender() {
       return "_";
     }
   };
+
+  const getMinimumPrice = () => {
+    for (let [key, value] of Object.entries(minimumNightlyRates)) {
+      setMinimumRate(Math.min(value as number,minimumRate));
+  }
+    }
+  
   const fetchMinimumNightlyRates = async () => {
     const minimumNightlyRatesFetched = await axios.get(
       process.env.REACT_APP_NIGHTLY_RATES!
@@ -67,6 +69,10 @@ export default function Calender() {
     fetchMinimumNightlyRates();
   }, []);
 
+  useEffect(() => {
+    getMinimumPrice();
+  }, [minimumNightlyRates]);
+
   function customDayContent(day: any) {
     return (
       <div className="day-tag">
@@ -76,29 +82,32 @@ export default function Calender() {
     );
   }
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    reduxDispatch(setStartDate(format(state[0].startDate,"yyyy-MM-dd")));
-    reduxDispatch(setEndDate(format(state[0].endDate,"yyyy-MM-dd")));
+    reduxDispatch(setStartDate(format(dateRange[0].startDate, "yyyy-MM-dd")));
+    reduxDispatch(setEndDate(format(dateRange[0].endDate, "yyyy-MM-dd")));
   };
+  
   return (
     <div className="calender">
-      <DateRangePicker
-        onChange={(item: any) => setState([item.selection])}
+      <DateRange
+        onChange={(item: any) => {
+          setDateRange([item.selection]);
+        }}
         showPreview={false}
         moveRangeOnFirstSelection={false}
         months={2}
-        ranges={state}
+        ranges={dateRange}
         direction="horizontal"
         preventSnapRefocus={true}
         calendarFocus="forwards"
         dayContentRenderer={customDayContent}
         minDate={
-          isSameDay(state[0].startDate, state[0].endDate)
-            ? state[0].startDate
+          isSameDay(dateRange[0].startDate, dateRange[0].endDate)
+            ? dateRange[0].startDate
             : new Date()
         }
         maxDate={
-          isSameDay(state[0].startDate, state[0].endDate)
-            ? addDays(state[0].startDate, maxLengthofStay)
+          isSameDay(dateRange[0].startDate, dateRange[0].endDate)
+            ? addDays(dateRange[0].startDate, maxLengthofStay)
             : new Date("2023-05-31")
         }
         fixedHeight={true}
@@ -106,19 +115,24 @@ export default function Calender() {
       <button
         className="apply-dates-button"
         onClick={(e) => handleClick(e)}
-        disabled={isSameDay(state[0].startDate, state[0].endDate)}
+        disabled={isSameDay(dateRange[0].startDate, dateRange[0].endDate)}
       >
         APPLY DATES
       </button>
-      {isSameDay(state[0].startDate, state[0].endDate) && (
+      {isSameDay(dateRange[0].startDate, dateRange[0].endDate) && (
         <p className="calender-footer-text">
-          <FormattedMessage id="errorMessageEndDate" defaultMessage="Please select end date. Max. length of stay: {maxLengthofStay} days" values={{ maxLengthofStay }}/>
+          <FormattedMessage
+            id="errorMessageEndDate"
+            defaultMessage="Please select end date. Max. length of stay: {maxLengthofStay} days"
+            values={{ maxLengthofStay }}
+          />
         </p>
       )}
-      {!isSameDay(state[0].startDate, state[0].endDate) && (
+      {!isSameDay(dateRange[0].startDate, dateRange[0].endDate) && (
         <p className="calender-footer-price">
           from {currencyLogo}
-          {minimumRate}<FormattedMessage id="night" defaultMessage="/night"/>
+          {minimumRate}
+          <FormattedMessage id="night" defaultMessage="/night" />
         </p>
       )}
     </div>

@@ -71,8 +71,8 @@ const LandingPage = () => {
           </Box>
           <CalenderDropdown
             register={register}
-            required={true}
             errors={errors}
+            isInside={false} margin={2} width={'90%'} top={-1.5} start={"Check-in"} end={"Check-out"}
           />
           <div className="guest-room-container">
             {guest.length === 0 ? (
