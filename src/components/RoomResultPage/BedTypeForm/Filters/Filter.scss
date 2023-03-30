@@ -1,8 +1,9 @@
+@import '../../../../styles/variables.scss';
 .accordion-container {
   background-color: #eff0f1 !important;
   border-style: none !important;
   box-shadow: none !important;
-  border-bottom: 1px solid #d8d9d9 !important;
+  border-bottom: 1px solid $border-line-grey !important;
 }
 .accordion-container:last-child {
   border-bottom: none !important;
@@ -11,6 +12,6 @@
   display: none;
 }
 .MuiButtonBase-root {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $black;
 }
 

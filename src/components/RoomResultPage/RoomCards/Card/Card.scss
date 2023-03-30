@@ -1,0 +1,44 @@
+@import '../../../../styles/variables.scss';
+
+.carousel-container {
+  height: 100%;
+  width: 100%;
+}
+.room-name-heading {
+  display: flex;
+  justify-content: space-between;
+  .room-name {
+    width: 35%;
+    margin: 2% 2.5%;
+  }
+  .property-rating {
+    background-color: $primary-navy-blue;
+    height: fit-content;
+    border-radius: 5px;
+    margin: 2.2%;
+    padding: 1% 2%;
+  }
+}
+.logo-div {
+  color: $primary-border-grey;
+  display: flex;
+  align-items: center;
+  margin: 2% 1.3%;
+}
+.room-size{
+    margin: 2% 2.5%;
+    justify-content: start;
+    .room-type{
+        font-style: italic;
+        padding-right: 2%;
+    }
+}
+
+.per-night-div{
+    color: $primary-border-grey;
+    margin: 2% 2.5%;
+}
+.button-select{
+    background-color: $primary-dark-blue-color!important;
+    margin: 2%!important;
+}

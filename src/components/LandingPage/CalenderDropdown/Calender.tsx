@@ -4,7 +4,7 @@ import { addDays, format, isBefore, isSameDay } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { useDispatch } from "react-redux";
-import { DateRange } from "react-date-range";
+import { DateRange, DateRangePicker } from "react-date-range";
 import { setEndDate, setStartDate } from "../../../redux/slice/SearchFormSlice";
 import axios from "axios";
 import { useAppSelector } from "../../../redux/hooks";
@@ -15,6 +15,7 @@ import {
 import { getCurrencyLogo } from "../../../util/GetCurrencyLogo";
 import { FormattedMessage } from "react-intl";
 import { maxLengthOfStay } from "../../../redux/slice/landingPageSlice";
+import { formatDate } from "../../../util/formatDate";
 
 export default function Calender() {
   const reduxDispatch = useDispatch();
@@ -40,9 +41,9 @@ export default function Calender() {
   const getMinNightlyRates = (day: Date) => {
     if (
       isBefore(addDays(new Date(), -1), day) &&
-      minimumNightlyRates[format(day, "yyyy-MM-dd")]
+      minimumNightlyRates[formatDate(day)]
     ) {
-      const formattedDate = format(day, "yyyy-MM-dd");
+      const formattedDate = formatDate(day);
 
       return `${currencyLogo} ${Math.round(
         minimumNightlyRates[formattedDate] * priceFactor
@@ -54,7 +55,7 @@ export default function Calender() {
 
   const getMinimumPrice = () => {
     for (let [key, value] of Object.entries(minimumNightlyRates)) {
-      setMinimumRate(Math.min(value as number,minimumRate));
+      setMinimumRate(Math.min(Math.round((value as number)*priceFactor),minimumRate));
   }
     }
   
@@ -70,6 +71,7 @@ export default function Calender() {
   }, []);
 
   useEffect(() => {
+    setMinimumRate(Number.MAX_VALUE);
     getMinimumPrice();
   }, [minimumNightlyRates]);
 
@@ -82,8 +84,8 @@ export default function Calender() {
     );
   }
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    reduxDispatch(setStartDate(format(dateRange[0].startDate, "yyyy-MM-dd")));
-    reduxDispatch(setEndDate(format(dateRange[0].endDate, "yyyy-MM-dd")));
+    reduxDispatch(setStartDate(formatDate(dateRange[0].startDate)));
+    reduxDispatch(setEndDate(formatDate(dateRange[0].endDate)));
   };
   
   return (

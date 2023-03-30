@@ -1,6 +1,7 @@
 import SearchForm from "./SearchForm/SeacrhForm";
 import './RoomResultPage.scss'
 import BedTypeForm from "./BedTypeForm/BedTypeForm";
+import RoomCards from "./RoomCards/RoomCards";
 import { bannerImage } from "../../redux/slice/landingPageSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { Box, Step, StepLabel, Stepper } from "@mui/material";
@@ -35,6 +36,7 @@ const RoomResultPage: React.FC = () => {
        <SearchForm/>
        <div className="body-container">
         <BedTypeForm/>
+        <RoomCards/>
        </div>
        </div>
       </>
