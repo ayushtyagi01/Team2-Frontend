@@ -4,6 +4,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useAppSelector } from "../../../redux/hooks";
 import { noOfRooms } from "../../../redux/slice/SearchFormSlice";
+import { Box } from "@mui/material";
 
 interface title {
   isInside:boolean;
@@ -12,9 +13,9 @@ interface title {
   top:number;
 }
 const RoomDropdown: React.FC<title> = (props) => {
-  const [noOfRoom, setnoOfRoom] = React.useState<string>("1");
+  const [noofRoom, setnoOfRoom] = React.useState<string>("1");
 
-  const handleChange = (event: SelectChangeEvent<typeof noOfRoom>) => {
+  const handleChange = (event: SelectChangeEvent<typeof noofRoom>) => {
     const {
       target: { value },
     } = event;
@@ -27,10 +28,18 @@ const RoomDropdown: React.FC<title> = (props) => {
   return (
     <>
       <FormControl sx={{ m: props.margin, width: props.width, mt: props.top }}>
-        <Select displayEmpty value={noOfRoom} onChange={handleChange}>
+        <Select displayEmpty value={noofRoom} onChange={handleChange}
+        renderValue={() => {
+          return (
+            <div>
+              {props.isInside?<Box>Rooms</Box>:""}
+              <b>{noofRoom}</b>
+            </div>
+          );
+        }}>
           <MenuItem disabled value=""></MenuItem>
-          {roomsArray.map((name) => (
-            <MenuItem key={name} value={name}>
+          {roomsArray.map((name,index) => (
+            <MenuItem key={index+name} value={name}>
               {name}
             </MenuItem>
           ))}

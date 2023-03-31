@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 .calender {
   box-sizing: border-box;
   /* margin: 1vw; */
@@ -9,6 +11,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  font-family: popins!important;
   /* display: absolute;
     top: 10%; */
 }
@@ -41,20 +44,20 @@
 .rdrInRange,
 .rdrStartEdge,
 .rdrEndEdge {
-  background-color: #c0c3c2 !important;
-  color: white !important;
+  background-color: $calender-background-grey !important;
+  color: $white !important;
 }
 .rdrStartEdge {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   left: 2px;
-  background-color: #27276d !important;
+  background-color: $primary-dark-blue-color !important;
 }
 .rdrEndEdge {
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   right: 2px;
-  background-color: #27276d !important;
+  background-color: $primary-dark-blue-color !important;
 }
 .open {
   display: grid !important;
@@ -78,10 +81,10 @@
 }
 .rdrStartEdge + .rdrDayNumber .day-tag,
 .rdrEndEdge + .rdrDayNumber .day-tag {
-  color: white !important;
+  color: $white !important;
 }
 .day-tag {
-  color: black;
+  color: $black;
   height: 100%;
   width: 100%;
 }
@@ -97,8 +100,8 @@
   min-height: 2.5rem;
   min-width: 8rem;
   font-size: 0.9rem;
-  background-color: #27276d;
-  color: white;
+  background-color: $primary-dark-blue-color;
+  color: $white;
   cursor: pointer;
   align-self: flex-end;
   margin-right: 10%;
@@ -109,7 +112,7 @@
   opacity: 0.4;
 }
 .calender-footer-text {
-  color: red;
+  color: $red-color;
   max-width: 25%;
   align-self: flex-end;
   margin-right: 10%;
@@ -120,7 +123,7 @@
   margin-right: 10%;
 }
 .day-tag:hover {
-  background-color: #27276d;
-  color: white !important;
+  background-color: $primary-dark-blue-color;
+  color: $white !important;
 }
 

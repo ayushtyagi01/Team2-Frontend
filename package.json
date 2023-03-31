@@ -26,6 +26,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.8",
     "react-intl": "^6.3.0",
+    "react-material-ui-carousel": "^3.4.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
@@ -40,9 +41,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  
-    "type": "module",
-  
+  "type": "module",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -61,7 +60,6 @@
       "last 1 safari version"
     ]
   },
-  
   "devDependencies": {
     "@types/react-date-range": "^1.4.4"
   }

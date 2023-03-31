@@ -30,7 +30,7 @@ const RoomDropdown: React.FC<title> = (props) => {
             return (
               <div>
                 {props.isInside?<Box>Guests</Box>:""}
-                {guestCount[0]} Adult {guestCount[1]} Child
+                <b>{guestCount[0]} Adult {guestCount[1]} Child</b>
               </div>
             );
           }}
