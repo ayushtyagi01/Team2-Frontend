@@ -4,8 +4,8 @@ import { addDays, format, isBefore, isSameDay } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { useDispatch } from "react-redux";
-import { DateRange, DateRangePicker } from "react-date-range";
-import { setEndDate, setStartDate } from "../../../redux/slice/SearchFormSlice";
+import { DateRange } from "react-date-range";
+import { end_date, setEndDate, setStartDate, start_date } from "../../../redux/slice/SearchFormSlice";
 import axios from "axios";
 import { useAppSelector } from "../../../redux/hooks";
 import {
@@ -22,6 +22,8 @@ export default function Calender() {
   const priceFactor = useAppSelector(selectedFactor);
   const currency = useAppSelector(selectedcurrency);
   const maxLengthofStay = useAppSelector(maxLengthOfStay);
+  const startDate = useAppSelector(start_date);
+  const endDate = useAppSelector(end_date);
 
   const [minimumNightlyRates, setMinimumNightlyRates] = useState<any>({});
   const [minimumRate, setMinimumRate] = useState<number>(Number.MAX_VALUE);
@@ -84,6 +86,8 @@ export default function Calender() {
     );
   }
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    localStorage.setItem('startDate',formatDate(dateRange[0].startDate));
+    localStorage.setItem('endDate',formatDate(dateRange[0].endDate));
     reduxDispatch(setStartDate(formatDate(dateRange[0].startDate)));
     reduxDispatch(setEndDate(formatDate(dateRange[0].endDate)));
   };

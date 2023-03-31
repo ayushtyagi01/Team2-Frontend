@@ -3,6 +3,7 @@ import { IntlProvider } from "react-intl";
 import { useAppSelector } from "./redux/hooks";
 import { setLang, translations } from "./redux/slice/InternationalisationSlice";
 import Router from "./components/Router/Router";
+import "@aws-amplify/ui-react/styles.css";
 
 function App() {
   const browserLanguage = navigator.language;

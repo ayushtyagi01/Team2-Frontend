@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../../redux/hooks";
 import { setProperty } from "../../../redux/slice/SearchFormSlice";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 interface PropertyDropdownProps {
   register: UseFormRegister<FieldValues>;
@@ -19,14 +20,27 @@ const names = ["Property 2"];
 const PropertyDropdown: React.FC<PropertyDropdownProps> = (props) => {
   const [propertyName, setPropertyName] = React.useState<string[]>([]);
   const reduxDispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  if(searchParams.get('property')!==null){
+    reduxDispatch(setProperty(searchParams.get('property')))
+  }
+  else if(localStorage.getItem('property')!==null){
+    reduxDispatch(setProperty(localStorage.getItem('property')));
+  }
+  
+
 
   const handleChange = (event: SelectChangeEvent<typeof propertyName>) => {
     const {
       target: { value },
     } = event;
     setPropertyName(typeof value === "string" ? value.split(",") : value);
-    reduxDispatch(setProperty(propertyName));
+    reduxDispatch(setProperty(value));
   };
+
+  
 
   return (
     <>

@@ -83,7 +83,7 @@ export const accessibility = (state: RootState) =>
   state.landingData.accessibility;
 export const availableTypeOfGuests = (state: RootState) =>
   state.landingData.availableTypeOfGuests;
-export const rooms = (state: RootState) => state.landingData.rooms;
+export const isRooms = (state: RootState) => state.landingData.rooms;
 export const propertyname = (state: RootState) =>
   state.landingData.propertyName;
 
