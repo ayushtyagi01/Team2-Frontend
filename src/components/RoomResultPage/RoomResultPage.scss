@@ -1,0 +1,47 @@
+@import "../../styles/variables.scss";
+
+.room-banner {
+  height: 10vh;
+}
+.form-container {
+  margin: 1% 3%;
+  .body-container {
+    display: flex;
+  }
+}
+.stepper-container {
+  margin-top: 1%;
+  display: flex;
+  justify-content: center;
+  .stepper {
+    width: 30%;
+    path {
+      color: $primary-dark-blue-color;
+    }
+    .Mui-completed {
+      color: $primary-dark-blue-color;
+    }
+    .Mui-active > .MuiSvgIcon-fontSizeMedium {
+      color: $red-color;
+
+      .MuiStepIcon-text,.MuiSvgIcon-root {
+        display: none;
+      }
+    }
+  }
+}
+
+.MuiStepLabel-horizontal{
+& > .Mui-active {
+    &::before {
+      content: "✔";
+      position: absolute;
+      z-index: 100;
+      left: 47%;
+      color: $white;
+      background-color: inherit;
+      width: 3rem;
+    }
+  }
+}
+

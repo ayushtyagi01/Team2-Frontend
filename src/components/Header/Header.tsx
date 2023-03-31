@@ -103,9 +103,6 @@ currency type in redux
           <Button type="submit" variant = "contained" className="login-btn">
           <FormattedMessage id="login" defaultMessage="Login" />
           </Button>
-          {/* <button className="login-btn">
-            <FormattedMessage id="login" defaultMessage="Login" />
-          </button> */}
         </div>
       </div>
     </div>

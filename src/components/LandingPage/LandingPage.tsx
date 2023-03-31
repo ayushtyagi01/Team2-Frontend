@@ -19,6 +19,7 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import { schema } from "../../util/constants/formSchema";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -28,8 +29,12 @@ const LandingPage = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  const addToLocalStorage = () => {
+    localStorage.setItem('property','property 2');
+
+  }
   const onSubmit = () => {
-    console.log("onSubmit");
+    addToLocalStorage();
     navigate('/room-search-results');
   };
   const reduxDispatch = useDispatch();
@@ -71,8 +76,8 @@ const LandingPage = () => {
           </Box>
           <CalenderDropdown
             register={register}
-            required={true}
             errors={errors}
+            isInside={false} margin={2} width={'90%'} top={-1.5} start={"Check-in"} end={"Check-out"}
           />
           <div className="guest-room-container">
             {guest.length === 0 ? (
