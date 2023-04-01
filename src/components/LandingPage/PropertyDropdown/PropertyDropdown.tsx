@@ -23,6 +23,7 @@ const PropertyDropdown: React.FC<PropertyDropdownProps> = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
+  
   if(searchParams.get('property')!==null){
     reduxDispatch(setProperty(searchParams.get('property')))
   }

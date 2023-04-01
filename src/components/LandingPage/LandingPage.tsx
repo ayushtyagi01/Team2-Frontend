@@ -7,7 +7,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import "./LandingPage.scss";
 import CalenderDropdown from "./CalenderDropdown/CalenderDropdown";
 import { useDispatch } from "react-redux";
-import {  end_date, isWheelchair, start_date , noOfRooms,guestsCount, wheelchair, property_name} from "../../redux/slice/SearchFormSlice";
+import {
+  end_date,
+  isWheelchair,
+  start_date,
+  noOfRooms,
+  guestsCount,
+  wheelchair,
+  property_name,
+} from "../../redux/slice/SearchFormSlice";
 import { useAppSelector } from "../../redux/hooks";
 import {
   accessibility,
@@ -34,29 +42,29 @@ const LandingPage = () => {
   const guest = useAppSelector(availableTypeOfGuests);
   const accessable = useAppSelector(accessibility);
 
-  const property  = useAppSelector(property_name);
+  const property = useAppSelector(property_name);
   const startDate = useAppSelector(start_date);
   const endDate = useAppSelector(end_date);
-  const guests =  useAppSelector(guestsCount);
+  const guests = useAppSelector(guestsCount);
   const rooms = useAppSelector(noOfRooms);
   const accessability = useAppSelector(wheelchair);
 
   const addToLocalStorage = () => {
-    localStorage.setItem('property',JSON.stringify(property));
-    localStorage.setItem('startDate',startDate);
-    localStorage.setItem('endDate',endDate);
-    localStorage.setItem('guest',JSON.stringify(guests));
-    localStorage.setItem('room',JSON.stringify(rooms));
-    localStorage.setItem('wheelchair',accessability.toString());
-  }
+    localStorage.setItem("property", JSON.stringify(property));
+    localStorage.setItem("startDate", startDate);
+    localStorage.setItem("endDate", endDate);
+    localStorage.setItem("guest", JSON.stringify(guests));
+    localStorage.setItem("room", JSON.stringify(rooms));
+    localStorage.setItem("wheelchair", accessability.toString());
+  };
   const onSubmit = () => {
     addToLocalStorage();
     navigate({
-      pathname:'/room-search-results',
-      search:`?property=${property}&start_date=${startDate}&end_date=${endDate}&guest=${guests}&room=${rooms}&wheelchair=${accessability}`
+      pathname: "/room-search-results",
+      search: `?property=${property}&start_date=${startDate}&end_date=${endDate}&guest=${guests}&room=${rooms}&wheelchair=${accessability}`,
     });
   };
-  
+
   const handleWheelchair = (e: React.ChangeEvent<HTMLInputElement>) => {
     reduxDispatch(isWheelchair(e.target.checked));
   };
@@ -90,7 +98,12 @@ const LandingPage = () => {
           <CalenderDropdown
             register={register}
             errors={errors}
-            isInside={false} margin={2} width={'90%'} top={-1.5} start={"Check-in"} end={"Check-out"}
+            isInside={false}
+            margin={2}
+            width={"90%"}
+            top={-1.5}
+            start={"Check-in"}
+            end={"Check-out"}
           />
           <div className="guest-room-container">
             {guest.length === 0 ? (
@@ -104,7 +117,12 @@ const LandingPage = () => {
                 <Box className="search-box">
                   <FormattedMessage id="Guests" defaultMessage="Guests" />
                 </Box>
-                <GuestDropdown isInside={false} margin={3} width={'100%'} top={-1.5} />
+                <GuestDropdown
+                  isInside={false}
+                  margin={3}
+                  width={"100%"}
+                  top={-1.5}
+                />
               </div>
             )}
             {isRoom === "true" ? (
@@ -116,7 +134,12 @@ const LandingPage = () => {
                 <Box className="search-box">
                   <FormattedMessage id="Room" defaultMessage="Room" />
                 </Box>
-                <RoomDropdown isInside={false} margin={2.5} width={'100%'} top={-1.5}/>
+                <RoomDropdown
+                  isInside={false}
+                  margin={2.5}
+                  width={"100%"}
+                  top={-1.5}
+                />
               </div>
             ) : (
               ""

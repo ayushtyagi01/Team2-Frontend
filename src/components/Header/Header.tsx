@@ -41,7 +41,6 @@ const Header: React.FC = () => {
   const headerLogoHere = useAppSelector(headerLogo);
   const pageTitlehere = useAppSelector(pageTitle);
   const userName = useAppSelector(user);
-  const signOutUtil = useAppSelector(signOut);
 
   /**
     Handles language change

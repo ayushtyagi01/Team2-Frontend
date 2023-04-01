@@ -5,15 +5,19 @@ import SingleBedIcon from "@mui/icons-material/SingleBed";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import Carousel from "./CarouselContainer/CarouselContainer";
+import { RoomResult } from "../../../../redux/slice/PostDataSlice";
 
-const RoomCards: React.FC = () => {
+interface RoomResultProps {
+  result: RoomResult;
+}
+const Card: React.FC<RoomResultProps> = (props) => {
   return (
     <>
       <div className="carousel-container">
         <Carousel />
       </div>
       <div className="room-name-heading">
-        <div className="room-name">Long Beautiful Result Name</div>
+        <div className="room-name">{props.result.roomTypeName}</div>
         <div className="property-rating">New Property</div>
       </div>
       <div className="logo-div">
@@ -21,15 +25,17 @@ const RoomCards: React.FC = () => {
       </div>
       <div className="logo-div room-size">
         <div className="room-type">Inclusive</div>
-        <div>301ft</div>
+        <div>{props.result.areaInSqFeet}</div>
       </div>
       <div className="logo-div">
-        <PermIdentityIcon /> 1-2
+        <PermIdentityIcon /> 1-{props.result.maxCapacity}
       </div>
       <div className="logo-div">
-        <SingleBedIcon /> Queens or Double Bed
+        <SingleBedIcon />{" "}
+        {props.result.doubleBedCount > 0 ? props.result.doubleBedCount + " Queens Bed" : ""}{" "}
+        {props.result.singleBedCount > 0 ? props.result.singleBedCount + " Kings Bed" : ""}
       </div>
-      <div className="room-size price-div">$ 132</div>
+      <div className="room-size price-div">$ {props.result.averageNightlyRateInDuration}</div>
       <div className="per-night-div">per night</div>
       <Button variant="contained" className="button-select">
         <FormattedMessage id="Searchi" defaultMessage="Select Room" />
@@ -38,4 +44,4 @@ const RoomCards: React.FC = () => {
   );
 };
 
-export default RoomCards;
+export default Card;
