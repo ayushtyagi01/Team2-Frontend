@@ -1,7 +1,8 @@
 @import "../../styles/variables.scss";
 
 .footer-container {
-  
+  // position: fixed;
+  // bottom: 0;
   width: 100%;
   .footer {
     background-color: $primary-dark-blue-color;

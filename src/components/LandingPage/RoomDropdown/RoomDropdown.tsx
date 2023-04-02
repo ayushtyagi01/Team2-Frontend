@@ -6,6 +6,7 @@ import { noOfRooms, setRooms } from "../../../redux/slice/SearchFormSlice";
 import { Box } from "@mui/material";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { roomPostData } from "../../../util/roomPostData";
 
 interface title {
   isInside:boolean;
@@ -20,22 +21,36 @@ const RoomDropdown: React.FC<title> = (props) => {
   const reduxDispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  
-  if(searchParams.get('room')!==null){
-    reduxDispatch(setRooms(searchParams.get('room')))
-  }
-  else if(localStorage.getItem('room')!==null){
-    reduxDispatch(setRooms(localStorage.getItem('room')));
-  }
-  else if(location.pathname==='/room-search-results'){
-    navigate("/");
-  }
- 
   const rooms = useAppSelector(noOfRooms);
-
+  console.log("dsadasdas",rooms);
+  let roomsArray = Array.from({ length: parseInt(noofRoom) }, (_, index) => index + 1);
+  
   useEffect(() => {
-    rooms?setnoOfRoom(typeof rooms==="string"?rooms:JSON.stringify(rooms)):setnoOfRoom("1");
+    if(searchParams.get('room')!==null){
+      for(let i = 0; i < parseInt(searchParams.get('room')!); i++){
+        roomsArray[i]=i+1;
+      }
+      setnoOfRoom(searchParams.get('room')!);
+    }
+    else if(location.pathname!=='/' && localStorage.getItem('room')!==null){
+      for(let i = 0; i < JSON.parse(localStorage.getItem('room')!); i++){
+        roomsArray[i]=i+1;
+      }
+      console.log("roomsArray",roomsArray,localStorage.getItem('room'),rooms);
+      setnoOfRoom(localStorage.getItem('room')!);
+    }
+    else if(location.pathname==='/room-search-results'){
+      navigate("/");
+    }
+    else if(location.pathname==='/'){
+      console.log("ndjadj",rooms);
+      for(let i = 0; i < rooms; i++){
+        roomsArray[i]=(i+1);
+      }
+      setnoOfRoom(JSON.stringify(rooms));
+    }
   },[rooms])
+ 
 
   const handleChange = (event: SelectChangeEvent<typeof noofRoom>) => {
     const {
@@ -43,9 +58,10 @@ const RoomDropdown: React.FC<title> = (props) => {
     } = event;
     setnoOfRoom(value);
     localStorage.setItem('room',value);
+    roomPostData.requiredRoomsCount=parseInt(value);
   };
+  console.log("rooms",roomsArray,rooms);
 
-  let roomsArray = Array.from({ length: rooms }, (_, index) => index + 1);
 
   return (
     <>

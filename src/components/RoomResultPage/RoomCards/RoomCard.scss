@@ -1,3 +1,4 @@
+@import '../../../styles/variables.scss';
 .room-card-container {
   flex-basis: 80%;
   .room-header {
@@ -6,10 +7,26 @@
     margin: 2% 2% 0 1.2%;
   }
   .room-card {
-    width: 28%;
-    border: 1px solid #eff0f1;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
-    border-radius: 5px;
-    margin: 1% 2% 0 1.2%;
+    display: flex;
+    width: 100%;
+  }
+  .room-results{
+    flex-basis: 83%;
+  }
+  .sort-heading{
+    flex-basis: 25%;
+    display: flex;
+    .page-heading{
+      padding-right:7%;
+    }
+  }
+}
+.pagination-btn{
+  display: flex;
+  justify-content: space-between;
+  margin: 2%;
+  .btn-page{
+    background-color: $primary-dark-blue-color;
+    width:100px;
   }
 }

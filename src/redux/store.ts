@@ -3,13 +3,17 @@ import landingPageReducer from "./slice/landingPageSlice";
 import convertorReducer from "./slice/InternationalisationSlice";
 import searchFormReducer from "./slice/SearchFormSlice";
 import userSliceReducer  from "./slice/UserSlice";
+import roomDataReducer from "./slice/PostDataSlice";
+import RoomResultConfigSliceReducer from "./slice/RoomResultConfigSlice";
 
 export const store = configureStore({
   reducer: {
     landingData: landingPageReducer,
     convertor: convertorReducer,
     searchForm: searchFormReducer,
-    user:userSliceReducer
+    user:userSliceReducer,
+    roomData: roomDataReducer,
+    roomConfig:RoomResultConfigSliceReducer,
   },
 });
 
