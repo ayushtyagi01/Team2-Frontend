@@ -40,6 +40,7 @@ const Filters: React.FC<FilterInterface> = (props) => {
               1
             );
           }
+          roomPostData.pageNumber=1;
           reduxDispatch(getRoomData(roomPostData));
         } else {
           filters.filterOptions.push(e.target.value);
@@ -54,9 +55,11 @@ const Filters: React.FC<FilterInterface> = (props) => {
         filterOptions: [target],
       };
       roomPostData.filterTypes.push(filterType);
+      roomPostData.pageNumber=1;
       reduxDispatch(getRoomData(roomPostData));
     }
   };
+  const h = props.heading;
   return (
     <>
       <Accordion className="accordion-container">
@@ -65,7 +68,7 @@ const Filters: React.FC<FilterInterface> = (props) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>{props.heading}</Typography>
+          <Typography><FormattedMessage id={props.heading==='Room Type'?"Room Type":props.heading==='Bed Type'?"Bed Type":"Price"} defaultMessage={props.heading} /></Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>

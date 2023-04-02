@@ -3,14 +3,15 @@ import BedTypeForm from "./BedTypeForm/BedTypeForm";
 import RoomCards from "./RoomCards/RoomCards";
 import { bannerImage } from "../../redux/slice/landingPageSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Step, StepLabel, Stepper } from "@mui/material";
+import { CircularProgress, Step, StepLabel, Stepper } from "@mui/material";
 import { useEffect } from "react";
-import { setBeds, setEndDate, setRooms, setStartDate } from "../../redux/slice/SearchFormSlice";
+import { setBeds, setEndDate, setProperty, setRooms, setStartDate } from "../../redux/slice/SearchFormSlice";
 import { getRoomData } from "../../redux/slice/PostDataSlice";
 import SearchForm from './SearchForm/SeacrhForm';
 import { roomPostData } from '../../util/roomPostData';
 import { useSearchParams } from 'react-router-dom';
-import { getRoomConfig } from '../../redux/slice/RoomResultConfigSlice';
+import { getRoomConfig, isLoading } from '../../redux/slice/RoomResultConfigSlice';
+import { FormattedMessage } from 'react-intl';
 
 const steps = [
   '1. Choose Room',
@@ -20,6 +21,7 @@ const steps = [
 
 const RoomResultPage: React.FC = () => {
   const banner_image = useAppSelector(bannerImage);
+  const loader = useAppSelector(isLoading);
   const reduxDispatch = useAppDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,14 +32,14 @@ const RoomResultPage: React.FC = () => {
   },[]);
 
   const getFormData = ()=>{
-    // if(searchParams.get('property')!==null){
-    //   roomPostData.propertyId=parseInt(searchParams.get('property')!);
-    //   reduxDispatch(setProperty(searchParams.get('property')))
-    // }
-    // else if(localStorage.getItem('property')!==null){
-    //   roomPostData.propertyId= parseInt(localStorage.getItem('property')!);
-    //   reduxDispatch(setProperty(localStorage.getItem('property')));
-    // }
+    if(searchParams.get('property')!==null){
+      roomPostData.propertyId=parseInt(searchParams.get('property')!);
+      reduxDispatch(setProperty(searchParams.get('property')))
+    }
+    else if(localStorage.getItem('property')!==null){
+      roomPostData.propertyId= parseInt(localStorage.getItem('property')!);
+      reduxDispatch(setProperty(localStorage.getItem('property')));
+    }
     if(searchParams.get('room')!==null){
       console.log('rooms',(parseInt(JSON.parse(searchParams.get('room')!))));
       roomPostData.requiredRoomsCount=parseInt(JSON.parse(searchParams.get('room')!));
@@ -67,7 +69,6 @@ const RoomResultPage: React.FC = () => {
     else if(localStorage.getItem('beds')!==null){
       reduxDispatch(setBeds(localStorage.getItem('beds')));
     }
-    console.log("data",roomPostData);
     return roomPostData;
   }
 
@@ -93,13 +94,13 @@ const RoomResultPage: React.FC = () => {
         ))}
       </Stepper>
     </div>
-      <div className="form-container">
+     {loader?<CircularProgress />:<div className="form-container">
        <SearchForm/>
        <div className="body-container">
         <BedTypeForm/>
         <RoomCards/>
        </div>
-       </div>
+       </div>}
       </>
     );
   }

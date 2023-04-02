@@ -30,15 +30,14 @@ const PropertyDropdown: React.FC<PropertyDropdownProps> = (props) => {
   else if(localStorage.getItem('property')!==null){
     reduxDispatch(setProperty(localStorage.getItem('property')));
   }
-  
-
 
   const handleChange = (event: SelectChangeEvent<typeof propertyName>) => {
     const {
       target: { value },
     } = event;
     setPropertyName(typeof value === "string" ? value.split(",") : value);
-    reduxDispatch(setProperty(value));
+    if(value==='Property 2')
+    reduxDispatch(setProperty(2));
   };
 
   

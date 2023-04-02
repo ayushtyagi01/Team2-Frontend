@@ -29,23 +29,7 @@ export const roomPostData: RoomPostData = {
   pageNumber: 1,
   sortType: {
     sortValue: "Price",
-    sortOrder: "DESC",
+    sortOrder: "ASC",
   },
-  filterTypes: [
-  //   {
-  //     filterTypeName: "Room_Type_Filter",
-  //     maxAttributes: 2,
-  //     filterOptions: ["Deluxe", "Suite"],
-  //   },
-  //   {
-  //     filterTypeName: "Bed_Type_Filter",
-  //     maxAttributes: 2,
-  //     filterOptions: ["Queen"]
-  // },
-  // {
-  //     filterTypeName: "Price_Type_Filter",
-  //     maxAttributes: 2,
-  //     filterOptions: ["Price 50-100","Price 120-140"]
-  // }
-  ]
+  filterTypes: []
 };

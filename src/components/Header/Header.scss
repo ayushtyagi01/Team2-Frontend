@@ -4,9 +4,11 @@
   position: sticky;
   top: 0;
   width: 100%;
+  z-index:101;
   webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
+  background-color: $white-color;
   .header {
     display: flex;
     justify-content: space-between;

@@ -15,6 +15,7 @@ import {
   guestsCount,
   wheelchair,
   property_name,
+  beds,
 } from "../../redux/slice/SearchFormSlice";
 import { useAppSelector } from "../../redux/hooks";
 import {
@@ -47,9 +48,10 @@ const LandingPage = () => {
   const endDate = useAppSelector(end_date);
   const guests = useAppSelector(guestsCount);
   const rooms = useAppSelector(noOfRooms);
+  const bed = useAppSelector(beds);
   const accessability = useAppSelector(wheelchair);
 
-  const addToLocalStorage = () => {
+   const addToLocalStorage = () => {
     localStorage.setItem("property", JSON.stringify(property));
     localStorage.setItem("startDate", startDate);
     localStorage.setItem("endDate", endDate);
@@ -59,9 +61,10 @@ const LandingPage = () => {
   };
   const onSubmit = () => {
     addToLocalStorage();
+    console.log("tpeof",typeof property)
     navigate({
       pathname: "/room-search-results",
-      search: `?property=${property}&start_date=${startDate}&end_date=${endDate}&guest=${guests}&room=${rooms}&wheelchair=${accessability}`,
+      search: `?property=2&start_date=${startDate}&end_date=${endDate}&guest=${guests}&room=${rooms}&beds=${bed}&wheelchair=${accessability}`,
     });
   };
 

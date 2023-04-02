@@ -48,10 +48,12 @@ export const getRoomData = createAsyncThunk(
   "roomData/postData",
   async (postData: RoomPostData) => {
     if (roomDataUrl) {
+      console.log("input",postData);
       const response = await axios
         .post(roomDataUrl, postData)
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
+        console.log("responsee",response)
       return response;
     }
   }
@@ -64,10 +66,16 @@ export const PostDataSlice = createSlice({
     builder.addCase(getRoomData.fulfilled, (state, action) => {
       state.roomResults = action.payload.roomResults;
       state.maxContents = action.payload.maxContents;
+      state.isLoading = false;
+    });
+    builder.addCase(getRoomData.pending, (state, action) => {
+      state.isLoading = true;
     });
   },
 });
 
 export const roomResults = (state: RootState) => state.roomData.roomResults;
+export const maxContents = (state: RootState) => state.roomData.maxContents;
+export const isLoading = (state: RootState) => state.roomData.isLoading;
 
 export default PostDataSlice.reducer;

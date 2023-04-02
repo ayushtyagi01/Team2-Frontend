@@ -3,7 +3,7 @@ import { addDays } from "date-fns";
 import { RootState } from "../store";
 
 export interface ISearchForm {
-  property_name: string[];
+  property_name: number;
   start_date: string,
   end_date: string;
   guests: number[];
@@ -13,10 +13,10 @@ export interface ISearchForm {
 }
 
 const initialState: ISearchForm = {
-  property_name: [],
+  property_name: 2,
   start_date: new Date().toISOString(),
   end_date: addDays(new Date(),2).toISOString(),
-  guests: [1,0,0],
+  guests: [1,0],
   noOfRooms: 1,
   beds:1,
   wheelchair: false,

@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../redux/hooks";
 import {
@@ -12,19 +12,17 @@ import AddIcon from "@mui/icons-material/Add";
 import "./Guests.scss";
 
 interface GuestInterface {
-  index: number;
   guestTitle: string;
   guest_min_count: number;
   guest_max_count: number;
   guest_maxAge: string;
 }
 const Guests: React.FC<GuestInterface> = (props) => {
-  const index = props.index;
+  const index = props.guestTitle === "Children" ? 1 : 0;
   const reduxDispatch = useDispatch();
-  
 
   const guestCounts = useAppSelector(guestsCount);
-  const [noOfGuests, setnoOfGuests] = useState<number>(0);
+  const [noOfGuests, setnoOfGuests] = useState<number>(+guestCounts[index]);
   const guest_max_value: number = props.guest_max_count;
 
   const handleAddGuest = () => {
@@ -49,14 +47,6 @@ const Guests: React.FC<GuestInterface> = (props) => {
         : reduxDispatch(setRooms(1));
     }
   };
-
-  useEffect(() => {
-    if (guestCounts.length < index) {
-      setnoOfGuests(guestCounts[index]);
-    } else {
-      setnoOfGuests(props.guest_min_count);
-    }
-  }, [guestCounts]);
   return (
     <>
       <div className="guest-containers">
@@ -65,7 +55,7 @@ const Guests: React.FC<GuestInterface> = (props) => {
         </div>
         <div className="count-container">
           <RemoveIcon onClick={handleRemoveGuest} className="btn-guest" />
-          <Box className="guest-box">{noOfGuests}</Box>
+          <Box className="guest-box">{useAppSelector(guestsCount)[index]}</Box>
           <AddIcon onClick={handleAddGuest} className="btn-guest" />
         </div>
       </div>

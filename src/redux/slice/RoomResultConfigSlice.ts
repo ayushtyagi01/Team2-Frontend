@@ -25,6 +25,7 @@ interface HotelData {
   sortType: SortType[];
   filterTypes: FilterType[];
   roomImages: RoomImage[];
+  isLoading:boolean;
 }
 
 const initialState: HotelData = {
@@ -44,6 +45,7 @@ const initialState: HotelData = {
     },
   ],
   roomImages: [{ roomTypeName: "", customName: "", images: [] }],
+  isLoading: false,
 };
 const roomResultsConfig: string | undefined = process.env.REACT_APP_ROOM_CONFIG;
 export const getRoomConfig = createAsyncThunk(
@@ -67,6 +69,10 @@ export const roomResultConfigSlice = createSlice({
       state.sortType = action.payload.sortType;
       state.filterTypes = action.payload.filterTypes;
       state.roomImages = action.payload.roomImages;
+      state.isLoading = false;
+    });
+    builder.addCase(getRoomConfig.pending, (state, action) => {
+      state.isLoading = true;
     });
   },
 });
@@ -74,5 +80,6 @@ export const roomResultConfigSlice = createSlice({
 export const sortType = (state: RootState) => state.roomConfig.sortType;
 export const filterTypes = (state: RootState) => state.roomConfig.filterTypes;
 export const roomImages = (state: RootState) => state.roomConfig.roomImages;
+export const isLoading = (state: RootState) => state.roomConfig.isLoading;
 
 export default roomResultConfigSlice.reducer;
