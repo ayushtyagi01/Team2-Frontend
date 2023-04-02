@@ -15,7 +15,7 @@ const initialState: SearchForm = {
   property_name: [],
   start_date: new Date().toISOString(),
   end_date: addDays(new Date(),2).toISOString(),
-  guests: [1, 0],
+  guests: [1,0,0],
   noOfRooms: 1,
   wheelchair: false,
 };
@@ -28,11 +28,13 @@ export const SearchFormSlice = createSlice({
       state.property_name = action.payload;
     },
     setStartDate: (state, action) => {
-      console.log(action.payload);
       state.start_date = action.payload;
     },
     setEndDate: (state, action) => {
       state.end_date = action.payload;
+    },
+    setfillGuest:(state,action)=>{
+      state.guests = action.payload;
     },
     setGuests: (state, action) => {
       state.guests[action.payload[1]] = action.payload[0];
@@ -61,6 +63,7 @@ export const {
   isWheelchair,
   setStartDate,
   setEndDate,
+  setfillGuest
 } = SearchFormSlice.actions;
 
 export default SearchFormSlice.reducer;

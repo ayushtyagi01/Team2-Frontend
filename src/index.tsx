@@ -5,19 +5,26 @@ import { store } from "./redux/store";
 import App from "./App";
 import { initSentry } from "./util/SentryUtil";
 import { BrowserRouter } from "react-router-dom";
+import { Amplify } from "aws-amplify";
+import config from "./cognito/UserPool";
+import { AmplifyProvider } from "@aws-amplify/ui-react";
 
 initSentry();
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
+//configuring cognito user pool
+Amplify.configure(config);
+
 root.render(
+  <AmplifyProvider>
     <BrowserRouter>
       <Provider store={store}>
         <App />
       </Provider>
     </BrowserRouter>
-
+  </AmplifyProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -16,6 +16,9 @@ import { languages } from "../../util/constants/languages";
 import { currencies } from "../../util/constants/currencies";
 import { FormattedMessage } from "react-intl";
 import { Button } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { removeUser, signOut, user } from "../../redux/slice/UserSlice";
+import { Auth } from "aws-amplify";
 
 const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
@@ -23,8 +26,6 @@ const Header: React.FC = () => {
   useEffect(() => {
     reduxDispatch(getLandingData());
   }, [reduxDispatch]);
-
-  
 
   /**
     useEffect to make a call to API to get currency factors
@@ -39,6 +40,8 @@ const Header: React.FC = () => {
 
   const headerLogoHere = useAppSelector(headerLogo);
   const pageTitlehere = useAppSelector(pageTitle);
+  const userName = useAppSelector(user);
+  const signOutUtil = useAppSelector(signOut);
 
   /**
     Handles language change
@@ -59,6 +62,16 @@ currency type in redux
   ) => {
     reduxDispatch(selectedCurrency(e.target.value));
   };
+
+  const dispatch=useAppDispatch()
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const handleClick = () => {
+    navigate("/login", { state: { location: pathname } });
+  };
+  const handleSignInOrOut = () =>{
+    userName ? Auth.signOut && dispatch(removeUser()) && Auth.signOut()  : handleClick()
+  }
 
   return (
     <div className="header-container">
@@ -100,8 +113,16 @@ currency type in redux
               </option>
             ))}
           </select>
-          <Button type="submit" variant = "contained" className="login-btn">
-          <FormattedMessage id="login" defaultMessage="Login" />
+          <Button
+            type="submit"
+            variant="contained"
+            className="login-btn"
+            onClick={()=>handleSignInOrOut()}
+          >
+            {!userName && <FormattedMessage id="login" defaultMessage="Login" />}
+            {userName && (
+              <FormattedMessage id="logout" defaultMessage="LogOut" />
+            )}
           </Button>
         </div>
       </div>

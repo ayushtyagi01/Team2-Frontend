@@ -6,12 +6,13 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "./CalenderDropdown.scss";
 import Calender from "./Calender";
-import { useAppSelector } from "../../../redux/hooks";
-import { end_date, start_date } from "../../../redux/slice/SearchFormSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { end_date, setEndDate, setStartDate, start_date } from "../../../redux/slice/SearchFormSlice";
 import { useEffect, useState } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { Alert } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 interface CalenderDropdownProps {
   register: UseFormRegister<FieldValues>;
@@ -28,8 +29,8 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
   const [showDate, setshowDate] = useState<number>(0);
   const startDate = useAppSelector(start_date);
   const endDate = useAppSelector(end_date);
-  const startdate = format(new Date(startDate), "yyyy-MM-dd");
-  const enddate = format(new Date(endDate), "yyyy-MM-dd");
+  let startdate = format(new Date(startDate), "yyyy-MM-dd");
+  let enddate = format(new Date(endDate), "yyyy-MM-dd");
 
   useEffect(() => {
     if (
@@ -42,6 +43,30 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
       setshowDate(1);
     }
   }, [startdate, enddate]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const reduxDispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  if(searchParams.get('start_date')!==null && searchParams.get('end_date')!=null){
+    reduxDispatch(setStartDate(searchParams.get('start_date')));
+    reduxDispatch(setEndDate(searchParams.get('end_date')));
+  }
+  else if(localStorage.getItem('startDate')!==null && localStorage.getItem('endDate')!==null){
+    reduxDispatch(setStartDate(localStorage.getItem('startDate')));
+    reduxDispatch(setEndDate(localStorage.getItem('endDate')));
+  }
+  else if(location.pathname==='/room-search-results'){
+    navigate("/");
+  }
+  
+  // useEffect(() => {
+  //   startdate = startDate;
+  //   enddate = endDate;
+  //   setshowDate(1);
+  // },[startDate,endDate])
   return (
     <>
       <FormControl sx={{ m: props.margin, width: props.width, mt: props.top }}>
