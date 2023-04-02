@@ -5,7 +5,17 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { useDispatch } from "react-redux";
 import { DateRange } from "react-date-range";
-import { end_date, setEndDate, setStartDate, start_date } from "../../../redux/slice/SearchFormSlice";
+import {
+  beds,
+  end_date,
+  guestsCount,
+  noOfRooms,
+  property_name,
+  setEndDate,
+  setStartDate,
+  start_date,
+  wheelchair,
+} from "../../../redux/slice/SearchFormSlice";
 import axios from "axios";
 import { useAppSelector } from "../../../redux/hooks";
 import {
@@ -16,6 +26,7 @@ import { getCurrencyLogo } from "../../../util/GetCurrencyLogo";
 import { FormattedMessage } from "react-intl";
 import { maxLengthOfStay } from "../../../redux/slice/landingPageSlice";
 import { formatDate } from "../../../util/formatDate";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Calender() {
   const reduxDispatch = useDispatch();
@@ -57,10 +68,12 @@ export default function Calender() {
 
   const getMinimumPrice = () => {
     for (let [key, value] of Object.entries(minimumNightlyRates)) {
-      setMinimumRate(Math.min(Math.round((value as number)*priceFactor),minimumRate));
-  }
+      setMinimumRate(
+        Math.min(Math.round((value as number) * priceFactor), minimumRate)
+      );
     }
-  
+  };
+
   const fetchMinimumNightlyRates = async () => {
     const minimumNightlyRatesFetched = await axios.get(
       process.env.REACT_APP_NIGHTLY_RATES!
@@ -85,13 +98,31 @@ export default function Calender() {
       </div>
     );
   }
+  const navigate = useNavigate();
+  const location = useLocation();
+  const property = useAppSelector(property_name);
+  const guests = useAppSelector(guestsCount);
+  const rooms = useAppSelector(noOfRooms);
+  const bed = useAppSelector(beds);
+  const accessability = useAppSelector(wheelchair);
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    localStorage.setItem('startDate',formatDate(dateRange[0].startDate));
-    localStorage.setItem('endDate',formatDate(dateRange[0].endDate));
+    if (location.pathname === "/room-search-results") {
+      navigate({
+        pathname: "/room-search-results",
+        search: `?property=2&start_date=${formatDate(
+          dateRange[0].startDate
+        )}&end_date=${formatDate(
+          dateRange[0].endDate
+        )}&guest=${guests}&room=${rooms}&beds=${bed}&wheelchair=${accessability}`,
+      });
+    }
+    localStorage.setItem("startDate", formatDate(dateRange[0].startDate));
+    localStorage.setItem("endDate", formatDate(dateRange[0].endDate));
     reduxDispatch(setStartDate(formatDate(dateRange[0].startDate)));
     reduxDispatch(setEndDate(formatDate(dateRange[0].endDate)));
   };
-  
+
   return (
     <div className="calender">
       <DateRange

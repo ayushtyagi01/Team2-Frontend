@@ -27,14 +27,29 @@ const RoomDropdown: React.FC<title> = (props) => {
   const guestsCounts = useAppSelector(guestsCount);
 
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const reduxDispatch = useAppDispatch();
-  const [guestArray, setGuestArray] = useState<number[]>([1,0,0]);
-
-  
-
+  const [count,setCount] = useState<number[]>([1,0]);
+  let guestArray = [];
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if(searchParams.get('guest')!==null){
+      let res = searchParams.get('guest')!.split(',').map(el => {
+        return Number(el);
+      });
+      setCount(res);
+    }
+    else if(location.pathname!=='/' && localStorage.getItem('room')!==null){
+      setCount(JSON.parse(localStorage.getItem('guest')!));
+    }
+    else if(location.pathname==='/room-search-results'){
+      navigate("/");
+    }
+    else if(location.pathname==='/'){
+      setCount(guestsCounts);
+    }
+  },[guestsCounts])
+
 
   return (
     <>
@@ -46,7 +61,7 @@ const RoomDropdown: React.FC<title> = (props) => {
               <div>
                 {props.isInside ? <Box>Guests</Box> : ""}
                 <b>
-                  {guestsCounts[0]} Adult {guestsCounts[1]} Child
+                  {count[0]} Adult {count[1]} Child
                 </b>
               </div>
             );
@@ -55,7 +70,6 @@ const RoomDropdown: React.FC<title> = (props) => {
           {availableTypeOfGuest.map((guest, index) => {
             return (
               <Guests
-                index={index}
                 guestTitle={typeofGuest[guest].title}
                 guest_min_count={typeofGuest[guest].min}
                 guest_max_count={typeofGuest[guest].max}

@@ -23,21 +23,21 @@ const PropertyDropdown: React.FC<PropertyDropdownProps> = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
+  
   if(searchParams.get('property')!==null){
     reduxDispatch(setProperty(searchParams.get('property')))
   }
   else if(localStorage.getItem('property')!==null){
     reduxDispatch(setProperty(localStorage.getItem('property')));
   }
-  
-
 
   const handleChange = (event: SelectChangeEvent<typeof propertyName>) => {
     const {
       target: { value },
     } = event;
     setPropertyName(typeof value === "string" ? value.split(",") : value);
-    reduxDispatch(setProperty(value));
+    if(value==='Property 2')
+    reduxDispatch(setProperty(2));
   };
 
   

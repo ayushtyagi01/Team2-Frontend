@@ -9,5 +9,13 @@
   "wheelchair":"J'ai besoin d'une chambre accessible",
   "errorMessageEndDate":"Veuillez sélectionner la date de fin. Max. durée du séjour : {maxLengthofStay} jours",
   "night":"/nuit",
-  "errorMessage":"Ce champ est obligatoire"
+  "errorMessage":"Ce champ est obligatoire",
+  "narrow_results":"Affinez vos résultats",
+  "Room Type":"Type de chambre",
+  "Bed Type":"Type de lit",
+  "Price":"Prix",
+  "room_result":"Résultats de la salle",
+  "previous":"Précédent",
+  "next":"Suivant"
+
 }

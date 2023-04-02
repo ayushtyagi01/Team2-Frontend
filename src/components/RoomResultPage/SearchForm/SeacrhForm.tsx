@@ -8,12 +8,47 @@ import { schema } from "../../../util/constants/formSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { beds, end_date, guestsCount, noOfRooms, property_name, start_date, wheelchair } from "../../../redux/slice/SearchFormSlice";
+import {useNavigate } from "react-router-dom";
+import { roomPostData } from "../../../util/roomPostData";
+import { getRoomData } from "../../../redux/slice/PostDataSlice";
 
 const SearchForm: React.FC = () => {
   const {
     register,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
+  const property = useAppSelector(property_name);
+  const startDate = useAppSelector(start_date);
+  const endDate = useAppSelector(end_date);
+  const guests = useAppSelector(guestsCount);
+  const rooms = useAppSelector(noOfRooms);
+  const bed = useAppSelector(beds);
+  const accessability = useAppSelector(wheelchair);
+
+  const navigate = useNavigate();
+  const reduxDispatch = useAppDispatch();
+
+  const addToLocalStorage = () => {
+    localStorage.setItem("property", JSON.stringify(property));
+    localStorage.setItem("startDate", startDate);
+    localStorage.setItem("endDate", endDate);
+    localStorage.setItem("guest", JSON.stringify(guests));
+    localStorage.setItem("room", JSON.stringify(rooms));
+    localStorage.setItem("wheelchair", accessability.toString());
+  };
+
+  const handleClick = ()=>{
+    addToLocalStorage();
+    navigate({
+      pathname: "/room-search-results",
+      search: `?property=${property}&start_date=${startDate}&end_date=${endDate}&guest=${guests}&room=${rooms}&beds=${bed}&wheelchair=${accessability}`,
+    });
+    roomPostData.requiredBedCount=bed;
+    reduxDispatch(getRoomData(roomPostData));
+  }
   return (
     <>
       <div className="search-containers">
@@ -29,7 +64,7 @@ const SearchForm: React.FC = () => {
           top={1.5}
           start={"Any Date"} end={"Any Date"}
         />
-        <Button type="submit" variant="contained" className="room-submit">
+        <Button type="submit" variant="contained" className="room-submit" onClick={()=>handleClick()}>
           <FormattedMessage id="Searchi" defaultMessage="Search Dates" />
         </Button>
       </div>

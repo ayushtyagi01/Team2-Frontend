@@ -9,5 +9,12 @@
   "wheelchair":"I need an accessible room",
   "errorMessageEndDate":"Please select end date. Max. length of stay: {maxLengthofStay} days",
   "night":"/night",
-  "errorMessage":"This field is required"
+  "errorMessage":"This field is required",
+  "narrow_results":"Narrow your results",
+  "Room Type":"Room Type",
+  "Bed Type":"Bed Type",
+  "Price":"Price",
+  "room_result":"Room Result",
+  "previous":"Previous",
+  "next":"Next"
 }

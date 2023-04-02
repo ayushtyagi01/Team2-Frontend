@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { FALSE } from "sass";
 import { RootState } from "../store";
 
 interface GuestType {
@@ -19,6 +20,7 @@ interface LandingPage {
   availableTypeOfGuests: [];
   accessibility: string[];
   rooms: string;
+  isLoading: boolean;
 }
 
 const initialState: LandingPage = {
@@ -39,6 +41,7 @@ const initialState: LandingPage = {
   accessibility: [],
   availableTypeOfGuests: [],
   rooms: "true",
+  isLoading:false
 };
 const landingPageUrl: string | undefined =
   process.env.REACT_APP_LANDING_PAGE_URL;
@@ -69,6 +72,10 @@ export const landingPageSlice = createSlice({
       state.availableTypeOfGuests = action.payload.availableTypeOfGuests;
       state.rooms = action.payload.rooms;
       state.propertyName = action.payload.propertyName;
+      state.isLoading=false;
+    });
+    builder.addCase(getLandingData.pending, (state, action) => {
+      state.isLoading = true;
     });
   },
 });
