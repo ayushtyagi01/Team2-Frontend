@@ -11,10 +11,12 @@
 }
 .carousel-container {
   width: 100%;
+  height:8rem;
 }
 .room-name-heading {
   display: flex;
   justify-content: space-between;
+  margin-top: 8rem;
   .room-name {
     width: 35%;
     margin: 2% 2.5%;
