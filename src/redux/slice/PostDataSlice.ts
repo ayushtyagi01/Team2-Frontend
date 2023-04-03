@@ -48,12 +48,10 @@ export const getRoomData = createAsyncThunk(
   "roomData/postData",
   async (postData: RoomPostData) => {
     if (roomDataUrl) {
-      console.log("input",postData);
       const response = await axios
         .post(roomDataUrl, postData)
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
-        console.log("responsee",response)
       return response;
     }
   }

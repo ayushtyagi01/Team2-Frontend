@@ -22,11 +22,11 @@ const RoomCards: React.FC = () => {
   const [isNext, setNext] = useState(false);
   const [isPrevious, setPrevious] = useState(false);
   useEffect(() => {
-    (roomPostData.pageNumber-1)*3+roomData.length === (maxCount)
+    (roomPostData.pageNumber-1)*3+roomData.length === (maxCount) || !roomData.length
       ? setNext(true)
       : setNext(false);
     roomPostData.pageNumber === 1 ? setPrevious(true) : setPrevious(false);
-  }, [roomPostData.pageNumber]);
+  }, [roomPostData.pageNumber,roomData]);
 
   const handleNext = () => {
     roomPostData.pageNumber = roomPostData.pageNumber + 1;
@@ -56,9 +56,9 @@ const RoomCards: React.FC = () => {
         </div>
       </div>
       <div className="room-card">
-        {loader?<CircularProgress />:roomData.map((room) => (
+        {loader?<CircularProgress />:roomData.length?roomData.map((room) => (
           <Card result={room} />
-        ))}
+        )):<div className="no-result-div">No result found</div>}
       </div>
       <div className="pagination-btn">
         <Button

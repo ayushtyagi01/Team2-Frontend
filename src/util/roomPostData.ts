@@ -23,7 +23,7 @@ export const roomPostData: RoomPostData = {
   checkInDate: "2023-03-01T00:00:00Z",
   checkOutDate: "2023-03-14T00:00:00Z",
   propertyId: 2,
-  requiredRoomsCount: 8,
+  requiredRoomsCount: 2,
   duration: 14,
   requiredBedCount: 1,
   pageNumber: 1,

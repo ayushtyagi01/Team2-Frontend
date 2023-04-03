@@ -27,7 +27,6 @@ const RoomResultPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(()=>{
-    console.log("hhhahdsakjhd");
     reduxDispatch(getRoomConfig());
   },[]);
 
@@ -41,7 +40,6 @@ const RoomResultPage: React.FC = () => {
       reduxDispatch(setProperty(localStorage.getItem('property')));
     }
     if(searchParams.get('room')!==null){
-      console.log('rooms',(parseInt(JSON.parse(searchParams.get('room')!))));
       roomPostData.requiredRoomsCount=parseInt(JSON.parse(searchParams.get('room')!));
       reduxDispatch(setRooms(searchParams.get('room')))
     }

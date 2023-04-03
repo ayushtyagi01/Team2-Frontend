@@ -1,5 +1,8 @@
 @import "../../styles/variables.scss";
 
+body{
+  height:calc(100vh - 168px);
+}
 .room-banner {
   height: 10vh;
 }
