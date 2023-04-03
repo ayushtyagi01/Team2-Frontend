@@ -16,5 +16,7 @@
   "Price":"Price",
   "room_result":"Room Result",
   "previous":"Previous",
-  "next":"Next"
+  "next":"Next",
+  "beds":"Beds",
+  "search_dates":"Search Dates"
 }

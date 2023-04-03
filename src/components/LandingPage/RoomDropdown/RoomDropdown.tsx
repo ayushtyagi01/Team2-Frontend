@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { roomPostData } from "../../../util/roomPostData";
+import { FormattedMessage } from "react-intl";
 
 interface title {
   isInside:boolean;
@@ -70,7 +71,7 @@ const RoomDropdown: React.FC<title> = (props) => {
         renderValue={() => {
           return (
             <div>
-              {props.isInside?<Box>Rooms</Box>:""}
+              {props.isInside?<Box><FormattedMessage id="Room" defaultMessage="Room" /></Box>:""}
               <b>{JSON.parse(noofRoom)}</b>
             </div>
           );
