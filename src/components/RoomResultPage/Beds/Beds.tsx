@@ -1,5 +1,6 @@
 import { Box, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 import { useAppDispatch } from "../../../redux/hooks";
 import { setBeds } from "../../../redux/slice/SearchFormSlice";
 
@@ -27,7 +28,7 @@ const Beds: React.FC = () => {
           renderValue={() => {
             return (
               <div>
-                {<Box>Beds</Box>}
+                {<Box><FormattedMessage id="beds" defaultMessage="Beds" /></Box>}
                 <b>{noofBeds}</b>
               </div>
             );

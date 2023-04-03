@@ -14,6 +14,7 @@ import {
 import { Box } from "@mui/material";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 interface title {
   isInside: boolean;
@@ -59,7 +60,7 @@ const RoomDropdown: React.FC<title> = (props) => {
           renderValue={() => {
             return (
               <div>
-                {props.isInside ? <Box>Guests</Box> : ""}
+                {props.isInside ? <Box><FormattedMessage id="Guests" defaultMessage="Guests" /></Box> : ""}
                 <b>
                   {count[0]} Adult {count[1]} Child
                 </b>
