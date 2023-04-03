@@ -61,7 +61,6 @@ const LandingPage = () => {
   };
   const onSubmit = () => {
     addToLocalStorage();
-    console.log("tpeof",typeof property)
     navigate({
       pathname: "/room-search-results",
       search: `?property=2&start_date=${startDate}&end_date=${endDate}&guest=${guests}&room=${rooms}&beds=${bed}&wheelchair=${accessability}`,
@@ -72,7 +71,7 @@ const LandingPage = () => {
     reduxDispatch(isWheelchair(e.target.checked));
   };
   return (
-    <>
+    <div className="container">
       <div
         className="search-container"
         data-testid="LandingPage"
@@ -173,7 +172,7 @@ const LandingPage = () => {
           </Button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

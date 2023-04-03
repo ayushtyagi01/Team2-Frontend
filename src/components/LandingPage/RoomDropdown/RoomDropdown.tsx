@@ -23,7 +23,6 @@ const RoomDropdown: React.FC<title> = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const rooms = useAppSelector(noOfRooms);
-  console.log("dsadasdas",rooms);
   let roomsArray = Array.from({ length: parseInt(noofRoom) }, (_, index) => index + 1);
   
   useEffect(() => {
@@ -37,14 +36,12 @@ const RoomDropdown: React.FC<title> = (props) => {
       for(let i = 0; i < JSON.parse(localStorage.getItem('room')!); i++){
         roomsArray[i]=i+1;
       }
-      console.log("roomsArray",roomsArray,localStorage.getItem('room'),rooms);
       setnoOfRoom(localStorage.getItem('room')!);
     }
     else if(location.pathname==='/room-search-results'){
       navigate("/");
     }
     else if(location.pathname==='/'){
-      console.log("ndjadj",rooms);
       for(let i = 0; i < rooms; i++){
         roomsArray[i]=(i+1);
       }
@@ -61,7 +58,6 @@ const RoomDropdown: React.FC<title> = (props) => {
     localStorage.setItem('room',value);
     roomPostData.requiredRoomsCount=parseInt(value);
   };
-  console.log("rooms",roomsArray,rooms);
 
 
   return (
