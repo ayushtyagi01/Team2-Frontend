@@ -65,7 +65,7 @@ const SearchForm: React.FC = () => {
           start={"Any Date"} end={"Any Date"}
         />
         <Button type="submit" variant="contained" className="room-submit" onClick={()=>handleClick()}>
-          <FormattedMessage id="Searchi" defaultMessage="Search Dates" />
+          <FormattedMessage id="search_dates" defaultMessage="Search Dates" />
         </Button>
       </div>
     </>
