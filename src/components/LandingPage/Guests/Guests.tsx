@@ -29,6 +29,9 @@ const Guests: React.FC<GuestInterface> = (props) => {
     if (+noOfGuests < guest_max_value) {
       setnoOfGuests(noOfGuests + 1);
       reduxDispatch(setGuests([noOfGuests + 1, index]));
+      // let guestArray = useAppSelector(guestsCount);
+      // guestArray[index]=(noOfGuests+1).toString();
+      // localStorage.setItem('guest', JSON.stringify(guestArray));
       noOfGuests + 1 >= 3
         ? reduxDispatch(setRooms(3))
         : noOfGuests + 1 === 2

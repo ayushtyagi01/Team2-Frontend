@@ -1,0 +1,151 @@
+@import "../../../../../styles/variables.scss";
+
+.modal {
+  .carousel-container_in_modal {
+    height: 25rem;
+
+    .crousel {
+      height: 100% !important;
+
+      .crousel__image {
+        height: 25rem;
+      }
+
+      .MuiButtonBase-root {
+        border-radius: 0 !important;
+        padding: 1.5rem;
+      }
+    }
+  }
+
+  .room_type_name {
+    color: white;
+    font-size: 2.5rem;
+    margin: 2rem 6rem;
+    margin-top: -4rem;
+    position: relative;
+    z-index: 100;
+    box-shadow: inset;
+  }
+
+  .text-info {
+    margin: 2rem 5rem;
+    display: flex;
+
+    .upper-left-details {
+      width: 60%;
+
+      .upper-left-details_header {
+        display: flex;
+        margin-bottom: 2rem;
+      }
+      .upper-left-details_desc {
+        text-align: start;
+        width: 85%;
+        margin-left: 1rem;
+      }
+    }
+
+    .upper-right-details {
+      width: 40%;
+
+      .amneties_header {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+      }
+      .amneties {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .amienity {
+          width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          margin: 0.3rem 0;
+
+          .check-icon {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  .packages {
+    margin: 2rem 6rem;
+
+    .package-type {
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-top: 3rem;
+    }
+
+    .package {
+      width: 55%;
+      margin: 1rem 0;
+      border: 1px solid lightgray;
+      border-radius: 5px;
+      display: flex;
+
+      .package-left {
+        width: 70%;
+        margin: 1rem;
+
+        .title {
+          font-size: 1.2rem;
+          font-weight: 700;
+        }
+
+        .desc {
+          font-size: 0.9rem;
+          margin-top: 0.5rem;
+        }
+      }
+
+      .package-right {
+        width: 28%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        flex-direction: column;
+        padding: 1rem;
+        background-color: lightgray;
+
+        .price,
+        .per-night-text {
+          margin-right: 0.5rem;
+        }
+
+        .per-night-text {
+          color: grey;
+          font-size: 0.9rem;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+
+  .add_coupon_code {
+    margin: 2rem 6rem;
+    margin-top: 5rem;
+
+    .add_coupon_code_title {
+      margin-top: 1rem;
+    }
+    .coupon_code {
+      margin-top: -1.5rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .coupon_input {
+        height: 2.3rem;
+        margin-top: -1.8rem;
+        margin-right: -1rem;
+        padding-left: 0.5rem;
+      }
+    }
+  }
+}

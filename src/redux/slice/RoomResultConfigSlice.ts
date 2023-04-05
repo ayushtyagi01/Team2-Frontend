@@ -19,13 +19,15 @@ interface RoomImage {
   roomTypeName: string;
   customName: string;
   images: string[];
+  description: string;
+  amnetieis: string[];
 }
 
 interface HotelData {
   sortType: SortType[];
   filterTypes: FilterType[];
   roomImages: RoomImage[];
-  isLoading:boolean;
+  isLoading: boolean;
 }
 
 const initialState: HotelData = {
@@ -44,7 +46,15 @@ const initialState: HotelData = {
       filterOptions: [],
     },
   ],
-  roomImages: [{ roomTypeName: "", customName: "", images: [] }],
+  roomImages: [
+    {
+      roomTypeName: "",
+      customName: "",
+      images: [],
+      description: "",
+      amnetieis: [],
+    },
+  ],
   isLoading: false,
 };
 const roomResultsConfig: string | undefined = process.env.REACT_APP_ROOM_CONFIG;
