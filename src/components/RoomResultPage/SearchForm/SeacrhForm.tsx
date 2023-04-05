@@ -32,15 +32,16 @@ const SearchForm: React.FC = () => {
   const reduxDispatch = useAppDispatch();
 
   const addToLocalStorage = () => {
-    localStorage.setItem("property", JSON.stringify(property));
+    localStorage.setItem("property", property.toString());
     localStorage.setItem("startDate", startDate);
     localStorage.setItem("endDate", endDate);
     localStorage.setItem("guest", JSON.stringify(guests));
-    localStorage.setItem("room", JSON.stringify(rooms));
+    localStorage.setItem("room", rooms.toString());
     localStorage.setItem("wheelchair", accessability.toString());
   };
 
   const handleClick = ()=>{
+    console.log("handleClick",rooms);
     addToLocalStorage();
     navigate({
       pathname: "/room-search-results",
@@ -64,7 +65,7 @@ const SearchForm: React.FC = () => {
           top={1.5}
           start={"Any Date"} end={"Any Date"}
         />
-        <Button type="submit" variant="contained" className="room-submit" onClick={()=>handleClick()}>
+        <Button variant="contained" className="room-submit" onClick={()=>handleClick()}>
           <FormattedMessage id="search_dates" defaultMessage="Search Dates" />
         </Button>
       </div>

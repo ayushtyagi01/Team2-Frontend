@@ -52,11 +52,11 @@ const LandingPage = () => {
   const accessability = useAppSelector(wheelchair);
 
    const addToLocalStorage = () => {
-    localStorage.setItem("property", JSON.stringify(property));
+    localStorage.setItem("property", property.toString());
     localStorage.setItem("startDate", startDate);
     localStorage.setItem("endDate", endDate);
     localStorage.setItem("guest", JSON.stringify(guests));
-    localStorage.setItem("room", JSON.stringify(rooms));
+    localStorage.setItem("room",rooms.toString());
     localStorage.setItem("wheelchair", accessability.toString());
   };
   const onSubmit = () => {

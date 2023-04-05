@@ -38,18 +38,16 @@ const RoomResultPage: React.FC = () => {
   const getFormData = () => {
     if (searchParams.get("property") !== null) {
       roomPostData.propertyId = parseInt(searchParams.get("property")!);
-      reduxDispatch(setProperty(searchParams.get("property")));
+      reduxDispatch(setProperty(roomPostData.propertyId));
     } else if (localStorage.getItem("property") !== null) {
       roomPostData.propertyId = parseInt(localStorage.getItem("property")!);
       reduxDispatch(setProperty(localStorage.getItem("property")));
     }
     if (searchParams.get("room") !== null) {
-      roomPostData.requiredRoomsCount = parseInt(
-        JSON.parse(searchParams.get("room")!)
-      );
+      roomPostData.requiredRoomsCount = parseInt(searchParams.get("room")!);
       reduxDispatch(setRooms(searchParams.get("room")));
     } else if (localStorage.getItem("room") !== null) {
-      roomPostData.requiredRoomsCount = JSON.parse(
+      roomPostData.requiredRoomsCount = parseInt(
         localStorage.getItem("room")!
       );
       reduxDispatch(setRooms(localStorage.getItem("room")));

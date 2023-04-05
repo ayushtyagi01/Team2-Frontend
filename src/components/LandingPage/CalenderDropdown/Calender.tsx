@@ -26,7 +26,7 @@ import { getCurrencyLogo } from "../../../util/GetCurrencyLogo";
 import { FormattedMessage } from "react-intl";
 import { maxLengthOfStay } from "../../../redux/slice/landingPageSlice";
 import { formatDate } from "../../../util/formatDate";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Calender() {
   const reduxDispatch = useDispatch();
@@ -47,6 +47,33 @@ export default function Calender() {
       key: "selection",
     },
   ]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const startdate =
+    searchParams.get("start_date") !== null
+      ? new Date(searchParams.get("start_date")!)
+      : localStorage.getItem("startDate") !== null
+      ? new Date(localStorage.getItem("startDate")!)
+      : new Date();
+
+  const enddate =
+    searchParams.get("end_date") !== null
+      ? new Date(searchParams.get("end_date")!)
+      : localStorage.getItem("endDate") !== null
+      ? new Date(localStorage.getItem("endDate")!)
+      : addDays(new Date(), 2);
+
+  useEffect(() => {
+    setDateRange([
+      {
+        startDate: startdate,
+        endDate: enddate,
+        key: "selection",
+      },
+    ]);
+  }, [startDate,endDate]);
+
   useEffect(() => {
     setCurrencyLogo(getCurrencyLogo(currency));
   }, []);
