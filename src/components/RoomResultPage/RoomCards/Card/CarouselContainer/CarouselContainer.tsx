@@ -1,16 +1,19 @@
-import Carousel from 'react-material-ui-carousel'
-import './CarouselContainer.scss';
-import { images } from '../../../../../util/constants/roomImages';
+import Carousel from "react-material-ui-carousel";
+import "./CarouselContainer.scss";
+// import { images } from "../../../../../util/constants/roomImages";
 
+type Props = {
+  images: string[];
+};
 
-const CarouselContainer: React.FC = () => {
+const CarouselContainer = (props: Props) => {
   return (
-    <Carousel className='crousel'>
-      {
-        images.map((item)=>(<img className='crousel__image' src={item} alt=''/>))
-      }
+    <Carousel className="crousel">
+      {props.images.map((item) => (
+        <img className="crousel__image" src={item} alt="" />
+      ))}
     </Carousel>
-  )
+  );
 };
 
 export default CarouselContainer;
