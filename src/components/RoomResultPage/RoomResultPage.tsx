@@ -19,8 +19,10 @@ import { useSearchParams } from "react-router-dom";
 import {
   getRoomConfig,
   isLoading,
+  showItenaryInCardsPage,
 } from "../../redux/slice/RoomResultConfigSlice";
 import { FormattedMessage } from "react-intl";
+import Itenary from "../CheckoutPage/Itenary/Itenary";
 
 const steps = ["1. Choose Room", "2. Choose add on", "3. Checkout"];
 
@@ -40,17 +42,26 @@ const RoomResultPage: React.FC = () => {
       roomPostData.propertyId = parseInt(searchParams.get("property")!);
       reduxDispatch(setProperty(roomPostData.propertyId));
     } else if (localStorage.getItem("property") !== null) {
-      roomPostData.propertyId = parseInt(localStorage.getItem("property")!);
-      reduxDispatch(setProperty(localStorage.getItem("property")));
+      const id =
+        localStorage.getItem("property")!?.length > 1
+          ? localStorage.getItem("property")?.substring(1, 2)!
+          : localStorage.getItem("property");
+      console.log("id", id, "localStorage", localStorage.getItem("property"));
+      roomPostData.propertyId = parseInt(id!);
+      reduxDispatch(
+        setProperty(localStorage.getItem("property")?.substring(1, 2))
+      );
     }
     if (searchParams.get("room") !== null) {
       roomPostData.requiredRoomsCount = parseInt(searchParams.get("room")!);
       reduxDispatch(setRooms(searchParams.get("room")));
     } else if (localStorage.getItem("room") !== null) {
-      roomPostData.requiredRoomsCount = parseInt(
-        localStorage.getItem("room")!
-      );
-      reduxDispatch(setRooms(localStorage.getItem("room")));
+      const roomCnt =
+        localStorage.getItem("room")!.length > 1
+          ? localStorage.getItem("room")?.substring(1, 2)!
+          : localStorage.getItem("room");
+      roomPostData.requiredRoomsCount = parseInt(roomCnt!);
+      reduxDispatch(setRooms(localStorage.getItem("room")?.substring(1, 2)));
     }
     if (
       searchParams.get("start_date") !== null &&
@@ -83,6 +94,7 @@ const RoomResultPage: React.FC = () => {
     } else if (localStorage.getItem("beds") !== null) {
       reduxDispatch(setBeds(localStorage.getItem("beds")));
     }
+
     return roomPostData;
   };
 
@@ -102,7 +114,7 @@ const RoomResultPage: React.FC = () => {
         }}
       ></div>
       <div className="stepper-container">
-        <Stepper activeStep={2} alternativeLabel className="stepper">
+        <Stepper activeStep={1} alternativeLabel className="stepper">
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>

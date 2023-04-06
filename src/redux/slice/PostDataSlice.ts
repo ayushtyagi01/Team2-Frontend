@@ -15,7 +15,7 @@ export interface RoomResult {
   ratings: number;
   reviews: number;
   averageNightlyRateInDuration: number;
-  maxCapacity:number;
+  maxCapacity: number;
 }
 
 interface RoomSearchResult {
@@ -37,7 +37,7 @@ const initialState: RoomSearchResult = {
       ratings: 0,
       reviews: 0,
       averageNightlyRateInDuration: 0,
-      maxCapacity:0,
+      maxCapacity: 0,
     },
   ],
   maxContents: 0,
@@ -48,6 +48,7 @@ export const getRoomData = createAsyncThunk(
   "roomData/postData",
   async (postData: RoomPostData) => {
     if (roomDataUrl) {
+      console.log("postData", postData);
       const response = await axios
         .post(roomDataUrl, postData)
         .then((response) => response.data)

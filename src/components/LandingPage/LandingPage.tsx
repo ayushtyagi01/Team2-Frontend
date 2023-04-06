@@ -17,7 +17,7 @@ import {
   property_name,
   beds,
 } from "../../redux/slice/SearchFormSlice";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   accessibility,
   availableTypeOfGuests,
@@ -28,9 +28,12 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import { schema } from "../../util/constants/formSchema";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { setShowItenaryInCardsPageToFalse } from "../../redux/slice/RoomResultConfigSlice";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     handleSubmit,
     register,
@@ -51,16 +54,18 @@ const LandingPage = () => {
   const bed = useAppSelector(beds);
   const accessability = useAppSelector(wheelchair);
 
-   const addToLocalStorage = () => {
+  const addToLocalStorage = () => {
     localStorage.setItem("property", property.toString());
     localStorage.setItem("startDate", startDate);
     localStorage.setItem("endDate", endDate);
     localStorage.setItem("guest", JSON.stringify(guests));
-    localStorage.setItem("room",rooms.toString());
+    localStorage.setItem("room", rooms.toString());
     localStorage.setItem("wheelchair", accessability.toString());
+    localStorage.setItem("property_id", (2).toString());
   };
   const onSubmit = () => {
     addToLocalStorage();
+    console.log("property", property, property.toString());
     navigate({
       pathname: "/room-search-results",
       search: `?property=2&start_date=${startDate}&end_date=${endDate}&guest=${guests}&room=${rooms}&beds=${bed}&wheelchair=${accessability}`,
@@ -70,6 +75,11 @@ const LandingPage = () => {
   const handleWheelchair = (e: React.ChangeEvent<HTMLInputElement>) => {
     reduxDispatch(isWheelchair(e.target.checked));
   };
+
+  useEffect(() => {
+    dispatch(setShowItenaryInCardsPageToFalse());
+  });
+
   return (
     <div className="container">
       <div

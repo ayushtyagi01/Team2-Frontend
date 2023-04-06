@@ -1,0 +1,138 @@
+.container_itenary_box {
+  width: 30rem;
+
+  .itenary {
+    background-color: #eef0f0;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+
+    .header {
+      display: flex;
+      align-items: center;
+      padding-bottom: 1rem;
+
+      .header_left {
+        width: 80%;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      .remove {
+        width: 20%;
+        color: #1e7efd;
+        margin-left: 10rem;
+        cursor: pointer;
+      }
+    }
+
+    .property_name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding-bottom: 0.25rem;
+    }
+
+    .date_and_guest,
+    .room_type_name,
+    .avg_rate,
+    .room_count,
+    .promo {
+      color: gray;
+      padding-bottom: 0.25rem;
+    }
+
+    .promo-end {
+      span {
+        display: inline;
+      }
+    }
+
+    .border_line {
+      margin: 1rem 0;
+      border-bottom: 1px solid grey;
+    }
+
+    .charges {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: gray;
+      padding-bottom: 0.5rem;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      height: 3rem;
+      align-self: center;
+      border: 4px solid #26266d;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .help_box {
+    background-color: #eef0f0;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30%;
+
+    .help_text {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .phone {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .dates {
+      color: grey;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.expand {
+  width: 35rem;
+  margin-top: 0.5rem;
+}
+
+.promo-desc {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.promo-modal {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.price-modal {
+  margin: 1rem 0;
+}
+
+.charges {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.room_total {
+  margin: 1rem 0;
+}
+
+.border_line {
+  margin: 1rem 0;
+  border-bottom: 1px solid grey;
+}
+
+.tax {
+  margin: 0.5rem 0;
+}

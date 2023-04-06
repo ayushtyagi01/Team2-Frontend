@@ -11,9 +11,13 @@ import Snackbar from "@mui/material/Snackbar";
 import { FormattedMessage } from "react-intl";
 import { roomPostData } from "../../../../../util/roomPostData";
 import axios from "axios";
-import { useAppSelector } from "../../../../../redux/hooks";
-import { roomImages } from "../../../../../redux/slice/RoomResultConfigSlice";
-import { useSearchParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
+import {
+  roomImages,
+  setRoomTypeDetails,
+} from "../../../../../redux/slice/RoomResultConfigSlice";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { selectedRoomTypeDetails } from "../../../../../redux/slice/RoomResultConfigSlice";
 
 type Props = {
   result: RoomResult;
@@ -48,6 +52,8 @@ const RoomDetailsModal = (props: Props) => {
   >();
   const roomImagesHere = useAppSelector(roomImages);
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const checkInDate = searchParams.get("start_date")
     ? searchParams.get("start_date")
@@ -87,9 +93,9 @@ const RoomDetailsModal = (props: Props) => {
     (roomImage) => roomImage.roomTypeName == props.result.roomTypeName
   )[0].amnetieis;
 
-  const images = roomImagesHere.filter(
+  const { images, roomTypeName } = roomImagesHere.filter(
     (roomImage) => roomImage.roomTypeName === props.result.roomTypeName
-  )[0].images;
+  )[0];
 
   const fetchPromotions = async () => {
     try {
@@ -125,6 +131,30 @@ const RoomDetailsModal = (props: Props) => {
         couponCodeRef.current.value = "";
       }
     }
+  };
+
+  const navigateToCheckoutPage = (
+    promotionTitle: string,
+    priceFactor: number,
+    promotionDescription: string
+  ) => {
+    dispatch(
+      setRoomTypeDetails({
+        promotionTitle,
+        priceFactor,
+        roomTypeName,
+        averageNightlyRateInDuration: props.result.averageNightlyRateInDuration,
+        promotionDescription,
+      })
+    );
+    navigate("/checkout", {
+      state: {
+        promotionTitle,
+        priceFactor,
+        roomTypeName,
+        averageNightlyRateInDuration: props.result.averageNightlyRateInDuration,
+      },
+    });
   };
 
   useEffect(() => {
@@ -185,7 +215,17 @@ const RoomDetailsModal = (props: Props) => {
                 ${props.result.averageNightlyRateInDuration.toFixed(2)}
               </div>
               <div className="per-night-text">per night</div>
-              <Button variant="contained" className="button-select">
+              <Button
+                variant="contained"
+                className="button-select"
+                onClick={() =>
+                  navigateToCheckoutPage(
+                    "Standard Rate",
+                    1,
+                    "Pay the entire amount"
+                  )
+                }
+              >
                 <FormattedMessage
                   id="Searchi"
                   defaultMessage="Select Package"
@@ -214,7 +254,17 @@ const RoomDetailsModal = (props: Props) => {
                     ).toFixed(2)}
                   </div>
                   <div className="per-night-text">per night</div>
-                  <Button variant="contained" className="button-select">
+                  <Button
+                    variant="contained"
+                    className="button-select"
+                    onClick={() =>
+                      navigateToCheckoutPage(
+                        promo.promotionTitle,
+                        promo.priceFactor,
+                        promo.promotionDescription
+                      )
+                    }
+                  >
                     <FormattedMessage
                       id="Searchi"
                       defaultMessage="Select Package"
@@ -246,7 +296,17 @@ const RoomDetailsModal = (props: Props) => {
                   ).toFixed(2)}
                 </div>
                 <div className="per-night-text">per night</div>
-                <Button variant="contained" className="button-select">
+                <Button
+                  variant="contained"
+                  className="button-select"
+                  onClick={() =>
+                    navigateToCheckoutPage(
+                      customPromotions?.title,
+                      customPromotions?.priceFactor,
+                      customPromotions.description
+                    )
+                  }
+                >
                   <FormattedMessage
                     id="Searchi"
                     defaultMessage="Select Package"
