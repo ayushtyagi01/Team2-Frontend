@@ -14,6 +14,8 @@ export interface RoomResult {
   availableRoomCount: number;
   ratings: number;
   reviews: number;
+  specialOffer?: string;
+  specialOfferCode?: string;
   averageNightlyRateInDuration: number;
   maxCapacity: number;
 }
@@ -36,6 +38,8 @@ const initialState: RoomSearchResult = {
       availableRoomCount: 0,
       ratings: 0,
       reviews: 0,
+      specialOffer: "",
+      specialOfferCode: "",
       averageNightlyRateInDuration: 0,
       maxCapacity: 0,
     },
@@ -47,12 +51,14 @@ const roomDataUrl: string | undefined = process.env.REACT_APP_ROOM_DATA;
 export const getRoomData = createAsyncThunk(
   "roomData/postData",
   async (postData: RoomPostData) => {
+    console.log("postData", postData);
     if (roomDataUrl) {
       console.log("postData", postData);
       const response = await axios
         .post(roomDataUrl, postData)
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
+      console.log("response", response);
       return response;
     }
   }

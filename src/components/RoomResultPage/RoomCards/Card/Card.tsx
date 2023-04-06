@@ -17,9 +17,7 @@ import { getCurrencyLogo } from "../../../../util/GetCurrencyLogo";
 import { useEffect, useState } from "react";
 import RoomDetailsModal from "./Modal/RoomDetailsModal";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { log } from "console";
 import { roomImages } from "../../../../redux/slice/RoomResultConfigSlice";
 
 const style = {
@@ -36,14 +34,14 @@ const style = {
   mt: 0.5,
   mb: 1,
   "&::-webkit-scrollbar": {
-    width: "0.1em", // adjust as needed
-    height: "0.1em", // adjust as needed
+    width: "0.1em",
+    height: "0.1em",
     background: "transparent",
   },
   "&::-webkit-scrollbar-thumb": {
-    backgroundColor: "#888", // adjust as needed
-    borderRadius: "1em", // adjust as needed
-    border: "1px solid #888", // adjust as needed
+    backgroundColor: "#888",
+    borderRadius: "1em",
+    border: "1px solid #888",
   },
 };
 
@@ -97,6 +95,15 @@ const Card: React.FC<RoomResultProps> = (props) => {
           ? props.result.singleBedCount + " Kings Bed"
           : ""}
       </div>
+      {props.result.specialOffer && props.result.specialOfferCode && (
+        <div>
+          <div className="special_deal">Special deal</div>
+          <div className="special_deal_desc">
+            {props.result.specialOffer}-{props.result.specialOfferCode}
+          </div>
+        </div>
+      )}
+
       <div className="room-size price-div">
         {currencyLogo}{" "}
         {Math.round(props.result.averageNightlyRateInDuration * priceFactor)}
@@ -117,7 +124,10 @@ const Card: React.FC<RoomResultProps> = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <RoomDetailsModal result={props.result} />
+          <RoomDetailsModal
+            result={props.result}
+            handleCloseModal={handleClose}
+          />
         </Box>
       </Modal>
     </div>

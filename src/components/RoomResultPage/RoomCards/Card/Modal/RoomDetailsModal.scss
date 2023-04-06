@@ -1,6 +1,15 @@
 @import "../../../../../styles/variables.scss";
 
 .modal {
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    margin-top: 0.75rem;
+    cursor: pointer;
+    z-index: 100;
+    left: 98%;
+  }
   .carousel-container_in_modal {
     height: 25rem;
 

@@ -4,16 +4,14 @@ import { format } from "date-fns";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { height } from "@mui/system";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   selectedRoomTypeDetails,
   setShowItenaryInCardsPageToFalse,
 } from "../../../redux/slice/RoomResultConfigSlice";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type Props = {};
 
@@ -74,7 +72,7 @@ const Itenary = (props: Props) => {
 
     setDailyPrice(prices.data);
   };
-  const dispatch = useAppDispatch();
+  const dispatch: any = useAppDispatch();
 
   const removeCard = () => {
     dispatch(setShowItenaryInCardsPageToFalse());
@@ -213,7 +211,12 @@ const Itenary = (props: Props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <div className="close-btn">
+            <CloseOutlinedIcon onClick={() => handleClose()} />
+          </div>
+
           <div className="promo-desc">{promotionTitle}</div>
+
           <div>{promotionDescription}</div>
           <div className="promo-modal">
             <div className="promo-modal_package">Package Total</div>
@@ -231,7 +234,12 @@ const Itenary = (props: Props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <div className="close-btn">
+            <CloseOutlinedIcon onClick={() => handleClosePriceModal()} />
+          </div>
+
           <div className="">Rate Breakdown</div>
+
           <div className="room_type_name">{roomTypeName}</div>
           <div className="avg_rate price-modal">
             ${averageNightlyRateInDuration}/night

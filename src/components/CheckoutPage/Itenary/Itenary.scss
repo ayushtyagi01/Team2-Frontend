@@ -136,3 +136,10 @@
 .tax {
   margin: 0.5rem 0;
 }
+
+.close-btn {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  cursor: pointer;
+}

@@ -17,10 +17,11 @@ import {
   setRoomTypeDetails,
 } from "../../../../../redux/slice/RoomResultConfigSlice";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { selectedRoomTypeDetails } from "../../../../../redux/slice/RoomResultConfigSlice";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type Props = {
   result: RoomResult;
+  handleCloseModal: () => void;
 };
 
 type PromotionType = {
@@ -79,7 +80,6 @@ const RoomDetailsModal = (props: Props) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
@@ -163,6 +163,10 @@ const RoomDetailsModal = (props: Props) => {
 
   return (
     <div className="modal">
+      <CloseOutlinedIcon
+        className="close-btn"
+        onClick={() => props.handleCloseModal()}
+      />
       <div className="carousel-container_in_modal">
         <CarouselContainer images={images} />
       </div>
@@ -330,7 +334,6 @@ const RoomDetailsModal = (props: Props) => {
           </Button>
         </div>
       </div>
-
       {/* error coupon code snakbar */}
       <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
         <Alert
