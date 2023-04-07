@@ -21,8 +21,7 @@ import {
   isLoading,
   showItenaryInCardsPage,
 } from "../../redux/slice/RoomResultConfigSlice";
-import { FormattedMessage } from "react-intl";
-import Itenary from "../CheckoutPage/Itenary/Itenary";
+import { isValid } from "date-fns";
 
 const steps = ["1. Choose Room", "2. Choose add on", "3. Checkout"];
 
@@ -65,7 +64,9 @@ const RoomResultPage: React.FC = () => {
     }
     if (
       searchParams.get("start_date") !== null &&
-      searchParams.get("end_date") != null
+      searchParams.get("end_date") != null &&
+      isValid(searchParams.get("start_date")) &&
+      isValid(searchParams.get("end_date"))
     ) {
       roomPostData.checkInDate = searchParams.get("start_date") + "T00:00:00Z";
       roomPostData.checkOutDate = searchParams.get("end_date") + "T00:00:00Z";

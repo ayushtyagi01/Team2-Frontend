@@ -5,6 +5,7 @@ import LandingPage from "../LandingPage/LandingPage";
 import Login from "../Login/Login";
 import RoomResultPage from "../RoomResultPage/RoomResultPage";
 import ChechoutPage from "../CheckoutPage/ChechoutPage";
+import RatingComp from "../Rating/RatingComp";
 
 const Router: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Router: React.FC = () => {
         <Route path="/room-search-results" element={<RoomResultPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<ChechoutPage />} />
+        <Route path="/rate" element={<RatingComp />} />
       </Routes>
       <Footer />
     </>

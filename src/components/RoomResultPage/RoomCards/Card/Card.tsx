@@ -99,7 +99,7 @@ const Card: React.FC<RoomResultProps> = (props) => {
         <div>
           <div className="special_deal">Special deal</div>
           <div className="special_deal_desc">
-            {props.result.specialOffer}-{props.result.specialOfferCode}
+            {props.result.specialOffer} - {props.result.specialOfferCode}
           </div>
         </div>
       )}
