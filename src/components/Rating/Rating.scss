@@ -1,0 +1,23 @@
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+  flex-direction: column;
+  margin-bottom: 4vh;
+
+  h1{
+    margin-bottom: 1%;
+  }
+  .success {
+    margin-bottom: 15%;
+  }
+
+  .review {
+    margin-top: 2%;
+    padding: 0.5%;
+  }
+  .failure{
+    margin-bottom: 27%;
+  }
+}

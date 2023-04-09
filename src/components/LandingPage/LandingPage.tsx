@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, FormControlLabel } from "@mui/material";
+import { Alert, Box, Button, Checkbox, FormControlLabel } from "@mui/material";
 import GuestDropdown from "./Guests/GuestDropdown";
 import PropertyDropdown from "./PropertyDropdown/PropertyDropdown";
 import RoomDropdown from "./RoomDropdown/RoomDropdown";
@@ -17,7 +17,7 @@ import {
   property_name,
   beds,
 } from "../../redux/slice/SearchFormSlice";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   accessibility,
   availableTypeOfGuests,
@@ -28,9 +28,12 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import { schema } from "../../util/constants/formSchema";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { setShowItenaryInCardsPageToFalse } from "../../redux/slice/RoomResultConfigSlice";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     handleSubmit,
     register,
@@ -42,6 +45,7 @@ const LandingPage = () => {
   const isRoom = useAppSelector(isRooms);
   const guest = useAppSelector(availableTypeOfGuests);
   const accessable = useAppSelector(accessibility);
+  const [isRequired,setRequired]=useState<boolean>(false);
 
   const property = useAppSelector(property_name);
   const startDate = useAppSelector(start_date);
@@ -51,15 +55,20 @@ const LandingPage = () => {
   const bed = useAppSelector(beds);
   const accessability = useAppSelector(wheelchair);
 
-   const addToLocalStorage = () => {
+  const addToLocalStorage = () => {
     localStorage.setItem("property", property.toString());
     localStorage.setItem("startDate", startDate);
     localStorage.setItem("endDate", endDate);
     localStorage.setItem("guest", JSON.stringify(guests));
-    localStorage.setItem("room",rooms.toString());
+    localStorage.setItem("room", rooms.toString());
     localStorage.setItem("wheelchair", accessability.toString());
+    localStorage.setItem("property_id", (2).toString());
   };
   const onSubmit = () => {
+    if(!localStorage.getItem("startDate") || !localStorage.getItem("endDate")){
+      setRequired(true);
+      return;
+    }
     addToLocalStorage();
     navigate({
       pathname: "/room-search-results",
@@ -70,6 +79,11 @@ const LandingPage = () => {
   const handleWheelchair = (e: React.ChangeEvent<HTMLInputElement>) => {
     reduxDispatch(isWheelchair(e.target.checked));
   };
+
+  useEffect(() => {
+    dispatch(setShowItenaryInCardsPageToFalse());
+  });
+
   return (
     <div className="container">
       <div
@@ -107,6 +121,14 @@ const LandingPage = () => {
             start={"Check-in"}
             end={"Check-out"}
           />
+           {isRequired && (
+          <Alert severity="error" className="calender-alert">
+            <FormattedMessage
+              id="errorMessage"
+              defaultMessage="This field is required"
+            />
+          </Alert>
+        )}
           <div className="guest-room-container">
             {guest.length === 0 ? (
               ""

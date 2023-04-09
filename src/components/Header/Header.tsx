@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   getLandingData,
   headerLogo,
@@ -22,6 +22,7 @@ import { Auth } from "aws-amplify";
 
 const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
+  const [lang,setLanguage] = useState<string>('en');
 
   useEffect(() => {
     reduxDispatch(getLandingData());
@@ -49,6 +50,7 @@ const Header: React.FC = () => {
   */
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     reduxDispatch(changeLang(e.target.value));
+    localStorage.setItem('selectedLanguage',e.target.value);
   };
 
   /**
@@ -60,7 +62,13 @@ currency type in redux
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     reduxDispatch(selectedCurrency(e.target.value));
+    localStorage.setItem('selectedCurrency', e.target.value);
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem('selectedCurrency'))
+    setLanguage(localStorage.getItem('selectedCurrency')!)
+  },[localStorage.getItem('selectedCurrency')]);
 
   const dispatch=useAppDispatch()
   const navigate = useNavigate();
@@ -89,14 +97,14 @@ currency type in redux
 
           <LanguageIcon className="lang-icon" key="language-icon" />
 
-          <select className="header-select" onChange={handleLanguageChange}>
+          <select className="header-select" onChange={handleLanguageChange} defaultValue={localStorage.getItem('selectedLanguage')!}>
             {languages.map((language) => (
               <option
                 key={language.value}
                 value={language.value}
                 className="options"
               >
-                {language.label}
+                {language.value}
               </option>
             ))}
           </select>
