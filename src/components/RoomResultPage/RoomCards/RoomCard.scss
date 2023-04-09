@@ -2,11 +2,10 @@
 .room-card-container {
   flex-basis: 80%;
   flex-grow: 1;
-  margin-right: 2%;
   .room-header {
     display: flex;
     justify-content: space-between;
-    margin: 2% 2% 0 1.2%;
+    margin: 2% 0.5% 0 1.2%;
   }
   .room-card {
     .room-card-container {
@@ -31,10 +30,13 @@
 .pagination-btn {
   display: flex;
   justify-content: space-between;
-  margin: 2%;
+  margin: 1%;
   .btn-page {
     background-color: $primary-dark-blue-color;
     width: 100px;
+  }
+  .btn-page:hover{
+    background-color: $primary-dark-blue-color!important;
   }
 }
 .no-result-div {

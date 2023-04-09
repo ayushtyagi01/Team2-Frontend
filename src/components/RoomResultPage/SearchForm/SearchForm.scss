@@ -2,13 +2,16 @@
 
 .search-containers {
   display: flex;
-  width: 96%;
-  margin-left: 2%;
-
+  width: 100%;
   .room-submit {
     margin: 1rem;
+    margin-right: 0;
     height: fit-content;
     padding: 1.5rem 1rem;
+    background-color: $primary-dark-blue-color;
+    width: 11rem;
+  }
+  .room-submit:hover{
     background-color: $primary-dark-blue-color;
   }
 }

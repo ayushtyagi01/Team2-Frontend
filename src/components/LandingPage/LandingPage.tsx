@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, FormControlLabel } from "@mui/material";
+import { Alert, Box, Button, Checkbox, FormControlLabel } from "@mui/material";
 import GuestDropdown from "./Guests/GuestDropdown";
 import PropertyDropdown from "./PropertyDropdown/PropertyDropdown";
 import RoomDropdown from "./RoomDropdown/RoomDropdown";
@@ -28,7 +28,7 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import { schema } from "../../util/constants/formSchema";
 import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setShowItenaryInCardsPageToFalse } from "../../redux/slice/RoomResultConfigSlice";
 
 const LandingPage = () => {
@@ -45,6 +45,7 @@ const LandingPage = () => {
   const isRoom = useAppSelector(isRooms);
   const guest = useAppSelector(availableTypeOfGuests);
   const accessable = useAppSelector(accessibility);
+  const [isRequired,setRequired]=useState<boolean>(false);
 
   const property = useAppSelector(property_name);
   const startDate = useAppSelector(start_date);
@@ -64,8 +65,11 @@ const LandingPage = () => {
     localStorage.setItem("property_id", (2).toString());
   };
   const onSubmit = () => {
+    if(!localStorage.getItem("startDate") || !localStorage.getItem("endDate")){
+      setRequired(true);
+      return;
+    }
     addToLocalStorage();
-    console.log("property", property, property.toString());
     navigate({
       pathname: "/room-search-results",
       search: `?property=2&start_date=${startDate}&end_date=${endDate}&guest=${guests}&room=${rooms}&beds=${bed}&wheelchair=${accessability}`,
@@ -117,6 +121,14 @@ const LandingPage = () => {
             start={"Check-in"}
             end={"Check-out"}
           />
+           {isRequired && (
+          <Alert severity="error" className="calender-alert">
+            <FormattedMessage
+              id="errorMessage"
+              defaultMessage="This field is required"
+            />
+          </Alert>
+        )}
           <div className="guest-room-container">
             {guest.length === 0 ? (
               ""

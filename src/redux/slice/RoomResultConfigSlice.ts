@@ -30,9 +30,14 @@ interface selectedRoomTypeDetails {
   averageNightlyRateInDuration: number;
   promotionDescription: string;
 }
+interface Taxes{
+  name:string;
+  factor:number;
+}
 
 interface HotelData {
   sortType: SortType[];
+  taxes:Taxes[]
   filterTypes: FilterType[];
   roomImages: RoomImage[];
   selectedRoomTypeDetails: selectedRoomTypeDetails;
@@ -47,6 +52,12 @@ const initialState: HotelData = {
       value: "",
       sortOrder: "ASC",
     },
+  ],
+  taxes:[
+    {
+      name:"",
+      factor:0
+    }
   ],
   filterTypes: [
     {
@@ -84,6 +95,7 @@ export const getRoomConfig = createAsyncThunk(
         .get(roomResultsConfig)
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
+        localStorage.setItem('taxes',JSON.stringify(response.taxes));
       return response;
     }
   }
@@ -100,6 +112,9 @@ export const roomResultConfigSlice = createSlice({
     },
     setShowItenaryInCardsPageToFalse: (state) => {
       state.showItenaryInCardsPage = false;
+    },
+    setShowItenaryInCardsPage: (state,action) => {
+      state.showItenaryInCardsPage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -119,6 +134,7 @@ export const {
   setRoomTypeDetails,
   setShowItenaryInCardsPageToTrue,
   setShowItenaryInCardsPageToFalse,
+  setShowItenaryInCardsPage
 } = roomResultConfigSlice.actions;
 
 export const sortType = (state: RootState) => state.roomConfig.sortType;

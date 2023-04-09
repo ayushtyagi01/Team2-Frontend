@@ -22,17 +22,17 @@ import { roomImages } from "../../../../redux/slice/RoomResultConfigSlice";
 
 const style = {
   position: "absolute" as "absolute",
-  top: "50%",
+  top: "49.68%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 1700,
-  height: 820,
+  width: 1730,
+  height: 810,
   overflow: "scroll",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   mt: 0.5,
-  mb: 1,
+  mb: 0,
   "&::-webkit-scrollbar": {
     width: "0.1em",
     height: "0.1em",
@@ -67,21 +67,22 @@ const Card: React.FC<RoomResultProps> = (props) => {
   return (
     <div className="cards">
       <div className="carousel-container">
-        <Carousel images={images} />
+        <Carousel images={images} /> 
       </div>
       <div className="room-name-heading">
         <div className="room-name">{props.result.roomTypeName}</div>
         <div className="property-rating">
           <GradeIcon className="rating-icon" />
-          {props.result.ratings}
+          {props.result.ratings.toFixed(1)}<br/>
         </div>
       </div>
+      <div className="rating-count">{props.result.ratingCount} reviews</div>
       <div className="logo-div">
         <LocationOnIcon className="location-icon" /> Near City Center
       </div>
       <div className="logo-div room-size">
         <div className="room-type">Inclusive</div>
-        <div>{props.result.areaInSqFeet}</div>
+        <div>{props.result.areaInSqFeet} ft</div>
       </div>
       <div className="logo-div">
         <PermIdentityIcon /> 1-{props.result.maxCapacity}

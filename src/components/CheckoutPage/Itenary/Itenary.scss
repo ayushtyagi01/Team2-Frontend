@@ -21,7 +21,7 @@
       .remove {
         width: 20%;
         color: #1e7efd;
-        margin-left: 10rem;
+        // margin-left: 10rem;
         cursor: pointer;
       }
     }
@@ -99,8 +99,12 @@
 }
 
 .expand {
-  width: 35rem;
+  width: 32rem;
   margin-top: 0.5rem;
+}
+
+.on-req-page{
+  //font-size: 0.1rem;
 }
 
 .promo-desc {

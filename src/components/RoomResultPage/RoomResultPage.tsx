@@ -115,7 +115,7 @@ const RoomResultPage: React.FC = () => {
         }}
       ></div>
       <div className="stepper-container">
-        <Stepper activeStep={1} alternativeLabel className="stepper">
+        <Stepper activeStep={0} alternativeLabel className="stepper">
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>

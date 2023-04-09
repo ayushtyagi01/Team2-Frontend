@@ -61,7 +61,7 @@ const SearchForm: React.FC = () => {
           errors={errors}
           isInside={true}
           margin={3}
-          width={"30%"}
+          width={"32%"}
           top={1.5}
           start={"Any Date"} end={"Any Date"}
         />

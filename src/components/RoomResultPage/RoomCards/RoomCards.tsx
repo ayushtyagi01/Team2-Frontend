@@ -21,6 +21,7 @@ const RoomCards: React.FC = () => {
   const loader = useAppSelector(isLoading);
   const reduxDispatch = useAppDispatch();
   const showItenaryInCardsPageHere = useAppSelector(showItenaryInCardsPage);
+  const [showItenaryInCardspage,setshowItenaryInCardspageHere]=useState(false);
 
   const [isNext, setNext] = useState(false);
   const [isPrevious, setPrevious] = useState(false);
@@ -48,6 +49,17 @@ const RoomCards: React.FC = () => {
     roomPostData.pageNumber === 1 ? setPrevious(true) : setPrevious(false);
     reduxDispatch(getRoomData(roomPostData));
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem('showItenary'))
+      setshowItenaryInCardspageHere(true);
+  },[]);
+
+  useEffect(()=>{
+    console.log("ggggg",localStorage.getItem('showItenary'))
+    localStorage.getItem('showItenary')?setshowItenaryInCardspageHere(true):setshowItenaryInCardspageHere(false);
+  },[showItenaryInCardsPageHere]);
+
   return (
     <div className="room-card-container">
       <div className="room-header">
@@ -73,7 +85,7 @@ const RoomCards: React.FC = () => {
             <div className="no-result-div">No result found</div>
           )}
         </div>
-        {showItenaryInCardsPageHere && <Itenary />}{" "}
+        {showItenaryInCardspage && <Itenary />}{" "}
       </div>
       <div className="pagination-btn">
         <Button
