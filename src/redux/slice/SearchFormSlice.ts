@@ -4,21 +4,21 @@ import { RootState } from "../store";
 
 export interface ISearchForm {
   property_name: number;
-  start_date: string,
+  start_date: string;
   end_date: string;
   guests: number[];
   noOfRooms: number;
-  beds:number;
+  beds: number;
   wheelchair: boolean;
 }
 
 const initialState: ISearchForm = {
   property_name: 2,
   start_date: new Date().toISOString(),
-  end_date: addDays(new Date(),2).toISOString(),
-  guests: [1,0],
+  end_date: addDays(new Date(), 2).toISOString(),
+  guests: [1, 0],
   noOfRooms: 1,
-  beds:1,
+  beds: 1,
   wheelchair: false,
 };
 
@@ -35,7 +35,7 @@ export const SearchFormSlice = createSlice({
     setEndDate: (state, action) => {
       state.end_date = action.payload;
     },
-    setfillGuest:(state,action)=>{
+    setfillGuest: (state, action) => {
       state.guests = action.payload;
     },
     setGuests: (state, action) => {
@@ -71,7 +71,7 @@ export const {
   setStartDate,
   setEndDate,
   setfillGuest,
-  setBeds
+  setBeds,
 } = SearchFormSlice.actions;
 
 export default SearchFormSlice.reducer;

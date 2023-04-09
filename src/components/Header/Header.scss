@@ -5,7 +5,8 @@
   height: 84px;
   top: 0;
   width: 100%;
-  z-index:101;
+  z-index: 101;
+
   webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
@@ -14,6 +15,7 @@
     display: flex;
     justify-content: space-between;
     padding: 1% 2%;
+    margin-left: 1%;
     .header-title {
       display: flex;
       flex-basis: 50%;
@@ -32,7 +34,8 @@
     }
     .convertor-div {
       display: flex;
-      flex-basis: 40%;
+      flex-basis: 41%;
+      margin-left: 14%;
       .booking {
         margin-right: 5rem;
         width: 10rem;
@@ -63,6 +66,7 @@
         padding: 0 2rem;
         border-radius: 5px;
         font-size: 0.8rem;
+        width: 7rem;
       }
     }
   }

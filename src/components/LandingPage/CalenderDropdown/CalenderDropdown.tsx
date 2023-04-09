@@ -63,11 +63,6 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
     navigate("/");
   }
   
-  // useEffect(() => {
-  //   startdate = startDate;
-  //   enddate = endDate;
-  //   setshowDate(1);
-  // },[startDate,endDate])
   return (
     <>
       <FormControl sx={{ m: props.margin, width: props.width, mt: props.top }}>
@@ -102,14 +97,14 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
                   {props.isInside ? <div>Check-in</div> : ""}
                   {props.isInside ? (
                     <b>
-                      {!showDate ? (
+                      {!localStorage.getItem('startDate') ? (
                         <div>{props.start}</div>
                       ) : (
                         <div>{startdate}</div>
                       )}
                     </b>
                   ) : (
-                    <div>{!showDate ? props.start : startdate}</div>
+                    <div>{!localStorage.getItem('startDate') ? props.start : startdate}</div>
                   )}
                 </div>
                 <ArrowForwardIcon />
@@ -117,14 +112,14 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
                   {props.isInside ? <div>Check-out</div> : ""}
                   {props.isInside ? (
                     <b>
-                      {!showDate ? (
+                      {!localStorage.getItem('endDate') ? (
                         <div>{props.end}</div>
                       ) : (
                         <div>{enddate}</div>
                       )}
                     </b>
                   ) : (
-                    <div>{!showDate ? props.end : enddate}</div>
+                    <div>{!localStorage.getItem('endDate') ? props.end : enddate}</div>
                   )}
                 </div>
                 <CalendarMonthIcon />

@@ -28,29 +28,34 @@ const RoomDropdown: React.FC<title> = (props) => {
   const guestsCounts = useAppSelector(guestsCount);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [count,setCount] = useState<number[]>([1,0]);
+  const [count, setCount] = useState<number[]>([1, 0]);
   let guestArray = [];
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if(searchParams.get('guest')!==null){
-      let res = searchParams.get('guest')!.split(',').map(el => {
-        return Number(el);
-      });
+    if (searchParams.get("guest") !== null) {
+      let res = searchParams
+        .get("guest")!
+        .split(",")
+        .map((el) => {
+          return Number(el);
+        });
       setCount(res);
-    }
-    else if(location.pathname!=='/' && localStorage.getItem('room')!==null){
-      setCount(JSON.parse(localStorage.getItem('guest')!));
-    }
-    else if(location.pathname==='/room-search-results'){
+    } else if (
+      location.pathname !== "/" &&
+      localStorage.getItem("room") !== null
+    ) {
+      setCount(JSON.parse(localStorage.getItem("guest")!));
+    } else if (location.pathname === "/room-search-results") {
       navigate("/");
-    }
-    else if(location.pathname==='/'){
+    } else if (location.pathname === "/") {
       setCount(guestsCounts);
     }
-  },[guestsCounts])
-
+  }, []);
+  useEffect(() => {
+    setCount(guestsCounts);
+  }, [guestsCounts]);
 
   return (
     <>
@@ -60,7 +65,13 @@ const RoomDropdown: React.FC<title> = (props) => {
           renderValue={() => {
             return (
               <div>
-                {props.isInside ? <Box><FormattedMessage id="Guests" defaultMessage="Guests" /></Box> : ""}
+                {props.isInside ? (
+                  <Box>
+                    <FormattedMessage id="Guests" defaultMessage="Guests" />
+                  </Box>
+                ) : (
+                  ""
+                )}
                 <b>
                   {count[0]} Adult {count[1]} Child
                 </b>

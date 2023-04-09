@@ -23,10 +23,25 @@ interface RoomImage {
   amnetieis: string[];
 }
 
+interface selectedRoomTypeDetails {
+  promotionTitle: string;
+  priceFactor: number;
+  roomTypeName: string;
+  averageNightlyRateInDuration: number;
+  promotionDescription: string;
+}
+interface Taxes{
+  name:string;
+  factor:number;
+}
+
 interface HotelData {
   sortType: SortType[];
+  taxes:Taxes[]
   filterTypes: FilterType[];
   roomImages: RoomImage[];
+  selectedRoomTypeDetails: selectedRoomTypeDetails;
+  showItenaryInCardsPage: boolean;
   isLoading: boolean;
 }
 
@@ -37,6 +52,12 @@ const initialState: HotelData = {
       value: "",
       sortOrder: "ASC",
     },
+  ],
+  taxes:[
+    {
+      name:"",
+      factor:0
+    }
   ],
   filterTypes: [
     {
@@ -55,6 +76,14 @@ const initialState: HotelData = {
       amnetieis: [],
     },
   ],
+  selectedRoomTypeDetails: {
+    promotionTitle: "",
+    priceFactor: 0,
+    roomTypeName: "",
+    averageNightlyRateInDuration: 0,
+    promotionDescription: "",
+  },
+  showItenaryInCardsPage: false,
   isLoading: false,
 };
 const roomResultsConfig: string | undefined = process.env.REACT_APP_ROOM_CONFIG;
@@ -66,6 +95,7 @@ export const getRoomConfig = createAsyncThunk(
         .get(roomResultsConfig)
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
+        localStorage.setItem('taxes',JSON.stringify(response.taxes));
       return response;
     }
   }
@@ -73,7 +103,20 @@ export const getRoomConfig = createAsyncThunk(
 export const roomResultConfigSlice = createSlice({
   name: "roomResultConfig",
   initialState,
-  reducers: {},
+  reducers: {
+    setRoomTypeDetails: (state, action) => {
+      state.selectedRoomTypeDetails = action.payload;
+    },
+    setShowItenaryInCardsPageToTrue: (state) => {
+      state.showItenaryInCardsPage = true;
+    },
+    setShowItenaryInCardsPageToFalse: (state) => {
+      state.showItenaryInCardsPage = false;
+    },
+    setShowItenaryInCardsPage: (state,action) => {
+      state.showItenaryInCardsPage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getRoomConfig.fulfilled, (state, action) => {
       state.sortType = action.payload.sortType;
@@ -87,9 +130,20 @@ export const roomResultConfigSlice = createSlice({
   },
 });
 
+export const {
+  setRoomTypeDetails,
+  setShowItenaryInCardsPageToTrue,
+  setShowItenaryInCardsPageToFalse,
+  setShowItenaryInCardsPage
+} = roomResultConfigSlice.actions;
+
 export const sortType = (state: RootState) => state.roomConfig.sortType;
 export const filterTypes = (state: RootState) => state.roomConfig.filterTypes;
 export const roomImages = (state: RootState) => state.roomConfig.roomImages;
+export const selectedRoomTypeDetails = (state: RootState) =>
+  state.roomConfig.selectedRoomTypeDetails;
+export const showItenaryInCardsPage = (state: RootState) =>
+  state.roomConfig.showItenaryInCardsPage;
 export const isLoading = (state: RootState) => state.roomConfig.isLoading;
 
 export default roomResultConfigSlice.reducer;

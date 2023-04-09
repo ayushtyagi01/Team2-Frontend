@@ -1,36 +1,45 @@
-@import '../../../styles/variables.scss';
+@import "../../../styles/variables.scss";
 .room-card-container {
   flex-basis: 80%;
+  flex-grow: 1;
   .room-header {
     display: flex;
     justify-content: space-between;
-    margin: 2% 2% 0 1.2%;
+    margin: 2% 0.5% 0 1.2%;
   }
   .room-card {
+    .room-card-container {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+    }
     display: flex;
-    width: 100%;
   }
-  .room-results{
+  .room-results {
     flex-basis: 83%;
   }
-  .sort-heading{
+  .sort-heading {
     flex-basis: 25%;
     display: flex;
-    .page-heading{
-      padding-right:7%;
+    .page-heading {
+      padding-right: 7%;
+      width: 13rem;
     }
   }
 }
-.pagination-btn{
+.pagination-btn {
   display: flex;
   justify-content: space-between;
-  margin: 2%;
-  .btn-page{
+  margin: 1%;
+  .btn-page {
     background-color: $primary-dark-blue-color;
-    width:100px;
+    width: 100px;
+  }
+  .btn-page:hover{
+    background-color: $primary-dark-blue-color!important;
   }
 }
-.no-result-div{
+.no-result-div {
   font-size: 3rem;
   text-align: center;
   padding: 5%;

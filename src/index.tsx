@@ -18,13 +18,15 @@ const root = createRoot(container);
 Amplify.configure(config);
 
 root.render(
-  <AmplifyProvider>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </AmplifyProvider>
+  <React.StrictMode>
+    <AmplifyProvider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </AmplifyProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

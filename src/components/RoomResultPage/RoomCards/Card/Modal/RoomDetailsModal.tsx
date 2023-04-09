@@ -11,12 +11,20 @@ import Snackbar from "@mui/material/Snackbar";
 import { FormattedMessage } from "react-intl";
 import { roomPostData } from "../../../../../util/roomPostData";
 import axios from "axios";
-import { useAppSelector } from "../../../../../redux/hooks";
-import { roomImages } from "../../../../../redux/slice/RoomResultConfigSlice";
-import { useSearchParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
+import {
+  roomImages,
+  setRoomTypeDetails,
+  setShowItenaryInCardsPageToTrue,
+} from "../../../../../redux/slice/RoomResultConfigSlice";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import { selectedcurrency, selectedFactor } from "../../../../../redux/slice/InternationalisationSlice";
+import { getCurrencyLogo } from "../../../../../util/GetCurrencyLogo";
 
 type Props = {
   result: RoomResult;
+  handleCloseModal: () => void;
 };
 
 type PromotionType = {
@@ -48,6 +56,8 @@ const RoomDetailsModal = (props: Props) => {
   >();
   const roomImagesHere = useAppSelector(roomImages);
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const checkInDate = searchParams.get("start_date")
     ? searchParams.get("start_date")
@@ -62,6 +72,13 @@ const RoomDetailsModal = (props: Props) => {
 
   const [open, setOpen] = useState(false);
 
+  const pricefactor = useAppSelector(selectedFactor);
+  const currency = useAppSelector(selectedcurrency);
+  const [currencyLogo, setCurrencyLogo] = useState<string>("$");
+  useEffect(() => {
+    setCurrencyLogo(getCurrencyLogo(currency));
+  }, [pricefactor]);
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -73,23 +90,22 @@ const RoomDetailsModal = (props: Props) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
-  const description = roomImagesHere.map((roomImageData) => {
-    if (roomImageData.roomTypeName == props.result.roomTypeName) {
+  const description:any = roomImagesHere.map((roomImageData) => {
+    if (roomImageData.roomTypeName === props.result.roomTypeName) {
       return roomImageData.description;
     }
   });
 
   const amnetieis = roomImagesHere.filter(
-    (roomImage) => roomImage.roomTypeName == props.result.roomTypeName
+    (roomImage) => roomImage.roomTypeName === props.result.roomTypeName
   )[0].amnetieis;
 
-  const images = roomImagesHere.filter(
+  const { images, roomTypeName } = roomImagesHere.filter(
     (roomImage) => roomImage.roomTypeName === props.result.roomTypeName
-  )[0].images;
+  )[0];
 
   const fetchPromotions = async () => {
     try {
@@ -101,7 +117,6 @@ const RoomDetailsModal = (props: Props) => {
           duration,
         }
       );
-
       setPromotions(applicablePromotions.data);
     } catch (e) {
       console.log(e);
@@ -115,9 +130,13 @@ const RoomDetailsModal = (props: Props) => {
         {
           couponCode: couponCodeRef.current?.value,
           duration,
+          roomType: props.result.roomTypeName,
         }
       );
-
+      if (typeof applicablePromotions.data === "string") {
+        handleClick();
+        return;
+      }
       setCustomPromotions(applicablePromotions.data);
     } catch (e) {
       handleClick();
@@ -127,12 +146,50 @@ const RoomDetailsModal = (props: Props) => {
     }
   };
 
+  const navigateToCheckoutPage = (
+    promotionTitle: string,
+    priceFactor: number,
+    promotionDescription: string
+  ) => {
+    dispatch(
+      setRoomTypeDetails({
+        promotionTitle,
+        priceFactor,
+        roomTypeName,
+        averageNightlyRateInDuration: props.result.averageNightlyRateInDuration,
+        promotionDescription,
+      })
+    );
+    dispatch(setShowItenaryInCardsPageToTrue());
+    localStorage.setItem("roomTypeName", roomTypeName);
+    localStorage.setItem("showItenary", "true");
+    localStorage.setItem(
+      "averageNightlyRateInDuration",
+      props.result.averageNightlyRateInDuration.toString()
+    );
+    localStorage.setItem("priceFactor", priceFactor.toString());
+    localStorage.setItem("promotionTitle", promotionTitle);
+    navigate("/checkout", {
+      state: {
+        promotionTitle,
+        priceFactor,
+        roomTypeName,
+        averageNightlyRateInDuration: props.result.averageNightlyRateInDuration,
+      },
+    });
+  };
+
   useEffect(() => {
     fetchPromotions();
   }, []);
+  console.log("hello",description)
 
   return (
     <div className="modal">
+      <CloseOutlinedIcon
+        className="close-btn"
+        onClick={() => props.handleCloseModal()}
+      />
       <div className="carousel-container_in_modal">
         <CarouselContainer images={images} />
       </div>
@@ -156,7 +213,9 @@ const RoomDetailsModal = (props: Props) => {
               <div className="area">{props.result.areaInSqFeet} ft</div>
             </div>
           </div>
-          <div className="upper-left-details_desc">{description}</div>
+          <div className="upper-left-details_desc">
+              <FormattedMessage id={description} defaultMessage={description} />
+          </div>
         </div>
         <div className="upper-right-details">
           <div className="amneties_header">Amenities</div>
@@ -165,7 +224,7 @@ const RoomDetailsModal = (props: Props) => {
               return (
                 <div className="amienity">
                   <CheckCircleOutlineOutlinedIcon className="check-icon" />{" "}
-                  {amienity}
+                  <FormattedMessage id={amienity} defaultMessage={amienity} />
                 </div>
               );
             })}
@@ -174,20 +233,30 @@ const RoomDetailsModal = (props: Props) => {
       </div>
       <div className="packages">
         <div className="standard">
-          <div className="package-type">Standard Package</div>
+          <div className="package-type"><FormattedMessage id="Standard Package" defaultMessage="Standard Package" /></div>
           <div className="package">
             <div className="package-left">
-              <div className="title">Standard Rate</div>
-              <div className="desc">{description}</div>
+              <div className="title"><FormattedMessage id="Standard Rate" defaultMessage="Standard Rate" /></div>
+              <div className="desc"><FormattedMessage id={description} defaultMessage={description} /></div>
             </div>
             <div className="package-right">
               <div className="price">
-                ${props.result.averageNightlyRateInDuration.toFixed(2)}
+                {currencyLogo}{(props.result.averageNightlyRateInDuration*pricefactor).toFixed(2)}
               </div>
               <div className="per-night-text">per night</div>
-              <Button variant="contained" className="button-select">
+              <Button
+                variant="contained"
+                className="button-select"
+                onClick={() =>
+                  navigateToCheckoutPage(
+                    "Standard Rate",
+                    1,
+                    "Pay the entire amount"
+                  )
+                }
+              >
                 <FormattedMessage
-                  id="Searchi"
+                  id="Select Package"
                   defaultMessage="Select Package"
                 />
               </Button>
@@ -207,14 +276,24 @@ const RoomDetailsModal = (props: Props) => {
                 </div>
                 <div className="package-right">
                   <div className="price">
-                    $
+                    {currencyLogo}
                     {(
                       props.result.averageNightlyRateInDuration *
-                      promo.priceFactor
+                      promo.priceFactor * pricefactor
                     ).toFixed(2)}
                   </div>
                   <div className="per-night-text">per night</div>
-                  <Button variant="contained" className="button-select">
+                  <Button
+                    variant="contained"
+                    className="button-select"
+                    onClick={() =>
+                      navigateToCheckoutPage(
+                        promo.promotionTitle,
+                        promo.priceFactor,
+                        promo.promotionDescription
+                      )
+                    }
+                  >
                     <FormattedMessage
                       id="Searchi"
                       defaultMessage="Select Package"
@@ -239,14 +318,24 @@ const RoomDetailsModal = (props: Props) => {
               </div>
               <div className="package-right">
                 <div className="price">
-                  $
+                  {currencyLogo}
                   {(
-                    props.result.averageNightlyRateInDuration *
-                    customPromotions?.priceFactor
+                    props.result.averageNightlyRateInDuration * pricefactor*
+                    customPromotions?.priceFactor 
                   ).toFixed(2)}
                 </div>
                 <div className="per-night-text">per night</div>
-                <Button variant="contained" className="button-select">
+                <Button
+                  variant="contained"
+                  className="button-select"
+                  onClick={() =>
+                    navigateToCheckoutPage(
+                      customPromotions?.title,
+                      customPromotions?.priceFactor,
+                      customPromotions.description
+                    )
+                  }
+                >
                   <FormattedMessage
                     id="Searchi"
                     defaultMessage="Select Package"
@@ -270,16 +359,15 @@ const RoomDetailsModal = (props: Props) => {
           </Button>
         </div>
       </div>
-
       {/* error coupon code snakbar */}
-      <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={1000} onClose={handleClose} className="snackbar">
         <Alert
           onClose={handleClose}
           severity="error"
           sx={{
             width: "100%",
             position: "relative",
-            bottom: customPromotions ? -820 : -620,
+            bottom: customPromotions ? -1100 : -1000,
             zIndex: 100,
             left: 1400,
           }}

@@ -14,8 +14,11 @@ export interface RoomResult {
   availableRoomCount: number;
   ratings: number;
   reviews: number;
+  specialOffer?: string;
+  specialOfferCode?: string;
   averageNightlyRateInDuration: number;
-  maxCapacity:number;
+  maxCapacity: number;
+  ratingCount:number;
 }
 
 interface RoomSearchResult {
@@ -36,8 +39,11 @@ const initialState: RoomSearchResult = {
       availableRoomCount: 0,
       ratings: 0,
       reviews: 0,
+      specialOffer: "",
+      specialOfferCode: "",
       averageNightlyRateInDuration: 0,
-      maxCapacity:0,
+      maxCapacity: 0,
+      ratingCount:0,
     },
   ],
   maxContents: 0,
