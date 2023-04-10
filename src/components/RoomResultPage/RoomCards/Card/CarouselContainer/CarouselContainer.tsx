@@ -1,6 +1,5 @@
 import Carousel from "react-material-ui-carousel";
 import "./CarouselContainer.scss";
-// import { images } from "../../../../../util/constants/roomImages";
 
 type Props = {
   images: string[];
