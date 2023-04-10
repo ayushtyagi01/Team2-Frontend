@@ -182,7 +182,6 @@ const RoomDetailsModal = (props: Props) => {
   useEffect(() => {
     fetchPromotions();
   }, []);
-  console.log("hello",description)
 
   return (
     <div className="modal">
@@ -214,7 +213,8 @@ const RoomDetailsModal = (props: Props) => {
             </div>
           </div>
           <div className="upper-left-details_desc">
-              <FormattedMessage id={description} defaultMessage={description} />
+              {/* <FormattedMessage id={description} defaultMessage={description} /> */}
+              {description}
           </div>
         </div>
         <div className="upper-right-details">
@@ -224,7 +224,8 @@ const RoomDetailsModal = (props: Props) => {
               return (
                 <div className="amienity">
                   <CheckCircleOutlineOutlinedIcon className="check-icon" />{" "}
-                  <FormattedMessage id={amienity} defaultMessage={amienity} />
+                  {/* <FormattedMessage id={amienity} defaultMessage={amienity} /> */}
+                  {amienity}
                 </div>
               );
             })}
@@ -237,7 +238,10 @@ const RoomDetailsModal = (props: Props) => {
           <div className="package">
             <div className="package-left">
               <div className="title"><FormattedMessage id="Standard Rate" defaultMessage="Standard Rate" /></div>
-              <div className="desc"><FormattedMessage id={description} defaultMessage={description} /></div>
+              <div className="desc">
+                {/* <FormattedMessage id={description} defaultMessage={description} /> */}
+                {description}
+                </div>
             </div>
             <div className="package-right">
               <div className="price">
