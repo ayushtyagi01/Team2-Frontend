@@ -101,6 +101,7 @@ const Itenary = (props: Props) => {
     localStorage.removeItem("showItenary");
     dispatch(setShowItenaryInCardsPageToFalse());
     dispatch(setShowItenaryInCardsPage(false));
+    // window.history.replaceState(null, null, "/");
     {
       pathname === "/checkout" && navigate("/");
     }
