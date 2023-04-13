@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { setShowItenaryInCardsPageToTrue } from "../../redux/slice/RoomResultConfigSlice";
 import axios from "axios";
+import CheckoutForm from "./CheckoutForm/CheckoutForm";
 
 type Props = {};
 const steps = ["1. Choose Room", "2. Choose add on", "3. Checkout"];
@@ -53,7 +54,9 @@ const ChechoutPage = (props: Props) => {
       </div>
 
       <div className="main-container">
-        <div className="checkout-form"></div>
+        <div className="checkout-form">
+          <CheckoutForm />
+        </div>
         <div className="itenary_box">
           <Itenary />
           <input type="email" className="email_input" ref={userEmailRef} />

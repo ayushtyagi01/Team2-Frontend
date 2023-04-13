@@ -115,7 +115,7 @@ const LandingPage = () => {
             register={register}
             errors={errors}
             isInside={false}
-            margin={2}
+            margin={3}
             width={"90%"}
             top={-1.5}
             start={"Check-in"}
