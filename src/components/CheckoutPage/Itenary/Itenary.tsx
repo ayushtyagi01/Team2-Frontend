@@ -35,7 +35,6 @@ const Itenary = (props: Props) => {
     promotionTitle,
     priceFactor,
     roomTypeName,
-    averageNightlyRateInDuration,
     promotionDescription,
   } = useAppSelector(selectedRoomTypeDetails);
 
@@ -84,6 +83,12 @@ const Itenary = (props: Props) => {
   };
 
   const fetchDailyPrice = async () => {
+    console.log({
+      endDate: checkOutDate,
+      propertyId: propertyName,
+      roomTypeName: localStorage.getItem("roomTypeName"),
+      startDate: checkInDate,
+    })
     const prices = await axios.post(process.env.REACT_APP_ALL_PRICE_API!, {
       endDate: checkOutDate,
       propertyId: propertyName,

@@ -42,7 +42,6 @@ export const getCheckoutData = createAsyncThunk(
         .get(checkoutConfigUrl)
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
-        console.log("response",response);
       return response;
     }
   }

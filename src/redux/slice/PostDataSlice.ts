@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RoomPostData } from "../../util/roomPostData";
 import { RootState } from "../store";
-import { ISearchForm } from "./SearchFormSlice";
 
 export interface RoomResult {
   roomTypeId: number;
@@ -54,12 +53,10 @@ export const getRoomData = createAsyncThunk(
   "roomData/postData",
   async (postData: RoomPostData) => {
     if (roomDataUrl) {
-      console.log("data",postData);
       const response = await axios
         .post(roomDataUrl, postData)
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
-        console.log("response", response);
       return response;
     }
   }
