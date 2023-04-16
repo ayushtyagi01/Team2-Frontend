@@ -5,6 +5,8 @@ import searchFormReducer from "./slice/SearchFormSlice";
 import userSliceReducer  from "./slice/UserSlice";
 import roomDataReducer from "./slice/PostDataSlice";
 import RoomResultConfigSliceReducer from "./slice/RoomResultConfigSlice";
+import checkoutReducer from "./slice/CheckoutConfigSlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +16,7 @@ export const store = configureStore({
     user:userSliceReducer,
     roomData: roomDataReducer,
     roomConfig:RoomResultConfigSliceReducer,
+    checkoutConfig:checkoutReducer,
   },
 });
 
