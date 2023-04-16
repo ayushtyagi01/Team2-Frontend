@@ -106,7 +106,7 @@ const Card: React.FC<RoomResultProps> = (props) => {
       )}
 
       <div className="room-size price-div">
-        {currencyLogo}{" "}
+        {currencyLogo}
         {Math.round(props.result.averageNightlyRateInDuration * priceFactor)}
       </div>
       <div className="per-night-div">per night</div>

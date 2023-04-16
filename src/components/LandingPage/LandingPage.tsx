@@ -83,6 +83,9 @@ const LandingPage = () => {
   useEffect(() => {
     dispatch(setShowItenaryInCardsPageToFalse());
   });
+  useEffect(()=>{
+    localStorage.clear();
+  },[]);
 
   return (
     <div className="container">

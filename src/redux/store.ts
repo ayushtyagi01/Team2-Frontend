@@ -6,6 +6,8 @@ import userSliceReducer  from "./slice/UserSlice";
 import roomDataReducer from "./slice/PostDataSlice";
 import RoomResultConfigSliceReducer from "./slice/RoomResultConfigSlice";
 import checkoutReducer from "./slice/CheckoutConfigSlice";
+import bookingConfirmationReducer from "./slice/BookingConfirmationSlice";
+import bookingStatusReducer from "./slice/CheckoutDataSlice";
 
 
 export const store = configureStore({
@@ -17,6 +19,8 @@ export const store = configureStore({
     roomData: roomDataReducer,
     roomConfig:RoomResultConfigSliceReducer,
     checkoutConfig:checkoutReducer,
+    bookingData:bookingConfirmationReducer,
+    bookingStatus:bookingStatusReducer
   },
 });
 

@@ -34,6 +34,9 @@
   "Hair Dryer":"Sèche-cheveux",
   "Standard Package":"Forfait standard",
   "Standard Rate":"Taux standard",
-  "Select Package":"Sélectionez foait"
+  "Select Package":"Sélectionez foait",
+  "11. Traveler Info":"1. Informations voyageurs",
+  "12. Billing Info":"2. Informations de facturation",
+  "13. Payment Info":"3. Informations de paiement"
 
 }
