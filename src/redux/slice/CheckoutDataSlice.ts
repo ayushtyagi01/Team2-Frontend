@@ -31,7 +31,6 @@ export const postCheckoutData = createAsyncThunk(
         console.log("response", response);
         let count=0;
         while(count<50){
-          console.log("inside");
           const status = await axios.post(process.env.REACT_APP_BOOKING_STATUS!,{
             bookingId:response,
           }).then((status) => {
@@ -40,7 +39,6 @@ export const postCheckoutData = createAsyncThunk(
           .catch((error) => console.error(error.message));
           count++;
           if(status.status!=='PENDING'){
-            console.log(status)
             return status;
           }
         }
@@ -61,6 +59,7 @@ export const CheckoutDataSlice = createSlice({
       state.isLoading = 1;
     });
     builder.addCase(postCheckoutData.rejected, (state, action) => {
+      state.bookingStatus.status="FAILED";
       state.isLoading = 0;
     });
   },

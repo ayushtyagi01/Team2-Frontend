@@ -11,7 +11,7 @@ interface Booking {
   promoTitle: string;
   promoDescription: string;
   nightlyRates: string;
-  priceFactor:string;
+  priceFactor: string;
   isCancelled: number;
   guestEntity: {
     id: number;
@@ -45,61 +45,67 @@ interface Booking {
 interface booking {
   bookingData: Booking;
   isLoading: boolean;
+  isError: boolean;
 }
 
 const initialState: booking = {
   bookingData: {
-      bookingId: "",
-      roomType: "",
-      guests: "",
-      checkInDate: "",
-      checkOutDate: "",
-      promoTitle: "",
-      promoDescription: "",
-      priceFactor:"",
-      nightlyRates: "0",
-      isCancelled: 0,
-      guestEntity: {
-        id: 0,
-        firstName: "",
-        lastName: "",
-        phone: "",
-        emailID: "",
-        sendPromoMail: 0
-      },
-      billingEntity: {
-        id: 0,
-        firstName: "",
-        lastName: "",
-        mailingAddress1: "",
-        mailingAddress2: "",
-        country: "",
-        city: "",
-        state: "",
-        zip: "",
-        phone: "",
-        emailID: ""
-      },
-      paymentInfoEntity: {
-        id: 0,
-        cardName: "",
-        expiryMonth: "",
-        expiryYear: ""
-      }
+    bookingId: "",
+    roomType: "",
+    guests: "",
+    checkInDate: "",
+    checkOutDate: "",
+    promoTitle: "",
+    promoDescription: "",
+    priceFactor: "",
+    nightlyRates: "0",
+    isCancelled: 0,
+    guestEntity: {
+      id: 0,
+      firstName: "",
+      lastName: "",
+      phone: "",
+      emailID: "",
+      sendPromoMail: 0,
+    },
+    billingEntity: {
+      id: 0,
+      firstName: "",
+      lastName: "",
+      mailingAddress1: "",
+      mailingAddress2: "",
+      country: "",
+      city: "",
+      state: "",
+      zip: "",
+      phone: "",
+      emailID: "",
+    },
+    paymentInfoEntity: {
+      id: 0,
+      cardName: "",
+      expiryMonth: "",
+      expiryYear: "",
+    },
   },
   isLoading: false,
+  isError: false,
 };
-const bookingDataUrl: string | undefined = process.env.REACT_APP_BOOKING_CONFIRMATION;
+
+const bookingDataUrl: string | undefined =
+  process.env.REACT_APP_BOOKING_CONFIRMATION;
 export const getBookingData = createAsyncThunk(
   "bookingData/bookingConfirmation",
-  async (postData:any) => {
+  async (postData: any) => {
     if (bookingDataUrl) {
-      console.log("request",postData);
+      console.log("request", postData);
       const response = await axios
         .post(bookingDataUrl, postData)
         .then((response) => response.data)
-        .catch((error) => console.error(error.message));
-        console.log(response);
+        .catch((error) => true);
+      if (response === "No booking data available") {
+        return true;
+      }
       return response;
     }
   }
@@ -110,16 +116,27 @@ export const BookingConfirmationSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getBookingData.fulfilled, (state, action) => {
+      if (action.payload === true) {
+        state.isError = true;
+        return;
+      }
       state.bookingData = action.payload;
       state.isLoading = false;
+      state.isError = false;
     });
     builder.addCase(getBookingData.pending, (state, action) => {
       state.isLoading = true;
+      state.isError = false;
+    });
+    builder.addCase(getBookingData.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
     });
   },
 });
 
 export const bookingData = (state: RootState) => state.bookingData.bookingData;
-export const isLoading = (state: RootState) => state.roomData.isLoading;
+export const isLoading = (state: RootState) => state.bookingData.isLoading;
+export const isError = (state: RootState) => state.bookingData.isError;
 
 export default BookingConfirmationSlice.reducer;

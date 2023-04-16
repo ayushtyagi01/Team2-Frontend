@@ -59,12 +59,12 @@ const ChechoutPage = (props: Props) => {
         </div>
         <div className="itenary_box">
           <Itenary />
-          <input type="email" className="email_input" ref={userEmailRef} />
+          {/* <input type="email" className="email_input" ref={userEmailRef} />
           <Button
             variant="contained"
             className="button-select"
             onClick={() => sendRatingEmail()}
-          >SEND EMAIL</Button>
+          >SEND EMAIL</Button> */}
         </div>
       </div>
     </>
