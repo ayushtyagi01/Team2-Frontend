@@ -19,11 +19,14 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   bookingData,
   getBookingData,
+  isError,
 } from "../../redux/slice/BookingConfirmationSlice";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { email, user } from "../../redux/slice/UserSlice";
 import { isLoading } from "../../redux/slice/CheckoutDataSlice";
+import { selectedcurrency, selectedFactor } from "../../redux/slice/InternationalisationSlice";
+import { getCurrencyLogo } from "../../util/GetCurrencyLogo";
 
 const style = {
   position: "absolute" as "absolute",
@@ -54,7 +57,7 @@ const monthNames = [
 const Confirmation = () => {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState("");
-  const [totalBill,setTotalBill] = useState(0);
+  const [totalBill, setTotalBill] = useState(0);
   const handleOpen = () => {
     setOpen(true);
     handeleGenerateOtp();
@@ -64,6 +67,7 @@ const Confirmation = () => {
   };
   const reduxDispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchParams.get("id") !== null)
@@ -73,7 +77,6 @@ const Confirmation = () => {
     }
   }, []);
 
-  const data = useAppSelector(bookingData);
   useEffect(() => {
     reduxDispatch(
       getBookingData({
@@ -81,6 +84,17 @@ const Confirmation = () => {
       })
     );
   }, []);
+
+  const pricefactor = useAppSelector(selectedFactor);
+  const currency = useAppSelector(selectedcurrency);
+  const [currencyLogo, setCurrencyLogo] = useState<string>("$");
+
+  useEffect(() => {
+    setCurrencyLogo(getCurrencyLogo(currency));
+  }, [pricefactor]);
+
+  const data = useAppSelector(bookingData);
+  const isErrorHere = useAppSelector(isError);
 
   const emailLooged = useAppSelector(email);
 
@@ -98,20 +112,21 @@ const Confirmation = () => {
   const monthCheckOut = monthNames[enddate.getMonth()];
   const yearCheckOut = enddate.getFullYear();
 
-  
+  useEffect(() => {
+    if (isErrorHere) {
+      navigate("/");
+    }
+    setTotalBill(
+      +data.nightlyRates *
+        +data.priceFactor *
+        +(
+          new Date(data.checkOutDate).getDate() -
+          new Date(data.checkInDate).getDate() +
+          1
+        )
+    );
+  }, [data, isErrorHere]);
 
-
-  useEffect(()=>{
-    console.log("dataaaaa",data ,new Date(data.checkInDate).getDate() - new Date(data.checkOutDate).getDate() + 1 ,
-    data.nightlyRates,data.priceFactor)
-    setTotalBill(+data.nightlyRates *
-      +data.priceFactor *
-      +(new Date(data.checkOutDate).getDate() - new Date(data.checkInDate).getDate() + 1));
-  },[data])
-
-
-
-  const emailRef = useRef<HTMLInputElement>(null);
   const otpRef = useRef<HTMLInputElement>(null);
 
   const handlePrint = () => {
@@ -149,10 +164,6 @@ const Confirmation = () => {
 
   const username = useAppSelector(user);
   const generateOtp = async () => {
-    console.log({
-      email: data.guestEntity.emailID,
-      bookingId: searchParams.get("id"),
-    });
     const response = await axios
       .post(process.env.REACT_APP_GENERATE_OTP!, {
         email: data.guestEntity.emailID,
@@ -160,9 +171,9 @@ const Confirmation = () => {
       })
       .then((response) => response.data)
       .catch((error) => console.log(error));
-    console.log(response);
   };
   const handeleGenerateOtp = () => {
+    if(!username)
     generateOtp();
   };
 
@@ -196,39 +207,48 @@ const Confirmation = () => {
   };
   return (
     <>
-      {!data && (
-        <Snackbar open={open1} autoHideDuration={6000} onClose={handleClose1}>
-          <Alert onClose={handleClose1} severity="error" sx={{ width: "100%" }}>
-            Invalid Booking Id
-          </Alert>
-        </Snackbar>
-      )}
       {isLoadingHere === 2 && (
-        <Snackbar open={open1} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose1} severity="error" sx={{ width: "100%" }}>
-            Booking Successfull
+        <Snackbar open={open1} autoHideDuration={2000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose1}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            <FormattedMessage
+              id="booking-success"
+              defaultMessage="Booking Successfull"
+            />
           </Alert>
         </Snackbar>
       )}
       <div className="confirmation-header">
         <div className="confirmation">
-          Upcoming Confirmation {data.bookingId}
+          <FormattedMessage
+            id="upcoming-confirmation"
+            defaultMessage="Upcoming Confirmation"
+          />
+          {data.bookingId}
         </div>
         <div className="confirmation-btn">
           <div className="print-btn" onClick={handlePrint}>
-            Print
+            <FormattedMessage id="print" defaultMessage="Print" />
           </div>
-          <div className="email-btn">Email</div>
+          <div className="email-btn">
+            <FormattedMessage id="email" defaultMessage="Email" />
+          </div>
         </div>
       </div>
       <div className="confirmation-container">
         <div className="confirmation-container-room-detail">
-          <div className="room-type">Room 1: {data.roomType}</div>
+          <div className="room-type">
+            <FormattedMessage id="room1" defaultMessage="Room 1" />:{" "}
+            {data.roomType}
+          </div>
           <div className="guest-logo">
             <PermIdentityIcon /> {data.guests}
           </div>
           <div className="cancel-room" onClick={handleOpen}>
-            CancelRoom
+            <FormattedMessage id="cancel" defaultMessage="CancelRoom" />
           </div>
         </div>
         <div className="room-info">
@@ -240,14 +260,18 @@ const Confirmation = () => {
           <div className="booking-info">
             <div className="date-container">
               <div className="date-box">
-                <div>Check in</div>
+                <div>
+                  <FormattedMessage id="checkin" defaultMessage="Check in" />
+                </div>
                 <div>{dayOfCheckInMonth}</div>
                 <div>
                   {monthCheckIn} {yearCheckIn}
                 </div>
               </div>
               <div className="date-box">
-                <div>Check out</div>
+                <div>
+                  <FormattedMessage id="checkout" defaultMessage="Check out" />
+                </div>
                 <div>{dayOfCheckOutMonth}</div>
                 <div>
                   {monthCheckOut} {yearCheckOut}
@@ -257,8 +281,19 @@ const Confirmation = () => {
             <div className="promotion-title">{data.promoTitle}</div>
             <div>{data.promoDescription}</div>
             <div className="booking-total">
-              <div>Copy explaining the cancellation policy, if applicable</div>
-              <div>${data.nightlyRates}/night total</div>
+              <div>
+                <FormattedMessage
+                  id="cancel-policy"
+                  defaultMessage="Copy explaining the cancellation policy, if applicable"
+                />
+              </div>
+              <div>
+                {currencyLogo}{(+data.nightlyRates*pricefactor).toFixed(2)}{" "}
+                <FormattedMessage
+                  id="night-total"
+                  defaultMessage="/night total"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -273,32 +308,50 @@ const Confirmation = () => {
             className="summary"
             onClick={() => handelPanel("panel1")}
           >
-            <Typography className="typography">Room Total Summary</Typography>
+            <Typography className="typography">
+              <FormattedMessage
+                id="room-total"
+                defaultMessage="Room Total Summary"
+              />
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
               <div className="booking-detail">
-                <div>Nightly rate</div>
-                <div>${data.nightlyRates}</div>
+                <div>
+                  <FormattedMessage
+                    id="nightly-rate"
+                    defaultMessage="Nightly Rate"
+                  />
+                </div>
+                <div>{currencyLogo}{(+data.nightlyRates*pricefactor).toFixed(1)}</div>
               </div>
               <div className="booking-detail">
                 <div>Subtotal</div>
-                <div>
-                  $
-                  {totalBill}
-                </div>
+                <div>{currencyLogo}{(totalBill*pricefactor).toFixed(2)}</div>
               </div>
               <div className="booking-detail">
-                <div>Taxes, Surcharges, Fees</div>
-                <div>$XXX</div>
+                <div>
+                  <FormattedMessage
+                    id="Taxes-Surcharges-Fees"
+                    defaultMessage="Taxes, Surcharges, Fees"
+                  />
+                </div>
+                <div>{currencyLogo}{(totalBill*0.1*pricefactor).toFixed(2)}</div>
               </div>
               <div className="booking-detail">
                 <div>VAT</div>
-                <div>$XXX</div>
+                <div>{currencyLogo}{(totalBill * 0.08 * pricefactor).toFixed(2)}</div>
               </div>
               <div className="booking-detail">
-                <div>Total for stay</div>
-                <div>$XXX</div>
+                <div>
+                  <FormattedMessage
+                    id="total-stay"
+                    defaultMessage="Total for stay"
+                  />
+                  Total for stay
+                </div>
+                <div>{currencyLogo}{((totalBill + totalBill*0.1 + totalBill*0.08)*pricefactor).toFixed(2)}</div>
               </div>
             </Typography>
           </AccordionDetails>
@@ -314,20 +367,34 @@ const Confirmation = () => {
             className="summary"
             onClick={() => handelPanel("panel2")}
           >
-            <Typography className="typography">Guest Information</Typography>
+            <Typography className="typography">
+              <FormattedMessage
+                id="guest-info"
+                defaultMessage="Guest Information"
+              />
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
               <div className="booking-detail">
-                <div>First Name</div>
+                <div>
+                  <FormattedMessage
+                    id="first-name"
+                    defaultMessage="First Name"
+                  />
+                </div>
                 <div>{data.guestEntity.firstName}</div>
               </div>
               <div className="booking-detail">
-                <div>Email</div>
+                <div>
+                  <FormattedMessage id="email" defaultMessage="Email" />
+                </div>
                 <div>{data.guestEntity.emailID}</div>
               </div>
               <div className="booking-detail">
-                <div>Phone</div>
+                <div>
+                  <FormattedMessage id="phone" defaultMessage="Phone" />
+                </div>
                 <div>{data.guestEntity.phone}</div>
               </div>
             </Typography>
@@ -344,36 +411,61 @@ const Confirmation = () => {
             className="summary"
             onClick={() => handelPanel("panel3")}
           >
-            <Typography className="typography">Billing Address</Typography>
+            <Typography className="typography">
+              <FormattedMessage
+                id="BillingAddress"
+                defaultMessage="Billing Address"
+              />
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
               <div className="booking-detail">
-                <div>First Name</div>
+                <div>
+                  <FormattedMessage
+                    id="first-name"
+                    defaultMessage="First Name"
+                  />
+                </div>
                 <div>{data.billingEntity.firstName}</div>
               </div>
               <div className="booking-detail">
-                <div>Mailing Address</div>
+                <div>
+                  <FormattedMessage
+                    id="MailingAddress"
+                    defaultMessage="Mailing Address"
+                  />
+                </div>
                 <div>{data.billingEntity.mailingAddress1}</div>
               </div>
               <div className="booking-detail">
-                <div>Country</div>
+                <div>
+                  <FormattedMessage id="country" defaultMessage="Country" />
+                </div>
                 <div>{data.billingEntity.country}</div>
               </div>
               <div className="booking-detail">
-                <div>State</div>
+                <div>
+                  <FormattedMessage id="state" defaultMessage="State" />
+                </div>
                 <div>{data.billingEntity.state}</div>
               </div>
               <div className="booking-detail">
-                <div>City</div>
+                <div>
+                  <FormattedMessage id="city" defaultMessage="City" />
+                </div>
                 <div>{data.billingEntity.city}</div>
               </div>
               <div className="booking-detail">
-                <div>Zip</div>
+                <div>
+                  <FormattedMessage id="zip" defaultMessage="Zip" />
+                </div>
                 <div>{data.billingEntity.zip}</div>
               </div>
               <div className="booking-detail">
-                <div>Phone</div>
+                <div>
+                  <FormattedMessage id="phone" defaultMessage="Phone" />
+                </div>
                 <div>{data.billingEntity.phone}</div>
               </div>
             </Typography>
@@ -390,12 +482,19 @@ const Confirmation = () => {
             className="summary"
             onClick={() => handelPanel("panel4")}
           >
-            <Typography className="typography">Payment Information</Typography>
+            <Typography className="typography">
+              <FormattedMessage
+                id="PaymentInformation"
+                defaultMessage="Payment Information"
+              />
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
               <div className="booking-detail">
-                <div>Card Number</div>
+                <div>
+                  <FormattedMessage id="card" defaultMessage="Card Number" />
+                </div>
                 <div>
                   {CryptoJS.AES.decrypt(
                     data.paymentInfoEntity.cardName,
@@ -404,7 +503,12 @@ const Confirmation = () => {
                 </div>
               </div>
               <div className="booking-detail">
-                <div>Expiry Month</div>
+                <div>
+                  <FormattedMessage
+                    id="ExpiryMOnth"
+                    defaultMessage="ExpiryMonth"
+                  />
+                </div>
                 <div>
                   {CryptoJS.AES.decrypt(
                     data.paymentInfoEntity.expiryMonth,
@@ -413,7 +517,12 @@ const Confirmation = () => {
                 </div>
               </div>
               <div className="booking-detail">
-                <div>Expiry Year</div>
+                <div>
+                  <FormattedMessage
+                    id="ExpiryYear"
+                    defaultMessage="Expiry Year"
+                  />
+                </div>
                 <div>
                   {CryptoJS.AES.decrypt(
                     data.paymentInfoEntity.expiryYear,

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 function App() {
   const browserLanguage = navigator.language;
   const [currentLang, setCurrentLang] = useState(
-    localStorage.getItem('selectedLanguage') || browserLanguage
+    localStorage.getItem('selectedLanguage') || 'en'
   );
   const currentLanguage = useAppSelector(setLang);
 

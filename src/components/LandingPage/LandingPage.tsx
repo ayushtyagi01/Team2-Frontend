@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Checkbox, FormControlLabel } from "@mui/material";
+import { Alert, Box, Button, Checkbox, FormControlLabel, Snackbar } from "@mui/material";
 import GuestDropdown from "./Guests/GuestDropdown";
 import PropertyDropdown from "./PropertyDropdown/PropertyDropdown";
 import RoomDropdown from "./RoomDropdown/RoomDropdown";
@@ -30,6 +30,8 @@ import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { setShowItenaryInCardsPageToFalse } from "../../redux/slice/RoomResultConfigSlice";
+import { isError } from "../../redux/slice/BookingConfirmationSlice";
+
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ const LandingPage = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const reduxDispatch = useDispatch();
+  const isErrorHere = useAppSelector(isError);
   const banner_image = useAppSelector(bannerImage);
   const isRoom = useAppSelector(isRooms);
   const guest = useAppSelector(availableTypeOfGuests);
@@ -86,6 +89,17 @@ const LandingPage = () => {
   useEffect(()=>{
     localStorage.clear();
   },[]);
+  const [open1, setOpen1] = useState(true);
+
+  const handleClose1 = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen1(false);
+  };
 
   return (
     <div className="container">
@@ -197,6 +211,13 @@ const LandingPage = () => {
           </Button>
         </form>
       </div>
+      {isErrorHere && (
+      <Snackbar open={open1} autoHideDuration={2000} onClose={handleClose1}>
+        <Alert onClose={handleClose1} severity="error" sx={{ width: "100%" }}>
+        <FormattedMessage id="invalid-booking" defaultMessage="Invalid Booking Id" />
+        </Alert>
+      </Snackbar>
+    )}
     </div>
   );
 };
