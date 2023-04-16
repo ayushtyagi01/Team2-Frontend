@@ -1,5 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Alert, Button, CircularProgress, FormControl, Modal, Snackbar, TextField } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  FormControl,
+  Modal,
+  Snackbar,
+  TextField,
+} from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
@@ -16,8 +24,14 @@ import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { PaymentSchema } from "../../../util/yupSchema/PaymentSchema";
 import { Box } from "@mui/system";
 import { getBookingData } from "../../../util/getBookingData";
-import { bookingStatus, isLoading, postCheckoutData } from "../../../redux/slice/CheckoutDataSlice";
+import {
+  bookingStatus,
+  isLoading,
+  postCheckoutData,
+} from "../../../redux/slice/CheckoutDataSlice";
 import { useNavigate } from "react-router-dom";
+import { selectedcurrency, selectedFactor } from "../../../redux/slice/InternationalisationSlice";
+import { getCurrencyLogo } from "../../../util/GetCurrencyLogo";
 
 const style = {
   position: "absolute" as "absolute",
@@ -62,11 +76,18 @@ const CheckoutForm = () => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   const isLoadingHere = useAppSelector(isLoading);
-  const bookingStatusHere =  useAppSelector(bookingStatus);
+  const bookingStatusHere = useAppSelector(bookingStatus);
   const navigate = useNavigate();
-  if(isLoadingHere===2){
+  if (isLoadingHere === 2) {
     navigate(`/booking?id=${bookingStatusHere.bookingId}`);
   }
+  const pricefactor = useAppSelector(selectedFactor);
+  const currency = useAppSelector(selectedcurrency);
+  const [currencyLogo, setCurrencyLogo] = useState<string>("$");
+
+  useEffect(() => {
+    setCurrencyLogo(getCurrencyLogo(currency));
+  }, [pricefactor]);
 
   const onSubmitHandler = (data: any) => {
     if (index === 1 && (Country === "" || State === "")) {
@@ -86,9 +107,17 @@ const CheckoutForm = () => {
         data.ExpYY,
         process.env.REACT_APP_SECRET_KEY!
       ).toString();
-      const isChecked = checkboxRef.current?.checked ? 1:0;
-      const bookingData = getBookingData({ ...data, Country, State, CardName, ExpMM, ExpYY ,isChecked});
-      console.log("book",bookingData);
+      const isChecked = checkboxRef.current?.checked ? 1 : 0;
+      const bookingData = getBookingData({
+        ...data,
+        Country,
+        State,
+        CardName,
+        ExpMM,
+        ExpYY,
+        isChecked,
+      });
+      console.log("book", bookingData);
       reduxDispatch(postCheckoutData(bookingData));
     }
     setIndex(index + 1);
@@ -100,23 +129,27 @@ const CheckoutForm = () => {
     setState(val);
   };
   const totalBill =
-  parseInt(localStorage.getItem("averageNightlyRateInDuration")!) *
-  parseFloat(localStorage.getItem("priceFactor")!) *
-  (new Date(localStorage.getItem("endDate")!).getDate() -
-    new Date(localStorage.getItem("startDate")!).getDate() +
-    1);
-    let totalBillAfterTax = totalBill;
+    parseInt(localStorage.getItem("averageNightlyRateInDuration")!) *
+    parseFloat(localStorage.getItem("priceFactor")!) *
+    (new Date(localStorage.getItem("endDate")!).getDate() -
+      new Date(localStorage.getItem("startDate")!).getDate() +
+      1);
+  let totalBillAfterTax = totalBill;
   totalBillAfterTax += totalBill * 0.18;
   totalBillAfterTax += totalBill * 0.08;
 
   return (
     <>
-      <div className="payment-header">Payment Info</div> 
+      <div className="payment-header">Payment Info</div>
       {checkoutConfig.map((item: any, ind: number) => {
         return (
           <>
             <div className="payment-header-section">
-            <FormattedMessage id={1+item.title}  /></div>
+              <FormattedMessage
+                id={" " + item.title.toLowerCase()}
+                defaultMessage={item.title}
+              />
+            </div>
             {index === ind && (
               <form onSubmit={handleSubmit(onSubmitHandler)}>
                 {item.inputs.map((input: any) => (
@@ -129,7 +162,13 @@ const CheckoutForm = () => {
                           ""
                         )}`}
                       >
-                        <div className="input-header ">{field.label}</div>
+                        <div className="input-header ">
+                          {" "}
+                          <FormattedMessage
+                            id={" " + field.label}
+                            defaultMessage={field.label}
+                          />
+                        </div>
                         <FormControl
                           sx={{ mr: 0, width: "100%" }}
                           variant="outlined"
@@ -140,11 +179,21 @@ const CheckoutForm = () => {
                               error={!!errors[field.label.replace(" ", "")]}
                               type={field.label === "CVV" ? "password" : ""}
                               helperText={
-                                errors[field.label.replace(" ", "")]
-                                  ? errors[
+                                errors[field.label.replace(" ", "")] ? (
+                                  <FormattedMessage
+                                    id={
+                                      " " +
+                                      errors[
+                                        field.label.replace(" ", "")
+                                      ]?.message?.toString()
+                                    }
+                                    defaultMessage={errors[
                                       field.label.replace(" ", "")
-                                    ]?.message?.toString()
-                                  : " "
+                                    ]?.message?.toString()}
+                                  />
+                                ) : (
+                                  " "
+                                )
                               }
                             />
                           ) : field.label === "Country" ? (
@@ -159,7 +208,10 @@ const CheckoutForm = () => {
                               />
                               {error && Country === "" && (
                                 <span className="error-message">
-                                  This field is required
+                                  <FormattedMessage
+                                    id="This field is required"
+                                    defaultMessage="This field is required"
+                                  />
                                 </span>
                               )}
                             </>
@@ -176,7 +228,10 @@ const CheckoutForm = () => {
                               />
                               {error && State === "" && (
                                 <span className="error-message">
-                                  This field is required
+                                  <FormattedMessage
+                                    id="This field is required"
+                                    defaultMessage="This field is required"
+                                  />
                                 </span>
                               )}
                             </>
@@ -190,8 +245,18 @@ const CheckoutForm = () => {
                 {index === 2 && (
                   <>
                     <div className="checkbox-container">
-                      <input type="checkbox" className="checkbox" ref={checkboxRef}/>
-                      <p>Send me special offer</p>
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        ref={checkboxRef}
+                      />
+                      <p>
+                        {" "}
+                        <FormattedMessage
+                          id="special-offer"
+                          defaultMessage="Send me special offer"
+                        />
+                      </p>
                     </div>
                     <div className="checkbox-container">
                       <input
@@ -200,28 +265,48 @@ const CheckoutForm = () => {
                         {...register("Terms")}
                       />
                       <p>
-                        I agree to{" "}
+                        <FormattedMessage
+                          id="agree-to"
+                          defaultMessage="I agree to"
+                        />{" "}
                         <span
                           className="open-modal"
                           onClick={() => setOpenModal(true)}
                         >
-                          Terms and Policies
+                          <FormattedMessage
+                            id="terms-policy"
+                            defaultMessage="Terms and Policies"
+                          />
                         </span>{" "}
-                        of travel
+                        <FormattedMessage
+                          id="travel"
+                          defaultMessage="of travel"
+                        />
                       </p>
                     </div>
                     <div className="checkbox-error">
                       {errors["Terms"] ? (
                         <div className="error-message">
-                          {errors["Terms"]?.message?.toString()}
+                          <FormattedMessage
+                            id={" " + errors["Terms"]?.message?.toString()}
+                            defaultMessage={errors[
+                              "Terms"
+                            ]?.message?.toString()}
+                          />
                         </div>
                       ) : (
                         " "
                       )}
                     </div>
                     <div className="price-container">
-                      <div className="due-amount">Total Due</div>
-                      <div>$ {(totalBillAfterTax * 0.15).toFixed(2)}</div>
+                      <div className="due-amount">
+                        {" "}
+                        <FormattedMessage
+                          id="total-due"
+                          defaultMessage="Total Due"
+                        />
+                      </div>
+                      <div>{currencyLogo} {(totalBillAfterTax * 0.15*pricefactor).toFixed(2)}</div>
                     </div>
                   </>
                 )}
@@ -231,7 +316,10 @@ const CheckoutForm = () => {
                       className="previous-btn"
                       onClick={() => setIndex(index - 1)}
                     >
-                      {item.previous}
+                      <FormattedMessage
+                        id={" " + item.previous}
+                        defaultMessage={item.previous}
+                      />
                     </p>
                   )}
                   {ind === index && (
@@ -240,7 +328,10 @@ const CheckoutForm = () => {
                       variant="contained"
                       className="btn-checkout-form"
                     >
-                      {item.next}
+                      <FormattedMessage
+                        id={" " + item.next}
+                        defaultMessage={item.next}
+                      />
                     </Button>
                   )}
                 </div>
@@ -260,7 +351,13 @@ const CheckoutForm = () => {
         <>
           {" "}
           <Box sx={style}>
-            <div className="terms-header">Terms and Conditions</div>
+            <div className="terms-header">
+              {" "}
+              <FormattedMessage
+                id="terms-policy"
+                defaultMessage="Terms and Policies"
+              />
+            </div>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
             et quibusdam necessitatibus architecto inventore quas molestiae
             rerum voluptas consequuntur quidem? Vero, harum. Labore non
@@ -312,10 +409,7 @@ const CheckoutForm = () => {
         </>
       </Modal>
 
-      {
-          isLoadingHere===1 &&  <CircularProgress />
-      }
-      
+      {isLoadingHere === 1 && <CircularProgress />}
     </>
   );
 };
