@@ -185,7 +185,7 @@ const Itenary = (props: Props) => {
         <div className="border_line"></div>
         <div className="charges">
           <div className="charge_name">Subtotal</div>
-          <div className="charge">{currencyLogo}{(+totalBill*pricefactor).toFixed(2)}</div>
+          <div className="charge">{currencyLogo}{(+totalBill*pricefactor*+localStorage.getItem('room')!).toFixed(2)}</div>
         </div>
         <div className="charges">
           <div className="charge_name">
