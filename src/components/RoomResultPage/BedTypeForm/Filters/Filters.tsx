@@ -59,7 +59,6 @@ const Filters: React.FC<FilterInterface> = (props) => {
       reduxDispatch(getRoomData(roomPostData));
     }
   };
-  const h = props.heading;
   return (
     <>
       <Accordion className="accordion-container">

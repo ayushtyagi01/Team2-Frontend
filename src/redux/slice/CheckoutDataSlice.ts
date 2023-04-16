@@ -1,18 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RoomPostData } from "../../util/roomPostData";
+import { RootState } from "../store";
 
+interface booking{
+  bookingId:number;
+  status:"PENDING"|"SUCCESS"|"FAILED";
+}
 interface CheckoutData {
-  isLoading: boolean;
+  bookingStatus:booking;
+  isLoading: number;
 }
 
 const initialState: CheckoutData = {
-  isLoading: false,
+  bookingStatus:{
+    bookingId:0,
+    status:"PENDING"
+  },
+  isLoading: 0,
 };
-const checkoutPostURl: string | undefined = process.env.REACT_APP_ROOM_DATA;
+const checkoutPostURl: string | undefined = process.env.REACT_APP_CHECKOUT_FORM;
 export const postCheckoutData = createAsyncThunk(
-  "checkoutData/postData",
-  async (postData: RoomPostData) => {
+  "checkoutData/bookingStatus",
+  async (postData:any) => {
     if (checkoutPostURl) {
       console.log("data",postData);
       const response = await axios
@@ -20,23 +29,45 @@ export const postCheckoutData = createAsyncThunk(
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
         console.log("response", response);
-      return response;
+        let count=0;
+        while(count<50){
+          console.log("inside");
+          const status = await axios.post(process.env.REACT_APP_BOOKING_STATUS!,{
+            bookingId:response,
+          }).then((status) => {
+            return status.data;
+          })
+          .catch((error) => console.error(error.message));
+          count++;
+          if(status.status!=='PENDING'){
+            console.log(status)
+            return status;
+          }
+        }
+      return "FAILED";
     }
   }
 );
 export const CheckoutDataSlice = createSlice({
-  name: "postData",
+  name: "bookingStatusData",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(postCheckoutData.fulfilled, (state, action) => {
-      state.isLoading = false;
+      state.bookingStatus=action.payload;
+      state.isLoading = 2;
     });
     builder.addCase(postCheckoutData.pending, (state, action) => {
-      state.isLoading = true;
+      state.isLoading = 1;
+    });
+    builder.addCase(postCheckoutData.rejected, (state, action) => {
+      state.isLoading = 0;
     });
   },
 });
+
+export const isLoading = (state: RootState) => state.bookingStatus.isLoading;
+export const bookingStatus = (state: RootState) => state.bookingStatus.bookingStatus;
 
 
 export default CheckoutDataSlice.reducer;

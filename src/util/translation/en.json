@@ -1,4 +1,5 @@
 {
+  "1":"1",
   "my_booking": "My Booking",
   "login":"Login",
   "propertyName":"Property Name*",
@@ -30,5 +31,8 @@
   "In Room Safe":"In Room Safe",
   "Iron and Ironing Board":"Iron and Ironing Board",
   "Writing Desk and Chair":"Writing Desk and Chair",
-  "Hair Dryer":"Hair Dryer"
+  "Hair Dryer":"Hair Dryer",
+  "11. Traveler Info":"1. Traveler Info",
+  "12. Billing Info":"2. Billing Info",
+  "13. Payment Info":"3. Payment Info"
 }

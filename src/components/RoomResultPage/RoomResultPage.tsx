@@ -40,15 +40,14 @@ const RoomResultPage: React.FC = () => {
     if (searchParams.get("property") !== null) {
       roomPostData.propertyId = parseInt(searchParams.get("property")!);
       reduxDispatch(setProperty(roomPostData.propertyId));
-    } else if (localStorage.getItem("property") !== null) {
+    } else if (localStorage.getItem("property_id") !== null) {
       const id =
-        localStorage.getItem("property")!?.length > 1
-          ? localStorage.getItem("property")?.substring(1, 2)!
-          : localStorage.getItem("property");
-      console.log("id", id, "localStorage", localStorage.getItem("property"));
+        localStorage.getItem("property_id")!?.length > 1
+          ? localStorage.getItem("property_id")?.substring(1, 2)!
+          : localStorage.getItem("property_id");
       roomPostData.propertyId = parseInt(id!);
       reduxDispatch(
-        setProperty(localStorage.getItem("property")?.substring(1, 2))
+        setProperty(localStorage.getItem("property_id"))
       );
     }
     if (searchParams.get("room") !== null) {

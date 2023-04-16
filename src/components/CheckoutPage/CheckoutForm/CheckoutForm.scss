@@ -55,6 +55,10 @@
     justify-content: end;
     width: 85%;
 }
+.open-modal{
+    color: $primary-dark-blue-color;
+    cursor: pointer;
+}
 .btn-checkout-form{
     background-color: $primary-dark-blue-color!important;
     width: auto!important;
@@ -84,4 +88,17 @@
     .due-amount{
         padding-right: 1%;
     }
+}
+.terms-header{
+    font-size: 2rem;
+    padding-bottom: 2%;
+}
+.error-message{
+    color: #f79557;
+    margin-top:-5%;
+    margin-left: 2%;
+    font-size: 0.8rem;
+}
+.checkbox-error{
+    margin: 5% 0 0 1%;
 }
