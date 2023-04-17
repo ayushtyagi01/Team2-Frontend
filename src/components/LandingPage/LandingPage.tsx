@@ -230,10 +230,18 @@ const LandingPage = () => {
       </Snackbar>
       )}
       {
-        localStorage.getItem('isBookingCanceled') && 
+        localStorage.getItem('isBookingCanceled') && localStorage.getItem('isBookingCanceled')==="true" && 
         <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose2}>
         <Alert onClose={handleClose2} severity="success" sx={{ width: "100%" }}>
         <FormattedMessage id="cancel-booking" defaultMessage="Booking Cancelled successfully" />
+        </Alert>
+      </Snackbar>
+      }
+       {
+        localStorage.getItem('isBookingCanceled') && localStorage.getItem('isBookingCanceled')==="false" &&
+        <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose2}>
+        <Alert onClose={handleClose2} severity="error" sx={{ width: "100%" }}>
+        <FormattedMessage id="failed-booking" defaultMessage="Failed to Cancel Booking" />
         </Alert>
       </Snackbar>
       }

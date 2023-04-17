@@ -25,7 +25,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { email, user } from "../../redux/slice/UserSlice";
 import { isLoading } from "../../redux/slice/CheckoutDataSlice";
-import { selectedcurrency, selectedFactor } from "../../redux/slice/InternationalisationSlice";
+import {
+  selectedcurrency,
+  selectedFactor,
+} from "../../redux/slice/InternationalisationSlice";
 import { getCurrencyLogo } from "../../util/GetCurrencyLogo";
 
 const style = {
@@ -60,7 +63,7 @@ const Confirmation = () => {
   const [totalBill, setTotalBill] = useState(0);
   const handleOpen = () => {
     setOpen(true);
-    handeleGenerateOtp();
+    if (!username) handeleGenerateOtp();
   };
   const handleClose = () => {
     setOpen(false);
@@ -113,8 +116,8 @@ const Confirmation = () => {
   const yearCheckOut = enddate.getFullYear();
 
   useEffect(() => {
-    if (isErrorHere || data.isCancelled===1) {
-      localStorage.setItem('isBookingCanceled',"true");
+    if (isErrorHere || data.isCancelled === 1) {
+      localStorage.setItem("isBookingCanceled", "true");
       navigate("/");
     }
     setTotalBill(
@@ -164,7 +167,7 @@ const Confirmation = () => {
   };
 
   const username = useAppSelector(user);
-  const [error,setError]=useState(false);
+  const [error, setError] = useState(false);
   const generateOtp = async () => {
     const response = await axios
       .post(process.env.REACT_APP_GENERATE_OTP!, {
@@ -175,8 +178,7 @@ const Confirmation = () => {
       .catch((error) => console.log(error));
   };
   const handeleGenerateOtp = () => {
-    if(!username)
-    generateOtp();
+    if (!username) generateOtp();
   };
 
   const handeleVerifyOtp = async () => {
@@ -186,12 +188,15 @@ const Confirmation = () => {
         otp: otpRef.current?.value,
       })
       .then((response) => response.data)
-      .catch((error) => {setError(true); return;});
-
-      if(res==='Not Verified' || res==='Error'){
+      .catch((error) => {
         setError(true);
         return;
-      }
+      });
+
+    if (res === "Not Verified" || res === "Error") {
+      setError(true);
+      return;
+    }
     const response = await axios
       .post(process.env.REACT_APP_CANCEL_BOOKING!, {
         email: data.guestEntity.emailID,
@@ -199,20 +204,27 @@ const Confirmation = () => {
       })
       .then((response) => response.data)
       .catch((error) => console.log(error));
-      localStorage.setItem('isBookingCanceled',"true");
-      navigate('/');
+    localStorage.setItem("isBookingCanceled", "true");
+    navigate("/");
   };
-  
+
   const handeleCancelforLoggedIn = async () => {
-    await axios
+    console.log({
+      email: emailLooged,
+      bookingId: localStorage.getItem("bookingId")!,
+    });
+    const response = await axios
       .post(process.env.REACT_APP_CANCEL_BOOKING!, {
         email: emailLooged,
         bookingId: localStorage.getItem("bookingId")!,
       })
       .then((response) => response.data)
-      .catch((error) => console.log(error));
-      localStorage.setItem('isBookingCanceled',"true");
-      navigate('/');
+      .catch((error) => console.log("Failed to cancel"));
+    if (response) localStorage.setItem("isBookingCanceled", "true");
+    else {
+      localStorage.setItem("isBookingCanceled", "false");
+    }
+    navigate("/");
   };
   return (
     <>
@@ -297,7 +309,8 @@ const Confirmation = () => {
                 />
               </div>
               <div>
-                {currencyLogo}{(+data.nightlyRates*pricefactor).toFixed(2)}{" "}
+                {currencyLogo}
+                {(+data.nightlyRates * pricefactor).toFixed(2)}{" "}
                 <FormattedMessage
                   id="night-total"
                   defaultMessage="/night total"
@@ -333,11 +346,17 @@ const Confirmation = () => {
                     defaultMessage="Nightly Rate"
                   />
                 </div>
-                <div>{currencyLogo}{(+data.nightlyRates*pricefactor).toFixed(1)}</div>
+                <div>
+                  {currencyLogo}
+                  {(+data.nightlyRates * pricefactor).toFixed(1)}
+                </div>
               </div>
               <div className="booking-detail">
                 <div>Subtotal</div>
-                <div>{currencyLogo}{(totalBill*pricefactor).toFixed(2)}</div>
+                <div>
+                  {currencyLogo}
+                  {(totalBill * pricefactor).toFixed(2)}
+                </div>
               </div>
               <div className="booking-detail">
                 <div>
@@ -346,11 +365,17 @@ const Confirmation = () => {
                     defaultMessage="Taxes, Surcharges, Fees"
                   />
                 </div>
-                <div>{currencyLogo}{(totalBill*0.1*pricefactor).toFixed(2)}</div>
+                <div>
+                  {currencyLogo}
+                  {(totalBill * 0.1 * pricefactor).toFixed(2)}
+                </div>
               </div>
               <div className="booking-detail">
                 <div>VAT</div>
-                <div>{currencyLogo}{(totalBill * 0.08 * pricefactor).toFixed(2)}</div>
+                <div>
+                  {currencyLogo}
+                  {(totalBill * 0.08 * pricefactor).toFixed(2)}
+                </div>
               </div>
               <div className="booking-detail">
                 <div>
@@ -360,7 +385,13 @@ const Confirmation = () => {
                   />
                   Total for stay
                 </div>
-                <div>{currencyLogo}{((totalBill + totalBill*0.1 + totalBill*0.08)*pricefactor).toFixed(2)}</div>
+                <div>
+                  {currencyLogo}
+                  {(
+                    (totalBill + totalBill * 0.1 + totalBill * 0.08) *
+                    pricefactor
+                  ).toFixed(2)}
+                </div>
               </div>
             </Typography>
           </AccordionDetails>
