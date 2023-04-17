@@ -114,6 +114,7 @@ const Confirmation = () => {
 
   useEffect(() => {
     if (isErrorHere || data.isCancelled===1) {
+      localStorage.setItem('isBookingCanceled',"true");
       navigate("/");
     }
     setTotalBill(
@@ -185,7 +186,7 @@ const Confirmation = () => {
         otp: otpRef.current?.value,
       })
       .then((response) => response.data)
-      .catch((error) => {console.log("4");setError(true); return;});
+      .catch((error) => {setError(true); return;});
 
       if(res==='Not Verified' || res==='Error'){
         setError(true);
