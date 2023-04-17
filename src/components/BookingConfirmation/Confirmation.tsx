@@ -113,7 +113,7 @@ const Confirmation = () => {
   const yearCheckOut = enddate.getFullYear();
 
   useEffect(() => {
-    if (isErrorHere) {
+    if (isErrorHere || data.isCancelled===1) {
       navigate("/");
     }
     setTotalBill(
@@ -163,6 +163,7 @@ const Confirmation = () => {
   };
 
   const username = useAppSelector(user);
+  const [error,setError]=useState(false);
   const generateOtp = async () => {
     const response = await axios
       .post(process.env.REACT_APP_GENERATE_OTP!, {
@@ -178,14 +179,18 @@ const Confirmation = () => {
   };
 
   const handeleVerifyOtp = async () => {
-    await axios
+    const res = await axios
       .post(process.env.REACT_APP_VERIFY_OTP!, {
         email: data.guestEntity.emailID,
         otp: otpRef.current?.value,
       })
       .then((response) => response.data)
-      .catch((error) => console.log(error));
+      .catch((error) => {console.log("4");setError(true); return;});
 
+      if(res==='Not Verified' || res==='Error'){
+        setError(true);
+        return;
+      }
     const response = await axios
       .post(process.env.REACT_APP_CANCEL_BOOKING!, {
         email: data.guestEntity.emailID,
@@ -193,9 +198,10 @@ const Confirmation = () => {
       })
       .then((response) => response.data)
       .catch((error) => console.log(error));
-    console.log(response);
+      localStorage.setItem('isBookingCanceled',"true");
+      navigate('/');
   };
-
+  
   const handeleCancelforLoggedIn = async () => {
     await axios
       .post(process.env.REACT_APP_CANCEL_BOOKING!, {
@@ -204,6 +210,8 @@ const Confirmation = () => {
       })
       .then((response) => response.data)
       .catch((error) => console.log(error));
+      localStorage.setItem('isBookingCanceled',"true");
+      navigate('/');
   };
   return (
     <>
@@ -555,6 +563,7 @@ const Confirmation = () => {
             <>
               <div>Enter OTP for cancelling the room booking</div>
               <input type="text" className="cancel-input" ref={otpRef}></input>
+              {error && <p className="error-otp">Invalid OTP</p>}
               <Button
                 variant="contained"
                 className="btn-otp"

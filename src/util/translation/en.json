@@ -102,5 +102,6 @@
   " Please enter a valid expiry year in YY format":"Please enter a valid expiry year in YY format",
   " Please enter a valid CVV Code":"Please enter a valid CVV Code",
   " Please agree to Terms and Conditions":"Please agree to Terms and Conditions",
-  "need-help":"Need help?"
+  "need-help":"Need help?",
+  "cancel-booking":"Booking Cancelled successfully"
 }

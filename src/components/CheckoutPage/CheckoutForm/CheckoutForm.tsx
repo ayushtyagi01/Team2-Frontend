@@ -117,7 +117,6 @@ const CheckoutForm = () => {
         ExpYY,
         isChecked,
       });
-      console.log("book", bookingData);
       reduxDispatch(postCheckoutData(bookingData));
     }
     setIndex(index + 1);

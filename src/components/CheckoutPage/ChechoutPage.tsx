@@ -17,6 +17,7 @@ const ChechoutPage = (props: Props) => {
 
   useEffect(() => {
     dispatch(setShowItenaryInCardsPageToTrue());
+    localStorage.removeItem('isBookingCanceled');
   }, []);
 
   const userEmailRef = useRef<HTMLInputElement>(null);

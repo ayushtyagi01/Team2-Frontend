@@ -34,6 +34,7 @@ const RoomResultPage: React.FC = () => {
 
   useEffect(() => {
     reduxDispatch(getRoomConfig());
+    localStorage.removeItem('isBookingCanceled');
   }, []);
 
   const getFormData = () => {
