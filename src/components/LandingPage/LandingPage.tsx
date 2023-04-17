@@ -87,7 +87,7 @@ const LandingPage = () => {
     dispatch(setShowItenaryInCardsPageToFalse());
   });
   useEffect(()=>{
-    localStorage.clear();
+    localStorage.removeItem('showItenary');
   },[]);
   const [open1, setOpen1] = useState(true);
 
@@ -99,6 +99,17 @@ const LandingPage = () => {
       return;
     }
     setOpen1(false);
+  };
+  const [open2, setOpen2] = useState(true);
+
+  const handleClose2 = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen2(false);
   };
 
   return (
@@ -217,7 +228,16 @@ const LandingPage = () => {
         <FormattedMessage id="invalid-booking" defaultMessage="Invalid Booking Id" />
         </Alert>
       </Snackbar>
-    )}
+      )}
+      {
+        localStorage.getItem('isBookingCanceled') && 
+        <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose2}>
+        <Alert onClose={handleClose2} severity="success" sx={{ width: "100%" }}>
+        <FormattedMessage id="cancel-booking" defaultMessage="Booking Cancelled successfully" />
+        </Alert>
+      </Snackbar>
+      }
+    
     </div>
   );
 };

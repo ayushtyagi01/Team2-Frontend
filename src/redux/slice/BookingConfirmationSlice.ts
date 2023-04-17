@@ -98,7 +98,6 @@ export const getBookingData = createAsyncThunk(
   "bookingData/bookingConfirmation",
   async (postData: any) => {
     if (bookingDataUrl) {
-      console.log("request", postData);
       const response = await axios
         .post(bookingDataUrl, postData)
         .then((response) => response.data)

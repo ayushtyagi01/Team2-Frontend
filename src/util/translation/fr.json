@@ -108,6 +108,7 @@
   " Please enter a valid expiry year in YY format":"Veuillez saisir une année d'expiration valide au format AA",
   " Please enter a valid CVV Code":"Veuillez entrer un code CVV valide",
   " Please agree to Terms and Conditions":"Veuillez accepter les termes et conditions",
-  "need-help":"Besoin d'aide?"
+  "need-help":"Besoin d'aide?",
+  "cancel-booking":"Réservation annulée avec succès"
 
 }
