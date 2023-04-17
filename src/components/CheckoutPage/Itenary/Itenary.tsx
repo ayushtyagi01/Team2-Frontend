@@ -51,7 +51,7 @@ const Itenary = (props: Props) => {
       : localStorage.getItem("property");
   const checkInDate = localStorage.getItem("startDate");
   const checkOutDate = localStorage.getItem("endDate");
-  const guests = localStorage.getItem("guest");
+  const guests = JSON.parse(localStorage.getItem("guest")!);
   const rooms = localStorage.getItem("room");
   const dispatch = useAppDispatch();
 
@@ -79,12 +79,6 @@ const Itenary = (props: Props) => {
   };
 
   const fetchDailyPrice = async () => {
-    console.log({
-      endDate: checkOutDate,
-      propertyId: propertyName,
-      roomTypeName: localStorage.getItem("roomTypeName"),
-      startDate: checkInDate,
-    });
     const prices = await axios.post(process.env.REACT_APP_ALL_PRICE_API!, {
       endDate: checkOutDate,
       propertyId: propertyName,

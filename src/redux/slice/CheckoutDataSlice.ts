@@ -23,12 +23,10 @@ export const postCheckoutData = createAsyncThunk(
   "checkoutData/bookingStatus",
   async (postData:any) => {
     if (checkoutPostURl) {
-      console.log("data",postData);
       const response = await axios
         .post(checkoutPostURl, postData)
         .then((response) => response.data)
         .catch((error) => console.error(error.message));
-        console.log("response", response);
         let count=0;
         while(count<50){
           const status = await axios.post(process.env.REACT_APP_BOOKING_STATUS!,{
