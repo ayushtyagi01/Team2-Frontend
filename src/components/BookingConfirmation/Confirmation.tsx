@@ -116,7 +116,7 @@ const Confirmation = () => {
   const yearCheckOut = enddate.getFullYear();
 
   useEffect(() => {
-    if (isErrorHere || data.isCancelled === 1) {
+    if ((data && data.isCancelled == 1)||isErrorHere ) {
       localStorage.setItem("isBookingCanceled", "true");
       navigate("/");
     }
