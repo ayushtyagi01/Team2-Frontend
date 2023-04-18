@@ -85,7 +85,7 @@ currency type in redux
       <div className="header">
         <div className="header-title">
           <div className="img-container">
-            <img className="header-logo" src={headerLogoHere} alt="" />
+            <img className="header-logo" src={headerLogoHere} alt="" onClick={()=>navigate('/')}/>
           </div>
           <div className="title">{pageTitlehere}</div>
         </div>
