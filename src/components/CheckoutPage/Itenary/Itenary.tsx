@@ -61,6 +61,9 @@ const Itenary = (props: Props) => {
     (new Date(localStorage.getItem("endDate")!).getDate() -
       new Date(localStorage.getItem("startDate")!).getDate() +
       1);
+  const avgNightlyRate =
+    parseInt(localStorage.getItem("averageNightlyRateInDuration")!) *
+    parseFloat(localStorage.getItem("priceFactor")!);
   let totalBillAfterTax = totalBill;
   totalBillAfterTax += totalBill * 0.18;
   totalBillAfterTax += totalBill * 0.08;
@@ -182,11 +185,8 @@ const Itenary = (props: Props) => {
             sx={{ height: 0.04, width: 0.04, cursor: "pointer" }}
           />
           <span>
-            , $
-            {(
-              parseInt(localStorage.getItem("averageNightlyRateInDuration")!) *
-              parseFloat(localStorage.getItem("priceFactor")!)
-            ).toFixed(0)}
+            , {currencyLogo}
+            {avgNightlyRate.toFixed(2)}
             /night
           </span>
         </div>
@@ -215,7 +215,7 @@ const Itenary = (props: Props) => {
           </div>
           <div className="charge">
             {currencyLogo}
-            {(totalTax * pricefactor).toFixed(2)}
+            {(totalTax * pricefactor * 0.1).toFixed(2)}
           </div>
         </div>
         <div className="charges">
@@ -233,13 +233,28 @@ const Itenary = (props: Props) => {
           {promotionTitle !== "Upfront payment discount" && (
             <div className="charge">
               {currencyLogo}
-              {(totalBillAfterTax * 0.15 * pricefactor).toFixed(2)}
+              {(
+                (+(totalTax * pricefactor * 0.1).toFixed(2) +
+                  +(
+                    totalBill *
+                    pricefactor *
+                    +localStorage.getItem("room")!
+                  ).toFixed(2) +
+                  +(totalBill * 0.08 * pricefactor).toFixed(2)) *
+                0.6
+              ).toFixed(2)}
             </div>
           )}
           {promotionTitle === "Upfront payment discount" && (
             <div className="charge">
               {currencyLogo}
-              {(totalBillAfterTax * 0.9 * pricefactor).toFixed(2)}
+              {(totalTax * pricefactor * 0.1).toFixed(2) +
+                +(
+                  totalBill *
+                  pricefactor *
+                  +localStorage.getItem("room")!
+                ).toFixed(2) +
+                +(totalBill * 0.08 * pricefactor).toFixed(2)}
             </div>
           )}
         </div>
@@ -250,7 +265,16 @@ const Itenary = (props: Props) => {
           {promotionTitle !== "Upfront payment discount" && (
             <div className="charge">
               {currencyLogo}
-              {(totalBillAfterTax * 0.85 * pricefactor).toFixed(2)}
+              {(
+                (+(totalTax * pricefactor * 0.1).toFixed(2) +
+                  +(
+                    totalBill *
+                    pricefactor *
+                    +localStorage.getItem("room")!
+                  ).toFixed(2) +
+                  +(totalBill * 0.08 * pricefactor).toFixed(2)) *
+                0.4
+              ).toFixed(2)}
             </div>
           )}
           {promotionTitle === "Upfront payment discount" && (
@@ -274,10 +298,7 @@ const Itenary = (props: Props) => {
       {pathname === "/checkout" && (
         <div className="help_box">
           <div className="help_text">
-            <FormattedMessage
-              id="need-help"
-              defaultMessage=" Need Help?"
-            />
+            <FormattedMessage id="need-help" defaultMessage=" Need Help?" />
           </div>
           <div className="phone">Call 1-800-555-5555</div>
           <div className="dates">Mon-Fr 8a-5p EST</div>
@@ -324,10 +345,7 @@ const Itenary = (props: Props) => {
           <div className="room_type_name">{roomTypeName}</div>
           <div className="avg_rate price-modal">
             {currencyLogo}
-            {(
-              +localStorage.getItem("averageNightlyRateInDuration")! *
-              pricefactor
-            ).toFixed(2)}
+            {avgNightlyRate.toFixed(2)}
             /night
           </div>
           <div className="avg_rate price-modal">
@@ -372,14 +390,29 @@ const Itenary = (props: Props) => {
             <div className="charge_name">Due Now</div>
             <div className="charge">
               {currencyLogo}
-              {(totalBill * 0.15 * pricefactor).toFixed(2)}
+              {(
+                (+(totalTax * pricefactor * 0.1).toFixed(2) +
+                  +(
+                    totalBill *
+                    pricefactor *
+                    +localStorage.getItem("room")!
+                  ).toFixed(2) +
+                  +(totalBill * 0.08 * pricefactor).toFixed(2)) *
+                0.6
+              ).toFixed(2)}
             </div>
           </div>
           <div className="charges tax">
             <div className="charge_name">Due at Resort</div>
             <div className="charge">
               {currencyLogo}
-              {(totalBill * 0.85 * pricefactor).toFixed(2)}
+              {((+(totalTax * pricefactor * 0.1).toFixed(2) +
+                +(
+                  totalBill *
+                  pricefactor *
+                  +localStorage.getItem("room")!
+                ).toFixed(2)+
+                +(totalBill * 0.08 * pricefactor).toFixed(2))*0.4).toFixed(2)}
             </div>
           </div>
         </Box>
