@@ -247,7 +247,7 @@ const Confirmation = () => {
           <FormattedMessage
             id="upcoming-confirmation"
             defaultMessage="Upcoming Confirmation"
-          />
+          />{" #"}
           {data.bookingId}
         </div>
         <div className="confirmation-btn">
@@ -545,8 +545,8 @@ const Confirmation = () => {
               <div className="booking-detail">
                 <div>
                   <FormattedMessage
-                    id="ExpiryMOnth"
-                    defaultMessage="ExpiryMonth"
+                    id="ExpiryMonth"
+                    defaultMessage="Expiry Month"
                   />
                 </div>
                 <div>

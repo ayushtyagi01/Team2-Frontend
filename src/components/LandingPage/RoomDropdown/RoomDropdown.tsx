@@ -22,12 +22,12 @@ const RoomDropdown: React.FC<title> = (props) => {
   const reduxDispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const rooms = useAppSelector(noOfRooms);
-  let roomsArray = Array.from({ length: parseInt(noofRoom) }, (_, index) => index + 1);
+  let rooms = useAppSelector(noOfRooms);
+  let roomsArray = Array.from({ length: parseInt(localStorage.getItem('adult')!==null?localStorage.getItem('adult')!:"1") }, (_, index) => index + 1);
   
   useEffect(() => {
     if(searchParams.get('room')!==null){
-      for(let i = 0; i < parseInt(searchParams.get('room')!); i++){
+      for(let i = 0; i < Math.min(parseInt(searchParams.get('room')!),parseInt(localStorage.getItem('adult')!)); i++){
         roomsArray[i]=i+1;
       }
       setnoOfRoom(searchParams.get('room')!);

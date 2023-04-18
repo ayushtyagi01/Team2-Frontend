@@ -4,7 +4,10 @@ export const BilingSchema = yup.object().shape({
   FirstName: yup.string().trim().notOneOf([''],"First Name cannot be empty"),
   "MailingAddress 1": yup.string().trim().notOneOf([''],"Address cannot be empty"),
   
-  City: yup.string().trim().notOneOf([""],"City is required"),
+  City: yup.string().trim().matches(
+    /^[a-zA-Z]*$/,
+    "Last name must only contain alphabetic characters"
+  ),
   Zip: yup.string().matches(/^\d{5,6}$/, "Please enter a valid Zip Code"),
   Phone: yup
     .string()
