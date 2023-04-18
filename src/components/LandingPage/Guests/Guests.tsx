@@ -29,16 +29,21 @@ const Guests: React.FC<GuestInterface> = (props) => {
     if (+noOfGuests < guest_max_value) {
       setnoOfGuests(noOfGuests + 1);
       reduxDispatch(setGuests([noOfGuests + 1, index]));
-      if(index===0)
-      reduxDispatch(setRooms(noOfGuests+1))
+      if(index===0){
+        reduxDispatch(setRooms(noOfGuests+1))
+        localStorage.setItem('adult',(noOfGuests + 1).toString());
+      }
     }
   };
   const handleRemoveGuest = () => {
     if (noOfGuests > +props.guest_min_count) {
       setnoOfGuests(noOfGuests - 1);
       reduxDispatch(setGuests([noOfGuests - 1, index]));
-      if(index===0)
-      reduxDispatch(setRooms(noOfGuests-1))
+      localStorage.setItem('guest',JSON.stringify(guestCounts));
+      if(index===0){
+        localStorage.setItem('adult',(noOfGuests -1).toString());
+        reduxDispatch(setRooms(noOfGuests-1))
+      }
     }
   };
   return (
