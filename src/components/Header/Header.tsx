@@ -22,7 +22,7 @@ import { Auth } from "aws-amplify";
 
 const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
-  const [lang,setLanguage] = useState<string>('en');
+  const [lang, setLanguage] = useState<string>("en");
 
   useEffect(() => {
     reduxDispatch(getLandingData());
@@ -50,7 +50,7 @@ const Header: React.FC = () => {
   */
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     reduxDispatch(changeLang(e.target.value));
-    localStorage.setItem('selectedLanguage',e.target.value);
+    localStorage.setItem("selectedLanguage", e.target.value);
   };
 
   /**
@@ -62,53 +62,67 @@ currency type in redux
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     reduxDispatch(selectedCurrency(e.target.value));
-    localStorage.setItem('selectedCurrency', e.target.value);
+    localStorage.setItem("selectedCurrency", e.target.value);
   };
+  const [logout,setLogout] = useState(false);
 
-  useEffect(()=>{
-    if(localStorage.getItem('selectedCurrency'))
-    setLanguage(localStorage.getItem('selectedCurrency')!)
-  },[localStorage.getItem('selectedCurrency')]);
+  useEffect(() => {
+    if (localStorage.getItem("selectedCurrency"))
+      setLanguage(localStorage.getItem("selectedCurrency")!);
+  }, [localStorage.getItem("selectedCurrency")]);
 
-  const dispatch=useAppDispatch()
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const handleClick = () => {
     navigate("/login", { state: { location: pathname } });
   };
-  const handleSignInOrOut = () =>{
-    userName ? Auth.signOut && dispatch(removeUser()) && Auth.signOut()  : handleClick()
-  }
+  const handleSignInOrOut = () => {
+    userName
+      ? Auth.signOut && dispatch(removeUser()) && Auth.signOut()
+      : handleClick();
+      setLogout(true);
+  };
 
   return (
     <div className="header-container">
       <div className="header">
         <div className="header-title">
           <div className="img-container">
-            <img className="header-logo" src={headerLogoHere} alt="" onClick={()=>navigate('/')}/>
+            <img
+              className="header-logo"
+              src={headerLogoHere}
+              alt=""
+              onClick={() => navigate("/")}
+            />
           </div>
           <div className="title">{pageTitlehere}</div>
         </div>
 
         <div className="convertor-div">
-          <div className="booking">
+          <div className="booking" onClick={() => navigate("/my-booking")}>
             <FormattedMessage id="my_booking" defaultMessage="My Booking" />
           </div>
+          <div className="language-container">
+            <LanguageIcon className="lang-icon" key="language-icon" />
 
-          <LanguageIcon className="lang-icon" key="language-icon" />
-
-          <select className="header-select" onChange={handleLanguageChange} defaultValue={localStorage.getItem('selectedLanguage')!}>
-            {languages.map((language) => (
-              <option
-                key={language.value}
-                value={language.value}
-                className="options"
-              >
-                {language.value}
-              </option>
-            ))}
-          </select>
-
+            <select
+              className="header-select"
+              onChange={handleLanguageChange}
+              defaultValue={localStorage.getItem("selectedLanguage")!}
+            >
+              {languages.map((language) => (
+                <option
+                  key={language.value}
+                  value={language.value}
+                  className="options"
+                >
+                  {language.value}
+                </option>
+              ))}
+            </select>
+          </div>
           <select className="header-select" onChange={handleCurrencyChange}>
             {currencies.map((currency) => (
               <option
@@ -124,12 +138,14 @@ currency type in redux
             type="submit"
             variant="contained"
             className="login-btn"
-            onClick={()=>handleSignInOrOut()}
+            onClick={() => handleSignInOrOut()}
           >
-            {!userName && <FormattedMessage id="login" defaultMessage="Login" />}
-            {userName && (
-              <FormattedMessage id="logout" defaultMessage="LogOut" />
-            )}
+            {(!userName || !localStorage.getItem(
+              "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
+            )) && <FormattedMessage id="login" defaultMessage="Login" />}
+            {(userName && localStorage.getItem(
+              "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
+            )) && <FormattedMessage id="logout" defaultMessage="LogOut" />}
           </Button>
         </div>
       </div>

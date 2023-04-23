@@ -24,7 +24,7 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { email, user } from "../../redux/slice/UserSlice";
-import { isLoading } from "../../redux/slice/CheckoutDataSlice";
+import { isLoading, setLoader } from "../../redux/slice/CheckoutDataSlice";
 import {
   selectedcurrency,
   selectedFactor,
@@ -81,6 +81,7 @@ const Confirmation = () => {
   }, []);
 
   useEffect(() => {
+    reduxDispatch(setLoader(0));
     reduxDispatch(
       getBookingData({
         bookingId: localStorage.getItem("bookingId"),
@@ -116,7 +117,7 @@ const Confirmation = () => {
   const yearCheckOut = enddate.getFullYear();
 
   useEffect(() => {
-    if ((data && data.isCancelled == 1)||isErrorHere ) {
+    if ((data && data.isCancelled == 1) || isErrorHere) {
       localStorage.setItem("isBookingCanceled", "true");
       navigate("/");
     }
@@ -153,7 +154,7 @@ const Confirmation = () => {
       setExpanded(panel);
     }
   };
-  const isLoadingHere = useAppSelector(isLoading);
+  let isLoadingHere = useAppSelector(isLoading);
   const [open1, setOpen1] = useState(true);
 
   const handleClose1 = (
@@ -204,7 +205,11 @@ const Confirmation = () => {
       })
       .then((response) => response.data)
       .catch((error) => console.log(error));
-    localStorage.setItem("isBookingCanceled", "true");
+    localStorage.clear();
+    if (response) localStorage.setItem("isBookingCanceled", "true");
+    else {
+      localStorage.setItem("isBookingCanceled", "false");
+    }
     navigate("/");
   };
 
@@ -220,6 +225,7 @@ const Confirmation = () => {
       })
       .then((response) => response.data)
       .catch((error) => console.log("Failed to cancel"));
+    localStorage.clear();
     if (response) localStorage.setItem("isBookingCanceled", "true");
     else {
       localStorage.setItem("isBookingCanceled", "false");
@@ -229,7 +235,7 @@ const Confirmation = () => {
   return (
     <>
       {isLoadingHere === 2 && (
-        <Snackbar open={open1} autoHideDuration={2000} onClose={handleClose}>
+        <Snackbar open={open1} autoHideDuration={2000} onClose={()=>{isLoadingHere=0;handleClose()}}>
           <Alert
             onClose={handleClose1}
             severity="success"
@@ -247,7 +253,8 @@ const Confirmation = () => {
           <FormattedMessage
             id="upcoming-confirmation"
             defaultMessage="Upcoming Confirmation"
-          />{" #"}
+          />
+          {" #"}
           {data.bookingId}
         </div>
         <div className="confirmation-btn">
@@ -594,7 +601,11 @@ const Confirmation = () => {
           {!username && (
             <>
               <div>Enter OTP for cancelling the room booking</div>
-              <input type="text" className="cancel-input" ref={otpRef}></input>
+              <input
+                type="number"
+                className="cancel-input"
+                ref={otpRef}
+              ></input>
               {error && <p className="error-otp">Invalid OTP</p>}
               <Button
                 variant="contained"

@@ -79,6 +79,7 @@ const CheckoutForm = () => {
   const bookingStatusHere = useAppSelector(bookingStatus);
   const navigate = useNavigate();
   if (isLoadingHere === 2) {
+    console.log("jjjiii");
     navigate(`/booking?id=${bookingStatusHere.bookingId}`);
   }
   const pricefactor = useAppSelector(selectedFactor);
