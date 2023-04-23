@@ -248,7 +248,7 @@ const Itenary = (props: Props) => {
           {promotionTitle === "Upfront payment discount" && (
             <div className="charge">
               {currencyLogo}
-              {(totalTax * pricefactor * 0.1).toFixed(2) +
+              {+(totalTax * pricefactor * 0.1).toFixed(2) +
                 +(
                   totalBill *
                   pricefactor *
@@ -301,7 +301,7 @@ const Itenary = (props: Props) => {
             <FormattedMessage id="need-help" defaultMessage=" Need Help?" />
           </div>
           <div className="phone">Call 1-800-555-5555</div>
-          <div className="dates">Mon-Fr 8a-5p EST</div>
+          <div className="dates">Mon-Fr 8am-5pm EST</div>
         </div>
       )}
 

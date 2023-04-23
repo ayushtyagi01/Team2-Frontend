@@ -5,23 +5,28 @@ import { setLang, translations } from "./redux/slice/InternationalisationSlice";
 import Router from "./components/Router/Router";
 import "@aws-amplify/ui-react/styles.css";
 import { useEffect, useState } from "react";
+import ReactGA from "react-ga";
+
+const TRACKING_ID = "UA-259459516-2";
+ReactGA.initialize(TRACKING_ID);
 
 function App() {
+
   const browserLanguage = navigator.language;
   const [currentLang, setCurrentLang] = useState(
-    localStorage.getItem('selectedLanguage') || 'en'
+    localStorage.getItem("selectedLanguage") || "en"
   );
   const currentLanguage = useAppSelector(setLang);
 
   useEffect(() => {
-    const selectedLanguage = localStorage.getItem('selectedLanguage');
+    const selectedLanguage = localStorage.getItem("selectedLanguage");
     if (selectedLanguage) {
       setCurrentLang(selectedLanguage);
     }
   }, []);
 
   useEffect(() => {
-    setCurrentLang(localStorage.getItem('selectedLanguage')!);
+    setCurrentLang(localStorage.getItem("selectedLanguage")!);
   }, [currentLanguage]);
 
   const messages = useAppSelector(translations);
@@ -34,6 +39,5 @@ function App() {
     </>
   );
 }
-
 
 export default App;

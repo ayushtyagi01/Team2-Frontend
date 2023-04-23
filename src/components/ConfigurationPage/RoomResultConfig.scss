@@ -1,0 +1,28 @@
+.sort-label{
+    margin-left: 2%;
+    margin-bottom: 1%;
+}
+.sort-check{
+    width: 15%;
+    margin-left: 2%!important;
+    margin-bottom: 1%!important;
+}
+.filter-check{
+    width: 8%;
+    margin-left: 2%!important;
+    margin-bottom: 1%!important;
+}
+.room-type{
+    margin-left: 2%;
+    margin-top: 2%;
+}
+.room-image-label{
+    display: flex;
+}
+.images-label{
+    width: 12%!important;
+    margin-left: 1%;
+    &:first-child{
+        margin-left: 0;
+    }
+}
