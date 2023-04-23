@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
 
-interface Booking {
+export interface Booking {
   bookingId: string;
   roomType: string;
   guests: string;
@@ -42,7 +42,7 @@ interface Booking {
   };
 }
 
-interface booking {
+export interface booking {
   bookingData: Booking;
   isLoading: boolean;
   isError: boolean;

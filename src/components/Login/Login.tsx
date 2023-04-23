@@ -17,7 +17,7 @@ const Login: React.FC = () => {
         dispatch(
           setJwtToken(user?.getSignInUserSession()?.getIdToken()?.getJwtToken())
         );
-        return <LoginImpl />;
+        return <LoginImpl/>;
       }}
     </Authenticator>
   );
