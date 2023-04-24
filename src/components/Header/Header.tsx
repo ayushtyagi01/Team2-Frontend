@@ -64,7 +64,7 @@ currency type in redux
     reduxDispatch(selectedCurrency(e.target.value));
     localStorage.setItem("selectedCurrency", e.target.value);
   };
-  const [logout,setLogout] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("selectedCurrency"))
@@ -82,7 +82,7 @@ currency type in redux
     userName
       ? Auth.signOut && dispatch(removeUser()) && Auth.signOut()
       : handleClick();
-      setLogout(true);
+    setLogout(true);
   };
 
   return (
@@ -101,6 +101,9 @@ currency type in redux
         </div>
 
         <div className="convertor-div">
+          <div className="admin" onClick={() => navigate("/configuration")}>
+            Admin
+          </div>
           <div className="booking" onClick={() => navigate("/my-booking")}>
             <FormattedMessage id="my_booking" defaultMessage="My Booking" />
           </div>
@@ -140,12 +143,14 @@ currency type in redux
             className="login-btn"
             onClick={() => handleSignInOrOut()}
           >
-            {(!userName || !localStorage.getItem(
-              "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
-            )) && <FormattedMessage id="login" defaultMessage="Login" />}
-            {(userName && localStorage.getItem(
-              "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
-            )) && <FormattedMessage id="logout" defaultMessage="LogOut" />}
+            {(!userName ||
+              !localStorage.getItem(
+                "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
+              )) && <FormattedMessage id="login" defaultMessage="Login" />}
+            {userName &&
+              localStorage.getItem(
+                "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
+              ) && <FormattedMessage id="logout" defaultMessage="LogOut" />}
           </Button>
         </div>
       </div>

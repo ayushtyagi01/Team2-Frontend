@@ -19,7 +19,7 @@
     margin-left: 1%;
     .header-title {
       display: flex;
-      flex-basis: 60%;
+      flex-basis: 50%;
       margin-left: 2.5rem;
       justify-content: flex-start;
       .img-container {
@@ -42,8 +42,16 @@
     }
     .convertor-div {
       display: flex;
-      flex-basis: 40%;
+      flex-basis: 50%;
       justify-content: space-around;
+      margin-right: 3%;
+      .admin{
+        width: 6rem;
+        color: $primary-dark-blue-color;
+        align-self: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
       .booking {
         width: 10rem;
         color: $primary-dark-blue-color;
