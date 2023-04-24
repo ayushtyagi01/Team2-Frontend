@@ -1,4 +1,32 @@
-export const LandingPageConfigUtil = {
+interface LandingPageConfig {
+  propertyName: number;
+  headerLogo: string;
+  pageTitle: string;
+  bannerImage: string;
+  maxLengthOfStay: number;
+  typeOfGuest: {
+    adult: {
+      title: string;
+      min: number;
+      max: number;
+      exists: string;
+      minAge: string;
+    };
+    children: {
+      title: string;
+      min: number;
+      max: number;
+      exists: string;
+      maxAge: string;
+    };
+  };
+  rooms: string;
+  accessibility: string[];
+  availableTypeOfGuests: string[];
+}
+
+
+export const LandingPageConfigUtil:LandingPageConfig = {
   propertyName: 2,
   headerLogo:
     "https://team2-configuration.s3.ap-south-1.amazonaws.com/hotel-1/header-logo.png",
@@ -22,7 +50,7 @@ export const LandingPageConfigUtil = {
       maxAge: "0-12 years",
     },
   },
-  rooms: "true",
-  accessibility: ["wheelchair"],
-  availableTypeOfGuests: ["adult", "children"],
+  rooms: "false",
+  accessibility: [],
+  availableTypeOfGuests: [],
 };
