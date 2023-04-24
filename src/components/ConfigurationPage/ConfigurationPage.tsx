@@ -4,13 +4,14 @@ import { LandingPageConfigUtil } from "../../util/configurationUtil/LandingPageC
 import RoomResultConfig from "./RoomResultsConfig";
 import "./ConfigurationPage.scss";
 import CheckoutPageConfig from "./CheckoutPageConfig";
-import { getRoles } from "@testing-library/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { jwtToken } from "../../redux/slice/UserSlice";
 import { error } from "console";
 import { FormattedMessage } from "react-intl";
+import {user} from "../../redux/slice/UserSlice";
+import { Authenticator } from "@aws-amplify/ui-react";
 
 const ConfigurationPage: React.FC = () => {
   const bannerImageRef = useRef<HTMLInputElement>(null);
@@ -22,6 +23,7 @@ const ConfigurationPage: React.FC = () => {
   const token = useAppSelector(jwtToken);
   const [snackbar,setSnackbar]=useState(false);
   const [open1, setOpen1] = useState(true);
+  const username = useAppSelector(user);
 
   const handleClose1 = (
     event?: React.SyntheticEvent | Event,
@@ -101,6 +103,8 @@ const ConfigurationPage: React.FC = () => {
       updateConfig();
   };
   return (
+    <Authenticator signUpAttributes={["email", "name"]}>
+      {({ signOut, user }) => (
     <>
       <div className="heading-config">Landing Page Configuration</div>
       <div className="config-container">
@@ -167,6 +171,8 @@ const ConfigurationPage: React.FC = () => {
       </Snackbar>
       )}
     </>
+  )}
+  </Authenticator>
   );
 };
 export default ConfigurationPage;
