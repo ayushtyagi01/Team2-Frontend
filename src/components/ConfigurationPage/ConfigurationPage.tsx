@@ -1,5 +1,5 @@
-import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { Alert, Button, Checkbox, FormControlLabel, Snackbar, TextField } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import { LandingPageConfigUtil } from "../../util/configurationUtil/LandingPageConfigUtil";
 import RoomResultConfig from "./RoomResultsConfig";
 import "./ConfigurationPage.scss";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { jwtToken } from "../../redux/slice/UserSlice";
 import { error } from "console";
+import { FormattedMessage } from "react-intl";
 
 const ConfigurationPage: React.FC = () => {
   const bannerImageRef = useRef<HTMLInputElement>(null);
@@ -19,6 +20,18 @@ const ConfigurationPage: React.FC = () => {
   const navigate = useNavigate();
 
   const token = useAppSelector(jwtToken);
+  const [snackbar,setSnackbar]=useState(false);
+  const [open1, setOpen1] = useState(true);
+
+  const handleClose1 = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen1(false);
+  };
   
 
   const updateConfig = async ()=>{
@@ -28,14 +41,14 @@ const ConfigurationPage: React.FC = () => {
       folderName:"hotel-1/",
       fileContent: LandingPageConfigUtil
   })
-    const response = await axios.post(process.env.REACT_APP_UPDATE_CONFIG!, {
+    await axios.post(process.env.REACT_APP_UPDATE_CONFIG!, {
         token:token,
         fileName: "LandingPage.txt",
         folderName:"hotel-1/",
         fileContent: JSON.stringify(LandingPageConfigUtil)
     }).then(response=>response.data)
     .catch(error=>console.log("error"));
-    console.log(response);
+    setSnackbar(true);
   }
 
   const getRoles = async () => {
@@ -46,9 +59,11 @@ const ConfigurationPage: React.FC = () => {
         )!
       ).UserAttributes[3].Value,
     });
-    if(response.data==='NON_ADMIN'){
+    if(response.data.role!=='ADMIN'){
+      console.log("res",response.data);
       navigate('/');
     }
+    
   };
   useEffect(() => {
     getRoles();
@@ -56,17 +71,19 @@ const ConfigurationPage: React.FC = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLLabelElement>) => {
     const checkbox = e.target as HTMLInputElement;
-    if (!checkbox.checked) {
+    if (checkbox.checked) {
       const checkboxValue = checkbox.value;
       if (checkboxValue === "Room") {
-        LandingPageConfigUtil.rooms = "false";
+        LandingPageConfigUtil.rooms = "true";
       } else if (checkboxValue === "Accessibility") {
-        LandingPageConfigUtil.accessibility = [];
+        LandingPageConfigUtil.accessibility = ["wheelchair"];
       } else if (checkboxValue === "Guest") {
-        LandingPageConfigUtil.availableTypeOfGuests = [];
+        LandingPageConfigUtil.availableTypeOfGuests = [
+          "adult",
+          "children"
+          ];
       }
     }
-    
   };
 
   const handleConfig = () => {
@@ -98,7 +115,7 @@ const ConfigurationPage: React.FC = () => {
         />
         <FormControlLabel
           value="End"
-          control={<Checkbox />}
+          control={<Checkbox value="Room"/>}
           label="Room"
           labelPlacement="end"
           onClick={(e) => handleClick(e)}
@@ -106,7 +123,7 @@ const ConfigurationPage: React.FC = () => {
         />
         <FormControlLabel
           value="End"
-          control={<Checkbox />}
+          control={<Checkbox value="Accessibility"/>}
           label="Accessibility"
           labelPlacement="end"
           onClick={(e) => handleClick(e)}
@@ -142,6 +159,13 @@ const ConfigurationPage: React.FC = () => {
       </Button>
       <RoomResultConfig />
       <CheckoutPageConfig />
+      {snackbar && (
+      <Snackbar open={open1} autoHideDuration={2000} onClose={handleClose1}>
+        <Alert onClose={handleClose1} severity="error" sx={{ width: "100%" ,top:0}}>
+        <FormattedMessage id="UploadSuccessful" defaultMessage="Upload Successfull" />
+        </Alert>
+      </Snackbar>
+      )}
     </>
   );
 };
