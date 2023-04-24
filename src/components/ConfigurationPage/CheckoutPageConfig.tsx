@@ -1,5 +1,8 @@
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import axios from "axios";
 import { useRef } from "react";
+import { useAppSelector } from "../../redux/hooks";
+import { jwtToken } from "../../redux/slice/UserSlice";
 import { checkoutPageConfigUtil } from "../../util/configurationUtil/CheckoutPageConfigUtil";
 import { LandingPageConfigUtil } from "../../util/configurationUtil/LandingPageConfigUtil";
 import "./CheckoutPageConfig.scss";
@@ -55,6 +58,17 @@ const CheckoutPageConfig: React.FC = () => {
       )
     );
   };
+  const token = useAppSelector(jwtToken);
+
+  const updateConfig = async (filteredCheckoutPageConfigUtil:any)=>{
+    await axios.post(process.env.REACT_APP_UPDATE_CONFIG!, {
+        token:token,
+        fileName: "CheckoutConfig.txt",
+        folderName:"hotel-1/",
+        fileContent: filteredCheckoutPageConfigUtil
+    }).then(response=>response.data)
+    .catch(error=>console.log("error"));
+  }
 
   const handleConfig = () => {
     const filteredCheckoutPageConfigUtil = checkoutPageConfigUtil.INFO.map(
@@ -67,7 +81,7 @@ const CheckoutPageConfig: React.FC = () => {
         return { ...page, inputs: filteredInputs };
       }
     );
-    console.log(filteredCheckoutPageConfigUtil);
+    updateConfig(filteredCheckoutPageConfigUtil);
   };
   return (
     <>

@@ -1,5 +1,8 @@
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import axios from "axios";
 import { createRef, useRef } from "react";
+import { useAppSelector } from "../../redux/hooks";
+import { jwtToken } from "../../redux/slice/UserSlice";
 import { LandingPageConfigUtil } from "../../util/configurationUtil/LandingPageConfigUtil";
 import { roomResultConfig } from "../../util/configurationUtil/RoomResultConfigUtil";
 import "./RoomResultConfig.scss";
@@ -36,6 +39,9 @@ const RoomResultConfig: React.FC = () => {
   const roomDescriptionRef = useRef<HTMLInputElement[]>([]);
   const roomAmmenitiesRef = useRef<HTMLInputElement[]>([]);
 
+  const token = useAppSelector(jwtToken);
+
+
   const handleClickSort = (e: React.MouseEvent<HTMLLabelElement>) => {
     const checkbox = e.target as HTMLInputElement;
     const checkboxValue = checkbox.value;
@@ -56,6 +62,16 @@ const RoomResultConfig: React.FC = () => {
         label.value === checkboxValue && (label.present = checkbox.checked)
     );
   };
+
+  const updateConfig = async (newRoomResultConfig:any)=>{
+    await axios.post(process.env.REACT_APP_UPDATE_CONFIG!, {
+        token:token,
+        fileName: "SearchResultsPage.txt",
+        folderName:"hotel-1/RoomResultsPage/",
+        fileContent: newRoomResultConfig
+    }).then(response=>response.data)
+    .catch(error=>console.log("error"));
+  }
 
   const handleConfig = () => {
     console.log(roomDescriptionRef.current);
@@ -109,7 +125,7 @@ const RoomResultConfig: React.FC = () => {
         }
       ),
     };
-    console.log(newRoomResultConfig);
+    updateConfig(newRoomResultConfig);
   };
   return (
     <>
