@@ -19,22 +19,23 @@ const ConfigurationPage: React.FC = () => {
   const navigate = useNavigate();
 
   const token = useAppSelector(jwtToken);
-  console.log("token",token);
+  
 
   const updateConfig = async ()=>{
     console.log({
       token:token,
-      fileName: "test.txt",
+      fileName: "LandingPage.txt",
       folderName:"hotel-1/",
-      fileContent: "Hello world"
+      fileContent: LandingPageConfigUtil
   })
     const response = await axios.post(process.env.REACT_APP_UPDATE_CONFIG!, {
         token:token,
-        fileName: "test.txt",
+        fileName: "LandingPage.txt",
         folderName:"hotel-1/",
-        fileContent: "Hello world"
+        fileContent: JSON.stringify(LandingPageConfigUtil)
     }).then(response=>response.data)
     .catch(error=>console.log("error"));
+    console.log(response);
   }
 
   const getRoles = async () => {
@@ -55,7 +56,6 @@ const ConfigurationPage: React.FC = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLLabelElement>) => {
     const checkbox = e.target as HTMLInputElement;
-    console.log(checkbox.value);
     if (!checkbox.checked) {
       const checkboxValue = checkbox.value;
       if (checkboxValue === "Room") {
