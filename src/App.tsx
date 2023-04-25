@@ -7,11 +7,10 @@ import "@aws-amplify/ui-react/styles.css";
 import { useEffect, useState } from "react";
 import ReactGA from "react-ga";
 
-const TRACKING_ID = "UA-259459516-2";
+const TRACKING_ID = "UA-259483994-1";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
-
   const browserLanguage = navigator.language;
   const [currentLang, setCurrentLang] = useState(
     localStorage.getItem("selectedLanguage") || "en"

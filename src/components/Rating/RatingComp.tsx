@@ -87,7 +87,6 @@ const RatingComp = (props: Props) => {
       }
     } catch (e) {
       setSuccess(false);
-      console.error(e);
     }
   };
 

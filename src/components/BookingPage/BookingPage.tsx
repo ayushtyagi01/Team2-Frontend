@@ -36,7 +36,6 @@ const BookingPage: React.FC = () => {
   const [bookingData, setBookingData] = useState<Booking[]>([]);
 
   const getUserBookings = async () => {
-    console.log("email", userEmail);
     const response = await axios
       .post(process.env.REACT_APP_GET_MY_BOOKING!, {
         email: JSON.parse(
@@ -47,7 +46,6 @@ const BookingPage: React.FC = () => {
       })
       .then((response) => response.data)
       .catch((error) => console.log("error"));
-    console.log("response", response);
     setBookingData(response.myBookings);
   };
   useEffect(() => {
