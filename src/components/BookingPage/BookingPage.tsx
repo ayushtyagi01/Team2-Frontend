@@ -2,9 +2,9 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Booking } from "../../redux/slice/BookingConfirmationSlice";
-import { email } from "../../redux/slice/UserSlice";
+import { email, setJwtToken } from "../../redux/slice/UserSlice";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import {
   selectedcurrency,
@@ -13,6 +13,7 @@ import {
 import { getCurrencyLogo } from "../../util/GetCurrencyLogo";
 import "./BookingPage.scss";
 import { useNavigate } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 const monthNames = [
   "January",
@@ -38,9 +39,11 @@ const BookingPage: React.FC = () => {
     console.log("email", userEmail);
     const response = await axios
       .post(process.env.REACT_APP_GET_MY_BOOKING!, {
-        email: JSON.parse(localStorage.getItem(
-          "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
-        )!).UserAttributes[3].Value,
+        email: JSON.parse(
+          localStorage.getItem(
+            "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
+          )!
+        ).UserAttributes[3].Value,
       })
       .then((response) => response.data)
       .catch((error) => console.log("error"));
@@ -54,6 +57,20 @@ const BookingPage: React.FC = () => {
   const pricefactor = useAppSelector(selectedFactor);
   const currency = useAppSelector(selectedcurrency);
   const [currencyLogo, setCurrencyLogo] = useState<string>("$");
+  const reduxdispatch = useAppDispatch();
+
+  useEffect(() => {
+    Auth.currentSession()
+      .then((session) => {
+        if (session && session.isValid()) {
+          const idToken = session.getIdToken().getJwtToken();
+          reduxdispatch(setJwtToken(idToken));
+        }
+      })
+      .catch((error) => {
+        
+      });
+  }, []);
 
   useEffect(() => {
     setCurrencyLogo(getCurrencyLogo(currency));
@@ -66,7 +83,10 @@ const BookingPage: React.FC = () => {
   };
 
   return (
-    <Authenticator signUpAttributes={["email", "name"]}>
+    <Authenticator
+      className="login-container"
+      signUpAttributes={["email", "name"]}
+    >
       {({ signOut, user }) => (
         <>
           {bookingData ? (

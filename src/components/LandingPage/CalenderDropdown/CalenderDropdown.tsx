@@ -34,12 +34,14 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
 
 
   useEffect(() => {
+    console.log(startdate,enddate);
     if (
       startdate !== format(new Date(), "yyyy-MM-dd") &&
       enddate !== format(addDays(new Date(), 2), "yyyy-MM-dd") &&
       enddate !== startdate &&
       enddate !== startdate
     ) {
+      console.log("inside");
       setShowSelect(false);
       setshowDate(1);
     }
@@ -127,7 +129,7 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
             );
           }}
         >
-          <Calender />
+          <Calender showCalender={setShowSelect}/>
         </Select>
         {showDate === 0 && props.errors.startDate && (
           <Alert severity="error">

@@ -22,6 +22,8 @@ import {
   showItenaryInCardsPage,
 } from "../../redux/slice/RoomResultConfigSlice";
 import { isValid } from "date-fns";
+import { Auth } from "aws-amplify";
+import { setJwtToken } from "../../redux/slice/UserSlice";
 
 const steps = ["1. Choose Room", "2. Choose add on", "3. Checkout"];
 
@@ -98,6 +100,18 @@ const RoomResultPage: React.FC = () => {
 
     return roomPostData;
   };
+  useEffect(() => {
+    Auth.currentSession()
+      .then((session) => {
+        if (session && session.isValid()) {
+          const idToken = session.getIdToken().getJwtToken();
+          reduxDispatch(setJwtToken(idToken));
+        }
+      })
+      .catch((error) => {
+        
+      });
+  }, []);
 
   useEffect(() => {
     reduxDispatch(getRoomData(getFormData()));

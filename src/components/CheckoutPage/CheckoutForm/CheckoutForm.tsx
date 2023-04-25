@@ -30,8 +30,13 @@ import {
   postCheckoutData,
 } from "../../../redux/slice/CheckoutDataSlice";
 import { useNavigate } from "react-router-dom";
-import { selectedcurrency, selectedFactor } from "../../../redux/slice/InternationalisationSlice";
+import {
+  selectedcurrency,
+  selectedFactor,
+} from "../../../redux/slice/InternationalisationSlice";
 import { getCurrencyLogo } from "../../../util/GetCurrencyLogo";
+import { setJwtToken } from "../../../redux/slice/UserSlice";
+import { Auth } from "aws-amplify";
 
 const style = {
   position: "absolute" as "absolute",
@@ -86,6 +91,17 @@ const CheckoutForm = () => {
   const currency = useAppSelector(selectedcurrency);
   const [currencyLogo, setCurrencyLogo] = useState<string>("$");
 
+  useEffect(() => {
+    Auth.currentSession()
+      .then((session) => {
+        if (session && session.isValid()) {
+          const idToken = session.getIdToken().getJwtToken();
+          reduxDispatch(setJwtToken(idToken));
+        }
+      })
+      .catch((error) => {});
+  }, []);
+  
   useEffect(() => {
     setCurrencyLogo(getCurrencyLogo(currency));
   }, [pricefactor]);
@@ -306,7 +322,10 @@ const CheckoutForm = () => {
                           defaultMessage="Total Due"
                         />
                       </div>
-                      <div>{currencyLogo} {(totalBillAfterTax * 0.15*pricefactor).toFixed(2)}</div>
+                      <div>
+                        {currencyLogo}{" "}
+                        {(totalBillAfterTax * 0.15 * pricefactor).toFixed(2)}
+                      </div>
                     </div>
                   </>
                 )}
