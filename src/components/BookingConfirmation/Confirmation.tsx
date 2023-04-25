@@ -23,13 +23,14 @@ import {
 } from "../../redux/slice/BookingConfirmationSlice";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { email, user } from "../../redux/slice/UserSlice";
+import { email, setJwtToken, user } from "../../redux/slice/UserSlice";
 import { isLoading, setLoader } from "../../redux/slice/CheckoutDataSlice";
 import {
   selectedcurrency,
   selectedFactor,
 } from "../../redux/slice/InternationalisationSlice";
 import { getCurrencyLogo } from "../../util/GetCurrencyLogo";
+import { Auth } from "aws-amplify";
 
 const style = {
   position: "absolute" as "absolute",
@@ -78,6 +79,20 @@ const Confirmation = () => {
     else {
       setSearchParams({ id: localStorage.getItem("bookingId")! });
     }
+  }, []);
+
+  useEffect(() => {
+    localStorage.removeItem("showItenary");
+    Auth.currentSession()
+      .then((session) => {
+        if (session && session.isValid()) {
+          const idToken = session.getIdToken().getJwtToken();
+          reduxDispatch(setJwtToken(idToken));
+        }
+      })
+      .catch((error) => {
+        
+      });
   }, []);
 
   useEffect(() => {

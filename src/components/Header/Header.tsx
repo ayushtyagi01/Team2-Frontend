@@ -17,12 +17,13 @@ import { currencies } from "../../util/constants/currencies";
 import { FormattedMessage } from "react-intl";
 import { Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { removeUser, signOut, user } from "../../redux/slice/UserSlice";
+import { jwtToken, removeJwtToken, removeUser, setJwtToken, signOut, user } from "../../redux/slice/UserSlice";
 import { Auth } from "aws-amplify";
 
 const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
   const [lang, setLanguage] = useState<string>("en");
+  const token = useAppSelector(jwtToken);
 
   useEffect(() => {
     reduxDispatch(getLandingData());
@@ -79,10 +80,11 @@ currency type in redux
     navigate("/login", { state: { location: pathname } });
   };
   const handleSignInOrOut = () => {
-    userName
-      ? Auth.signOut && dispatch(removeUser()) && Auth.signOut()
+    token
+      ? (Auth.signOut && dispatch(removeUser()) && reduxDispatch(setJwtToken("")) && Auth.signOut())
       : handleClick();
     setLogout(true);
+
   };
 
   return (
@@ -143,11 +145,11 @@ currency type in redux
             className="login-btn"
             onClick={() => handleSignInOrOut()}
           >
-            {(!userName ||
+            {(!token ||
               !localStorage.getItem(
                 "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
               )) && <FormattedMessage id="login" defaultMessage="Login" />}
-            {userName &&
+            {token &&
               localStorage.getItem(
                 "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
               ) && <FormattedMessage id="logout" defaultMessage="LogOut" />}

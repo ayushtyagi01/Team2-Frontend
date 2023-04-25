@@ -28,7 +28,7 @@ import { maxLengthOfStay } from "../../../redux/slice/landingPageSlice";
 import { formatDate } from "../../../util/formatDate";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-export default function Calender() {
+export default function Calender(props:any) {
   const reduxDispatch = useDispatch();
   const priceFactor = useAppSelector(selectedFactor);
   const currency = useAppSelector(selectedcurrency);
@@ -148,6 +148,7 @@ export default function Calender() {
     localStorage.setItem("endDate", formatDate(dateRange[0].endDate));
     reduxDispatch(setStartDate(formatDate(dateRange[0].startDate)));
     reduxDispatch(setEndDate(formatDate(dateRange[0].endDate)));
+    props.showCalender(false);
   };
 
   return (
