@@ -1,5 +1,10 @@
 @import '../../styles/variables.scss';
 
+.login-container{
+    min-height: calc(100vh - 84px - 84px)!important;
+    position: sticky!important;
+    top: 0!important;
+}
 .heading-config{
     font-size: 2rem;
     text-align: center;

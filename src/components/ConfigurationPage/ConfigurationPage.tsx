@@ -6,12 +6,13 @@ import "./ConfigurationPage.scss";
 import CheckoutPageConfig from "./CheckoutPageConfig";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../redux/hooks";
-import { jwtToken } from "../../redux/slice/UserSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { jwtToken, setJwtToken } from "../../redux/slice/UserSlice";
 import { error } from "console";
 import { FormattedMessage } from "react-intl";
 import {user} from "../../redux/slice/UserSlice";
 import { Authenticator } from "@aws-amplify/ui-react";
+import { Auth } from "aws-amplify";
 
 const ConfigurationPage: React.FC = () => {
   const bannerImageRef = useRef<HTMLInputElement>(null);
@@ -24,6 +25,20 @@ const ConfigurationPage: React.FC = () => {
   const [snackbar,setSnackbar]=useState(false);
   const [open1, setOpen1] = useState(true);
   const username = useAppSelector(user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    Auth.currentSession()
+      .then((session) => {
+        if (session && session.isValid()) {
+          const idToken = session.getIdToken().getJwtToken();
+          dispatch(setJwtToken(idToken));
+        }
+      })
+      .catch((error) => {
+        
+      });
+  }, []);
 
   const handleClose1 = (
     event?: React.SyntheticEvent | Event,
@@ -103,7 +118,7 @@ const ConfigurationPage: React.FC = () => {
       updateConfig();
   };
   return (
-    <Authenticator signUpAttributes={["email", "name"]}>
+    <Authenticator className = "login-container"signUpAttributes={["email", "name"]}>
       {({ signOut, user }) => (
     <>
       <div className="heading-config">Landing Page Configuration</div>

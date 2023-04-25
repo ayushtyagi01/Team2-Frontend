@@ -1,4 +1,11 @@
-import { Alert, Box, Button, Checkbox, FormControlLabel, Snackbar } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Snackbar,
+} from "@mui/material";
 import GuestDropdown from "./Guests/GuestDropdown";
 import PropertyDropdown from "./PropertyDropdown/PropertyDropdown";
 import RoomDropdown from "./RoomDropdown/RoomDropdown";
@@ -31,7 +38,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { setShowItenaryInCardsPageToFalse } from "../../redux/slice/RoomResultConfigSlice";
 import { isError } from "../../redux/slice/BookingConfirmationSlice";
-
+import { jwtToken, setJwtToken } from "../../redux/slice/UserSlice";
+import { Auth } from "aws-amplify";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -48,7 +56,7 @@ const LandingPage = () => {
   const isRoom = useAppSelector(isRooms);
   const guest = useAppSelector(availableTypeOfGuests);
   const accessable = useAppSelector(accessibility);
-  const [isRequired,setRequired]=useState<boolean>(false);
+  const [isRequired, setRequired] = useState<boolean>(false);
 
   const property = useAppSelector(property_name);
   const startDate = useAppSelector(start_date);
@@ -68,7 +76,10 @@ const LandingPage = () => {
     localStorage.setItem("property_id", (2).toString());
   };
   const onSubmit = () => {
-    if(!localStorage.getItem("startDate") || !localStorage.getItem("endDate")){
+    if (
+      !localStorage.getItem("startDate") ||
+      !localStorage.getItem("endDate")
+    ) {
       setRequired(true);
       return;
     }
@@ -86,9 +97,20 @@ const LandingPage = () => {
   useEffect(() => {
     dispatch(setShowItenaryInCardsPageToFalse());
   });
-  useEffect(()=>{
-    localStorage.removeItem('showItenary');
-  },[]);
+  useEffect(() => {
+    localStorage.removeItem("showItenary");
+    Auth.currentSession()
+      .then((session) => {
+        if (session && session.isValid()) {
+          const idToken = session.getIdToken().getJwtToken();
+          dispatch(setJwtToken(idToken));
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting current session:", error);
+      });
+  }, []);
+
   const [open1, setOpen1] = useState(true);
 
   const handleClose1 = (
@@ -149,14 +171,14 @@ const LandingPage = () => {
             start={"Check-in"}
             end={"Check-out"}
           />
-           {isRequired && (
-          <Alert severity="error" className="calender-alert">
-            <FormattedMessage
-              id="errorMessage"
-              defaultMessage="This field is required"
-            />
-          </Alert>
-        )}
+          {isRequired && (
+            <Alert severity="error" className="calender-alert">
+              <FormattedMessage
+                id="errorMessage"
+                defaultMessage="This field is required"
+              />
+            </Alert>
+          )}
           <div className="guest-room-container">
             {guest.length === 0 ? (
               ""
@@ -223,29 +245,45 @@ const LandingPage = () => {
         </form>
       </div>
       {isErrorHere && (
-      <Snackbar open={open1} autoHideDuration={2000} onClose={handleClose1}>
-        <Alert onClose={handleClose1} severity="error" sx={{ width: "100%" }}>
-        <FormattedMessage id="invalid-booking" defaultMessage="Invalid Booking Id" />
-        </Alert>
-      </Snackbar>
+        <Snackbar open={open1} autoHideDuration={2000} onClose={handleClose1}>
+          <Alert onClose={handleClose1} severity="error" sx={{ width: "100%" }}>
+            <FormattedMessage
+              id="invalid-booking"
+              defaultMessage="Invalid Booking Id"
+            />
+          </Alert>
+        </Snackbar>
       )}
-      {
-        localStorage.getItem('isBookingCanceled') && localStorage.getItem('isBookingCanceled')==="true" && 
-        <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose2}>
-        <Alert onClose={handleClose2} severity="success" sx={{ width: "100%" }}>
-        <FormattedMessage id="cancel-booking" defaultMessage="Booking Cancelled successfully" />
-        </Alert>
-      </Snackbar>
-      }
-       {
-        localStorage.getItem('isBookingCanceled') && localStorage.getItem('isBookingCanceled')==="false" &&
-        <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose2}>
-        <Alert onClose={handleClose2} severity="error" sx={{ width: "100%" }}>
-        <FormattedMessage id="failed-booking" defaultMessage="Failed to Cancel Booking" />
-        </Alert>
-      </Snackbar>
-      }
-    
+      {localStorage.getItem("isBookingCanceled") &&
+        localStorage.getItem("isBookingCanceled") === "true" && (
+          <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose2}>
+            <Alert
+              onClose={handleClose2}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              <FormattedMessage
+                id="cancel-booking"
+                defaultMessage="Booking Cancelled successfully"
+              />
+            </Alert>
+          </Snackbar>
+        )}
+      {localStorage.getItem("isBookingCanceled") &&
+        localStorage.getItem("isBookingCanceled") === "false" && (
+          <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose2}>
+            <Alert
+              onClose={handleClose2}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              <FormattedMessage
+                id="failed-booking"
+                defaultMessage="Failed to Cancel Booking"
+              />
+            </Alert>
+          </Snackbar>
+        )}
     </div>
   );
 };
