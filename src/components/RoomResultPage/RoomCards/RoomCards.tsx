@@ -56,7 +56,6 @@ const RoomCards: React.FC = () => {
   },[]);
 
   useEffect(()=>{
-    console.log("ggggg",localStorage.getItem('showItenary'))
     localStorage.getItem('showItenary')?setshowItenaryInCardspageHere(true):setshowItenaryInCardspageHere(false);
   },[showItenaryInCardsPageHere]);
 

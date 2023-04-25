@@ -107,7 +107,6 @@ const LandingPage = () => {
         }
       })
       .catch((error) => {
-        console.log("Error getting current session:", error);
       });
   }, []);
 

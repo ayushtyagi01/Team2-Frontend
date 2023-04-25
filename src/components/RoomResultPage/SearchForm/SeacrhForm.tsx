@@ -41,7 +41,6 @@ const SearchForm: React.FC = () => {
   };
 
   const handleClick = ()=>{
-    console.log("handleClick",rooms);
     addToLocalStorage();
     navigate({
       pathname: "/room-search-results",

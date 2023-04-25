@@ -119,7 +119,6 @@ const RoomDetailsModal = (props: Props) => {
       );
       setPromotions(applicablePromotions.data);
     } catch (e) {
-      console.log(e);
     }
   };
 
