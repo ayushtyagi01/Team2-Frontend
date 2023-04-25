@@ -58,7 +58,6 @@ const RoomDropdown: React.FC<title> = (props) => {
       target: { value },
     } = event;
     setnoOfRoom(value);
-    console.log("change",value);
     localStorage.setItem('room',value);
     roomPostData.requiredRoomsCount=parseInt(value);
   };

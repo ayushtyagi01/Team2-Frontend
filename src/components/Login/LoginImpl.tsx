@@ -11,9 +11,7 @@ export const LoginImpl = () => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
       const updatedAttributes = await Auth.updateUserAttributes(currentUser, attributes);
-      console.log('Updated user attributes:', updatedAttributes);
     } catch (error) {
-      console.error('Error updating user attributes:', error);
     }
   }
 

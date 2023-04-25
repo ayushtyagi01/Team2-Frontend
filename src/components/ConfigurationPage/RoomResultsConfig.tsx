@@ -74,7 +74,6 @@ const RoomResultConfig: React.FC = () => {
   }
 
   const handleConfig = () => {
-    console.log(roomDescriptionRef.current);
     const newRoomResultConfig: any = {
       sortType: roomResultConfig.sortType
         .filter((item) => item.present === true)
@@ -98,12 +97,10 @@ const RoomResultConfig: React.FC = () => {
       }),
       roomImages: roomResultConfig.roomImages.map(
         (roomResults, index: number) => {
-          console.log("inside", roomDescriptionRef.current[index]?.value);
           if (
             roomDescriptionRef.current[index]?.value !== null &&
             roomDescriptionRef.current[index]?.value !== ""
           ) {
-            console.log("inside", roomDescriptionRef.current[index]?.value);
             roomResultConfig.roomImages[index].description =
               roomDescriptionRef.current[index]?.value!;
           }

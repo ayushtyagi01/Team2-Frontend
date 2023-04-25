@@ -52,12 +52,6 @@ const ConfigurationPage: React.FC = () => {
   
 
   const updateConfig = async ()=>{
-    console.log({
-      token:token,
-      fileName: "LandingPage.txt",
-      folderName:"hotel-1/",
-      fileContent: LandingPageConfigUtil
-  })
     await axios.post(process.env.REACT_APP_UPDATE_CONFIG!, {
         token:token,
         fileName: "LandingPage.txt",
@@ -77,7 +71,6 @@ const ConfigurationPage: React.FC = () => {
       ).UserAttributes[3].Value,
     });
     if(response.data.role!=='ADMIN'){
-      console.log("res",response.data);
       navigate('/');
     }
     
