@@ -258,7 +258,7 @@ const ConfigurationPage: React.FC = () => {
               inputRef={headerLogoRef}
               defaultValue={
                 currentConfig && currentConfig.headerLogo
-                  ? currentConfig.bannerImage
+                  ? currentConfig.headerLogo
                   : LandingPageConfigUtil.headerLogo
               }
             />
@@ -271,7 +271,7 @@ const ConfigurationPage: React.FC = () => {
               type="number"
               defaultValue={
                 currentConfig && currentConfig.maxLengthOfStay
-                  ? currentConfig.bannerImage
+                  ? currentConfig.maxLengthOfStay
                   : LandingPageConfigUtil.maxLengthOfStay
               }
             />
@@ -283,7 +283,7 @@ const ConfigurationPage: React.FC = () => {
               inputRef={pageTitleRef}
               defaultValue={
                 currentConfig && currentConfig.pageTitle
-                  ? currentConfig.bannerImage
+                  ? currentConfig.pageTitle
                   : LandingPageConfigUtil.pageTitle
               }
             />
