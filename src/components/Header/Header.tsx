@@ -47,6 +47,10 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  useEffect(() => {
     reduxDispatch(getLandingData());
   }, [reduxDispatch]);
 
@@ -89,8 +93,6 @@ currency type in redux
   const [logout, setLogout] = useState(false);
 
   useEffect(() => {
-    getCurrentUser();
-
     if (localStorage.getItem("selectedCurrency"))
       setLanguage(localStorage.getItem("selectedCurrency")!);
   }, [localStorage.getItem("selectedCurrency")]);

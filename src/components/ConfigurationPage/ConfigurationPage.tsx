@@ -305,7 +305,7 @@ const ConfigurationPage: React.FC = () => {
             >
               <Alert
                 onClose={handleClose1}
-                severity="error"
+                severity="success"
                 sx={{ width: "100%", top: 0 }}
               >
                 <FormattedMessage
