@@ -265,7 +265,8 @@ const ConfigurationPage: React.FC = () => {
           </div>
           <div className="text-label">
             <div className="label">Enter Maximum day of stay</div>
-            <TextField
+            {
+              currentConfig && <TextField
               className="textfield-label"
               inputRef={maxStayDaysRef}
               type="number"
@@ -275,6 +276,7 @@ const ConfigurationPage: React.FC = () => {
                   : LandingPageConfigUtil.maxLengthOfStay
               }
             />
+            }
           </div>
           <div className="text-label">
             <div className="label">Enter page Title</div>{" "}
