@@ -38,11 +38,7 @@ const BookingPage: React.FC = () => {
   const getUserBookings = async () => {
     const response = await axios
       .post(process.env.REACT_APP_GET_MY_BOOKING!, {
-        email: JSON.parse(
-          localStorage.getItem(
-            "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
-          )!
-        ).UserAttributes[3].Value,
+        email: userEmail,
       })
       .then((response) => response.data)
       .catch((error) => console.log("error"));
@@ -65,9 +61,7 @@ const BookingPage: React.FC = () => {
           reduxdispatch(setJwtToken(idToken));
         }
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
   }, []);
 
   useEffect(() => {

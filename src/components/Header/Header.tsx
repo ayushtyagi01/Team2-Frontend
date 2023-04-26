@@ -17,13 +17,34 @@ import { currencies } from "../../util/constants/currencies";
 import { FormattedMessage } from "react-intl";
 import { Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { jwtToken, removeJwtToken, removeUser, setJwtToken, signOut, user } from "../../redux/slice/UserSlice";
+import {
+  jwtToken,
+  removeJwtToken,
+  removeUser,
+  setEmail,
+  setJwtToken,
+  signOut,
+  user,
+} from "../../redux/slice/UserSlice";
 import { Auth } from "aws-amplify";
+import { setUser } from "../../redux/slice/UserSlice";
 
 const Header: React.FC = () => {
   const reduxDispatch = useAppDispatch();
   const [lang, setLanguage] = useState<string>("en");
   const token = useAppSelector(jwtToken);
+
+  const getCurrentUser = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    const username = user?.username;
+    reduxDispatch(setUser(username));
+    const session = await Auth.currentSession();
+    const token = session.getIdToken().getJwtToken();
+    reduxDispatch(setJwtToken(token));
+    const email = user?.attributes?.email;
+    reduxDispatch(setEmail(email));
+    localStorage.setItem("email", email);
+  };
 
   useEffect(() => {
     reduxDispatch(getLandingData());
@@ -68,6 +89,8 @@ currency type in redux
   const [logout, setLogout] = useState(false);
 
   useEffect(() => {
+    getCurrentUser();
+
     if (localStorage.getItem("selectedCurrency"))
       setLanguage(localStorage.getItem("selectedCurrency")!);
   }, [localStorage.getItem("selectedCurrency")]);
@@ -81,10 +104,12 @@ currency type in redux
   };
   const handleSignInOrOut = () => {
     token
-      ? (Auth.signOut && dispatch(removeUser()) && reduxDispatch(setJwtToken("")) && Auth.signOut())
+      ? Auth.signOut &&
+        dispatch(removeUser()) &&
+        reduxDispatch(setJwtToken("")) &&
+        Auth.signOut()
       : handleClick();
     setLogout(true);
-
   };
 
   return (
@@ -145,14 +170,8 @@ currency type in redux
             className="login-btn"
             onClick={() => handleSignInOrOut()}
           >
-            {(!token ||
-              !localStorage.getItem(
-                "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
-              )) && <FormattedMessage id="login" defaultMessage="Login" />}
-            {token &&
-              localStorage.getItem(
-                "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
-              ) && <FormattedMessage id="logout" defaultMessage="LogOut" />}
+            {!token && <FormattedMessage id="login" defaultMessage="Login" />}
+            {token && <FormattedMessage id="logout" defaultMessage="LogOut" />}
           </Button>
         </div>
       </div>

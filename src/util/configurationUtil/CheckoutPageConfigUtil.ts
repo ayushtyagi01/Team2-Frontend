@@ -7,31 +7,31 @@ export const checkoutPageConfigUtil = {
           {
             label: "First Name",
             type: "text",
-            present: true,
+            present: false,
           },
           {
             label: "Middle Name",
             type: "text",
-            present: true,
+            present: false,
           },
           {
             label: "Last Name",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
         [
           {
             label: "Phone",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
         [
           {
             label: "Email",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
       ],
@@ -45,67 +45,67 @@ export const checkoutPageConfigUtil = {
           {
             label: "First Name",
             type: "text",
-            present: true,
+            present: false,
           },
           {
             label: "Middle Name",
             type: "text",
-            present: true,
+            present: false,
           },
           {
             label: "Last Name",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
         [
           {
             label: "Mailing Address 1",
             type: "text",
-            present: true,
+            present: false,
           },
           {
             label: "Mailing Address 2",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
         [
           {
             label: "Country",
             type: "select",
-            present: true,
+            present: false,
           },
         ],
         [
           {
             label: "State",
             type: "select",
-            present: true,
+            present: false,
           },
           {
             label: "City",
             type: "text",
-            present: true,
+            present: false,
           },
           {
             label: "Zip",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
         [
           {
             label: "Phone",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
         [
           {
             label: "Email",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
       ],
@@ -119,24 +119,24 @@ export const checkoutPageConfigUtil = {
           {
             label: "Card Name",
             type: "text",
-            present: true,
+            present: false,
           },
           {
             label: "Exp MM",
             type: "text",
-            present: true,
+            present: false,
           },
           {
             label: "Exp YY",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
         [
           {
             label: "CVV",
             type: "text",
-            present: true,
+            present: false,
           },
         ],
       ],
