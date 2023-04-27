@@ -185,6 +185,11 @@ const Confirmation = () => {
   const token = useAppSelector(jwtToken);
   const [error, setError] = useState(false);
   const generateOtp = async () => {
+    ReactGA.event({
+      category: 'Button',
+      action: 'Click',
+      label: 'Booking Cancel'
+    });
     const response = await axios
       .post(process.env.REACT_APP_GENERATE_OTP!, {
         email: data.guestEntity.emailID,
@@ -232,6 +237,11 @@ const Confirmation = () => {
   };
 
   const handeleCancelforLoggedIn = async () => {
+    ReactGA.event({
+      category: 'Button',
+      action: 'Click',
+      label: 'Booking Cancel'
+    });
     const response = await axios
       .put("https://ua9cc168uj.execute-api.ap-south-1.amazonaws.com/default/Team2-config", {
         token,
