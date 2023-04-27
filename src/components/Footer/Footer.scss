@@ -10,6 +10,10 @@
     background-color: $primary-dark-blue-color;
     display: flex;
     justify-content: space-between;
+    @media (max-width: 800px) {
+      flex-direction: column;
+      justify-content: flex-start;
+    }
     .footer-logo {
       margin: 1% 5%;
       .footer-img {
@@ -25,6 +29,10 @@
       width: auto;
       padding: 1% 2%;
       margin-right: 3%;
+      @media (max-width: 1000px) {
+        margin-left: 3%;
+        margin-top: -1%!important;
+      }
       .footer-text {
         color: $white-color;
         padding-bottom: 1%;

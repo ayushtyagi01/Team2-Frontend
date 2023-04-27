@@ -1,6 +1,6 @@
 @import "../../styles/variables.scss";
 
-.container{
+.container {
   min-height: calc(100vh - 168px);
 }
 .search-container {
@@ -8,6 +8,9 @@
   height: 65vh;
   margin-top: 0;
   padding-top: 2rem;
+  @media (max-width: 1000px) {
+    height: 80vh;
+  }
   .form {
     width: 30rem;
     background-color: $white-color;
@@ -16,12 +19,20 @@
     margin-left: 5%;
     padding-top: 1rem;
     border-radius: 5px;
+    @media (max-width: 1000px) {
+      width: 21.5rem;
+    }
+    .MuiInputBase-root {
+      @media (max-width: 1000px) {
+        margin-left: -14px;
+      }
+    }
 
     .search-box {
       margin: 0.1rem 1.6rem 1rem 1.6rem;
     }
-    .calender-alert{
-      margin: -1rem 0 0 1rem!important;
+    .calender-alert {
+      margin: -1rem 0 0 1rem !important;
       width: 90%;
     }
     .guest-room-container {

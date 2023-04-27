@@ -3,6 +3,15 @@
 .search-containers {
   display: flex;
   width: 100%;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+  .MuiInputBase-root {
+    @media (max-width: 800px) {
+      width: 330px!important;
+      margin-left: -12px!important;
+    }
+  }
   .room-submit {
     margin: 1rem;
     margin-right: 0;
@@ -10,8 +19,12 @@
     padding: 1.5rem 1rem;
     background-color: $primary-dark-blue-color;
     width: 11rem;
+    @media (max-width: 800px) {
+      width: 330px!important;
+      margin: 1rem 0.8rem;
+    }
   }
-  .room-submit:hover{
+  .room-submit:hover {
     background-color: $primary-dark-blue-color;
   }
 }

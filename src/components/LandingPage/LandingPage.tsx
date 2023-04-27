@@ -39,6 +39,7 @@ import { useEffect, useState } from "react";
 import { setShowItenaryInCardsPageToFalse } from "../../redux/slice/RoomResultConfigSlice";
 import { isError } from "../../redux/slice/BookingConfirmationSlice";
 import { jwtToken, setJwtToken } from "../../redux/slice/UserSlice";
+import ReactGA from 'react-ga';
 import { Auth } from "aws-amplify";
 
 const LandingPage = () => {
@@ -76,6 +77,11 @@ const LandingPage = () => {
     localStorage.setItem("property_id", (2).toString());
   };
   const onSubmit = () => {
+    ReactGA.event({
+      category: 'Button',
+      action: 'Click',
+      label: 'Search Button Clicked'
+    });
     if (
       !localStorage.getItem("startDate") ||
       !localStorage.getItem("endDate")

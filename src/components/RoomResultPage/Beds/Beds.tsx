@@ -20,7 +20,7 @@ const Beds: React.FC = () => {
     }
   return (
     <>
-      <FormControl sx={{ m: 2.5, width:"15%", mt: 1.5 }}>
+      <FormControl sx={{ m: 3, width:"15%", mt: 1.5 }}>
         <Select
           displayEmpty
           value={noofBeds}

@@ -22,13 +22,24 @@
       flex-basis: 50%;
       margin-left: 5rem;
       justify-content: flex-start;
+      @media (max-width: 1000px) {
+          margin-left: 2rem;
+      }
       .img-container {
         width: 98px;
         min-width: 98px;
         align-self: center;
+        @media (max-width: 600px) {
+          width: fit-content;
+          height: 50px;
+        }
         .header-logo {
           width: 100%;
           cursor: pointer;
+          @media (max-width: 600px) {
+            width: 80%;
+            height: 50px;
+          }
         }
       }
       .title {
@@ -38,6 +49,12 @@
         font-size: 1.2rem;
         width: 217px;
         color: $primary-dark-blue-color;
+        @media (max-width: 1000px) {
+          font-size: 1.2rem;
+          width: 180px;
+          margin-left: -15px;
+          margin-top: 5px;
+        }
       }
     }
     .convertor-div {
@@ -45,7 +62,13 @@
       flex-basis: 50%;
       justify-content: space-around;
       margin-right: 3%;
-      .admin{
+      svg{
+        display: none;
+      }
+      @media (max-width: 1000px) {
+        display: none;
+      }
+      .admin {
         width: 6rem;
         color: $primary-dark-blue-color;
         align-self: center;
@@ -59,9 +82,9 @@
         font-size: 1.2rem;
         cursor: pointer;
       }
-      .language-container{
+      .language-container {
         display: flex;
-        .header-select{
+        .header-select {
           align-self: center;
         }
       }
@@ -84,14 +107,59 @@
       }
       .login-btn {
         align-self: center;
-        background-color: $primary-dark-blue-color!important;
-        color: $white-color!important;
-        padding: 1rem 5%!important;
-        border-radius: 5px!important;
-        font-size: 0.8rem!important;
-        width: 7rem!important;
-        height: fit-content!important;
+        background-color: $primary-dark-blue-color !important;
+        color: $white-color !important;
+        padding: 1rem 5% !important;
+        border-radius: 5px !important;
+        font-size: 0.8rem !important;
+        width: 7rem !important;
+        height: fit-content !important;
       }
+    }
+  }
+}
+IconButton{
+  display: none!important;
+  @media (min-width: 1000px) {
+    display: none!important;
+  }
+}
+Menu{
+  MenuItem{
+    .admin {
+      width: 6rem;
+      color: $primary-dark-blue-color;
+      align-self: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .booking {
+      color: $primary-dark-blue-color!important;
+      width: 100%!important;
+    }
+    .header-select {
+      border: none;
+      background-color: $white-color;
+      align-self: center;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-indent: 1px;
+      text-overflow: "";
+      padding: 0.5rem;
+      font-size: 1rem;
+      .options {
+        font-size: 1rem;
+      }
+    }
+    .login-btn {
+      align-self: center;
+      background-color: $primary-dark-blue-color !important;
+      color: $white-color !important;
+      padding: 1rem 5% !important;
+      border-radius: 5px !important;
+      font-size: 0.8rem !important;
+      width: 7rem !important;
+      height: fit-content !important;
     }
   }
 }

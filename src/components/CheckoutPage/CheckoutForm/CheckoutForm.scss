@@ -8,6 +8,12 @@
     padding: 0.5rem;
     margin: 0.5rem 15% 0 0;
     border-radius: 5px;
+    @media (max-width: 800px) {
+        width: 92%;
+        &:last-child{
+        margin-bottom: 2%;
+        }
+    }
 }
 .hide-form{
     display: none;
@@ -16,12 +22,26 @@
     display: flex;
     width: 85%;
     justify-content: space-between;
+    @media (max-width: 800px) {
+        flex-wrap: wrap;
+        width: 90%;
+        flex-direction: column;
+    }
     .input-container{
         width: 45%;
         margin-right: 8%;
         margin-left: 1%;
+        @media (max-width: 800px) {
+            flex-wrap: wrap;
+            width: 100%;
+            flex-direction: column;
+        }
         &:last-child{
             margin-right: 0;
+            @media (max-width: 800px) {
+                flex-wrap: wrap;
+                width: 100%;
+            }
         }
         .input-header{
             padding: 1.2%;
@@ -36,16 +56,26 @@
         border: 1px solid $checkout-border-grey;
         border-radius: 4px;
         margin-bottom: 5%;
+        @media (max-width: 800px) {
+            width: 100%;
+            flex-wrap: wrap;
+        }
     }
     .City,.Zip{
         width: 28%!important;
         margin-top: 6px!important;
         margin-right: 2%;
+        @media (max-width: 800px) {
+            width: 100%!important;
+        }
     }
     .ExpMM,.ExpYY{
         width: 20%!important;
         margin-top: 6px!important;
         margin-right: 2%;
+        @media (max-width: 800px) {
+            width: 100%!important;
+        }
     }
     
 }
@@ -54,6 +84,10 @@
     display: flex;
     justify-content: end;
     width: 85%;
+    @media (max-width: 800px) {
+        width: 90%;
+        margin-bottom: 3%;
+    }
 }
 .open-modal{
     color: $primary-dark-blue-color;
@@ -101,4 +135,10 @@
 }
 .checkbox-error{
     margin: 5% 0 0 1%;
+}
+
+.CardName{
+    @media (max-width: 800px) {
+        display: block;
+    }
 }

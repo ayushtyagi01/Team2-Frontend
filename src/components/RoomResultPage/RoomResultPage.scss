@@ -11,6 +11,11 @@ body {
   .body-container {
     display: flex;
     margin-left: 0rem;
+    @media (max-width: 1000px) {
+      flex-direction: column;
+      width: 100%;
+      margin: 1% 4.5%;
+  }
   }
 }
 .stepper-container {
@@ -19,6 +24,9 @@ body {
   justify-content: center;
   .stepper {
     width: 30%;
+    @media (max-width: 1000px) {
+      width: 80%;
+  }
     path {
       color: $primary-dark-blue-color;
     }
@@ -44,11 +52,13 @@ body {
     &::before {
       content: "✔";
       position: absolute;
-      z-index: 100;
       left: 47%;
       color: $white;
       background-color: inherit;
       width: 3rem;
+      @media (max-width: 1000px) {
+        left: 44%;
+    }
     }
   }
 }
