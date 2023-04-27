@@ -103,5 +103,16 @@
   " Please enter a valid CVV Code":"Please enter a valid CVV Code",
   " Please agree to Terms and Conditions":"Please agree to Terms and Conditions",
   "need-help":"Need help?",
-  "cancel-booking":"Booking Cancelled successfully"
+  "cancel-booking":"Booking Cancelled successfully",
+  "review":"reviews",
+  "inclusive":"Inclusive",
+  "queen":"Queens Bed",
+  "king":"Kings Bed",
+  "specialdeal":"Special Deal",
+  "pernight":"per night",
+  "selectRoom":"Select Room",
+  "location":"Near City Center",
+  "showing":"Showing",
+  "result":"Results",
+  "admin":"Admin"
 }

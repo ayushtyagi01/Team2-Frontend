@@ -376,53 +376,43 @@ const CheckoutForm = () => {
                 defaultMessage="Terms and Policies"
               />
             </div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-            et quibusdam necessitatibus architecto inventore quas molestiae
-            rerum voluptas consequuntur quidem? Vero, harum. Labore non
-            consequuntur hic illum reprehenderit praesentium! Libero, id. Quo
-            harum veritatis vel, sed atque temporibus doloremque deserunt unde
-            ad, veniam eius labore praesentium optio est! Omnis facilis illum,
-            alias iste ipsam quibusdam quod aliquam velit non! Aliquid suscipit
-            voluptatibus dolorum expedita et excepturi eum fuga quas obcaecati,
-            aut culpa laborum. Amet optio sapiente in quis dicta. Consequuntur
-            aspernatur quasi quos impedit dicta similique ex vitae
-            exercitationem quo, sed aut. Eveniet libero enim voluptatem
-            distinctio expedita quis voluptatibus debitis repudiandae at, rem
-            dolores deserunt eos dolorum alias quasi tempora in et nemo
-            consequuntur molestias doloribus non quisquam id! Nam, fugiat magni
-            natus cupiditate exercitationem laboriosam est saepe ad doloribus
-            voluptatum, dignissimos repellendus iste eaque? Placeat quaerat,
-            voluptates possimus numquam voluptate sapiente eos odio nihil! Natus
-            ducimus adipisci, dolores nam id quia exercitationem nihil quibusdam
-            minima itaque, eaque repellendus, quaerat obcaecati? Vel, possimus
-            commodi rem eos sunt quo. Dolorem fugit, obcaecati in officia quia
-            debitis perferendis consectetur porro odit! In ipsa quo culpa non!
-            Doloribus, perspiciatis. Culpa similique dolor, vitae earum
-            veritatis quo consequatur minima rem sed voluptas ipsam beatae error
-            recusandae iste fugiat qui veniam a soluta inventore repudiandae
-            laboriosam? Nam, impedit? Omnis modi dolorum doloremque excepturi ex
-            doloribus nulla facilis amet, adipisci facere sed deleniti incidunt
-            voluptatem odio iste sit recusandae qui ut assumenda enim vitae
-            perferendis ab libero ipsam? Possimus et eum incidunt, quidem ipsa
-            quo libero aliquam atque odit. Dolorem, iure. Soluta eum quaerat
-            quidem, obcaecati doloribus delectus fugit non. Voluptatem soluta
-            inventore provident explicabo sed. Aliquid non eos obcaecati minima?
-            Magni maiores repellat molestias odio nostrum voluptas vitae ea,
-            dolore sequi doloremque aspernatur, pariatur quas, non error nobis?
-            Sunt autem sed magni nihil. Reiciendis illo odit explicabo vero fuga
-            cumque sapiente dolore ullam unde minus veniam nostrum dolorum,
-            mollitia provident modi, ipsam delectus, ut enim! Veniam ullam
-            eveniet eum placeat quisquam, impedit accusamus fugit ad illum quis
-            reprehenderit nisi quo in explicabo aperiam, rem incidunt. Possimus
-            hic, vel perferendis pariatur fugiat veniam ea sequi laborum
-            deserunt velit voluptatibus, ducimus earum repellat cum illum quod
-            ipsam error quia dicta, recusandae distinctio debitis? Id nisi,
-            repudiandae itaque sed, natus, magni fugiat quo odio eveniet tempora
-            saepe maiores consequuntur? Impedit, nobis. Rerum consequatur
-            similique expedita debitis illum excepturi nostrum architecto natus,
-            recusandae aliquid amet incidunt officia, reprehenderit in
-            distinctio, laboriosam doloribus quidem placeat earum laborum quo et
-            enim? Iusto voluptatum
+            TERMS AND CONDITIONS FOR HOTEL BOOKING APPLICATION HOTEL <br/>
+            Welcome to our Hotel Booking Application Hotel (“Hotel”). By booking a room at
+            our Hotel through our Application, you agree to the following terms
+            and conditions (“Terms and Conditions”). If you do not agree to
+            these Terms and Conditions, please do not use our Application.
+            <br/>1. Booking and Payment <br/>2.To book a room at our Hotel through our
+            Application, you must provide accurate and complete information,
+            including your name, contact information, and payment information.
+            Payment for your reservation will be processed through the
+            Application using a valid credit or debit card. You agree to pay all
+            fees and charges associated with your reservation. If you cancel
+            your reservation, you may be eligible for a refund, subject to the
+            terms and conditions of our cancellation policy.<br/>3. Check-In and
+            Check-Out <br/>4.Check-in time is [insert check-in time] and check-out time
+            is [insert check-out time].If you require an early check-in or late
+            check-out, please contact our front desk in advance to make
+            arrangements. Additional fees may apply.<br/>5. Room Assignments <br/>6.We reserve
+            the right to assign rooms at our discretion. If you have specific
+            room preferences, please let us know in advance, and we will do our
+            best to accommodate your request. However, we cannot guarantee that
+            your preferred room will be available. <br/>7.Use of Hotel Facilities <br/>8.As a
+            guest of our Hotel, you are entitled to use our facilities,
+            including our pool, fitness center, and restaurant, subject to
+            availability and our operating hours. You agree to use our
+            facilities responsibly and in accordance with our rules and
+            regulations. We reserve the right to refuse service to anyone who
+            violates our rules and regulations.<br/>9. Damage and Liability <br/>10.You are
+            responsible for any damage caused to our Hotel or its property
+            during your stay. You agree to pay for any damages or losses
+            incurred as a result of your actions. We are not liable for any
+            injury, loss, or damage to you or your property during your stay,
+            except as provided by law. <br/>11.Personal Information <br/>12.We collect and use
+            your personal information in accordance with our Privacy Policy,
+            which is incorporated by reference into these Terms and Conditions.
+            <br/>13. Governing Law and Dispute Resolution <br/>14. If
+            you have any questions or concerns about these Terms and Conditions
+            or our Hotel Booking Application, please contact us at 1234567890.
           </Box>
         </>
       </Modal>
