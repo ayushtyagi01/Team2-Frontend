@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import CryptoJS from "crypto-js";
+import ReactGA from "react-ga";
 import {
   checkoutData,
   getCheckoutData,
@@ -111,6 +112,11 @@ const CheckoutForm = () => {
       return;
     }
     if (index === 2) {
+      ReactGA.event({
+        category: "Button",
+        action: "Click",
+        label: "Room Purchase Clicked",
+      });
       const CardName = CryptoJS.AES.encrypt(
         data.CardName,
         process.env.REACT_APP_SECRET_KEY!
@@ -149,9 +155,19 @@ const CheckoutForm = () => {
     (new Date(localStorage.getItem("endDate")!).getDate() -
       new Date(localStorage.getItem("startDate")!).getDate() +
       1);
+  const avgNightlyRate =
+    parseInt(localStorage.getItem("averageNightlyRateInDuration")!) *
+    parseFloat(localStorage.getItem("priceFactor")!);
   let totalBillAfterTax = totalBill;
   totalBillAfterTax += totalBill * 0.18;
   totalBillAfterTax += totalBill * 0.08;
+
+  const taxes = JSON.parse(localStorage.getItem("taxes")!);
+  let totalTax: number = 0;
+  totalTax = taxes.reduce((acc: number, tax: any) => {
+    const taxAmount = totalBill * tax.factor;
+    return acc + taxAmount;
+  }, 0);
 
   return (
     <>
@@ -323,7 +339,16 @@ const CheckoutForm = () => {
                       </div>
                       <div>
                         {currencyLogo}{" "}
-                        {(totalBillAfterTax * 0.15 * pricefactor).toFixed(2)}
+                        {(
+                          (+(totalTax * pricefactor * 0.1).toFixed(2) +
+                            +(
+                              totalBill *
+                              pricefactor *
+                              +localStorage.getItem("room")!
+                            ).toFixed(2) +
+                            +(totalBill * 0.08 * pricefactor).toFixed(2)) *
+                          0.6
+                        ).toFixed(2)}
                       </div>
                     </div>
                   </>
@@ -376,43 +401,57 @@ const CheckoutForm = () => {
                 defaultMessage="Terms and Policies"
               />
             </div>
-            TERMS AND CONDITIONS FOR HOTEL BOOKING APPLICATION HOTEL <br/>
-            Welcome to our Hotel Booking Application Hotel (“Hotel”). By booking a room at
-            our Hotel through our Application, you agree to the following terms
-            and conditions (“Terms and Conditions”). If you do not agree to
-            these Terms and Conditions, please do not use our Application.
-            <br/>1. Booking and Payment <br/>2.To book a room at our Hotel through our
-            Application, you must provide accurate and complete information,
-            including your name, contact information, and payment information.
-            Payment for your reservation will be processed through the
-            Application using a valid credit or debit card. You agree to pay all
-            fees and charges associated with your reservation. If you cancel
-            your reservation, you may be eligible for a refund, subject to the
-            terms and conditions of our cancellation policy.<br/>3. Check-In and
-            Check-Out <br/>4.Check-in time is [insert check-in time] and check-out time
-            is [insert check-out time].If you require an early check-in or late
+            TERMS AND CONDITIONS FOR HOTEL BOOKING APPLICATION HOTEL <br />
+            Welcome to our Hotel Booking Application Hotel (“Hotel”). By booking
+            a room at our Hotel through our Application, you agree to the
+            following terms and conditions (“Terms and Conditions”). If you do
+            not agree to these Terms and Conditions, please do not use our
+            Application.
+            <br />
+            1. Booking and Payment <br />
+            2.To book a room at our Hotel through our Application, you must
+            provide accurate and complete information, including your name,
+            contact information, and payment information. Payment for your
+            reservation will be processed through the Application using a valid
+            credit or debit card. You agree to pay all fees and charges
+            associated with your reservation. If you cancel your reservation,
+            you may be eligible for a refund, subject to the terms and
+            conditions of our cancellation policy.
+            <br />
+            3. Check-In and Check-Out <br />
+            4.Check-in time is [insert check-in time] and check-out time is
+            [insert check-out time].If you require an early check-in or late
             check-out, please contact our front desk in advance to make
-            arrangements. Additional fees may apply.<br/>5. Room Assignments <br/>6.We reserve
-            the right to assign rooms at our discretion. If you have specific
-            room preferences, please let us know in advance, and we will do our
-            best to accommodate your request. However, we cannot guarantee that
-            your preferred room will be available. <br/>7.Use of Hotel Facilities <br/>8.As a
-            guest of our Hotel, you are entitled to use our facilities,
+            arrangements. Additional fees may apply.
+            <br />
+            5. Room Assignments <br />
+            6.We reserve the right to assign rooms at our discretion. If you
+            have specific room preferences, please let us know in advance, and
+            we will do our best to accommodate your request. However, we cannot
+            guarantee that your preferred room will be available. <br />
+            7.Use of Hotel Facilities <br />
+            8.As a guest of our Hotel, you are entitled to use our facilities,
             including our pool, fitness center, and restaurant, subject to
             availability and our operating hours. You agree to use our
             facilities responsibly and in accordance with our rules and
             regulations. We reserve the right to refuse service to anyone who
-            violates our rules and regulations.<br/>9. Damage and Liability <br/>10.You are
-            responsible for any damage caused to our Hotel or its property
-            during your stay. You agree to pay for any damages or losses
-            incurred as a result of your actions. We are not liable for any
-            injury, loss, or damage to you or your property during your stay,
-            except as provided by law. <br/>11.Personal Information <br/>12.We collect and use
-            your personal information in accordance with our Privacy Policy,
-            which is incorporated by reference into these Terms and Conditions.
-            <br/>13. Governing Law and Dispute Resolution <br/>14. If
-            you have any questions or concerns about these Terms and Conditions
-            or our Hotel Booking Application, please contact us at 1234567890.
+            violates our rules and regulations.
+            <br />
+            9. Damage and Liability <br />
+            10.You are responsible for any damage caused to our Hotel or its
+            property during your stay. You agree to pay for any damages or
+            losses incurred as a result of your actions. We are not liable for
+            any injury, loss, or damage to you or your property during your
+            stay, except as provided by law. <br />
+            11.Personal Information <br />
+            12.We collect and use your personal information in accordance with
+            our Privacy Policy, which is incorporated by reference into these
+            Terms and Conditions.
+            <br />
+            13. Governing Law and Dispute Resolution <br />
+            14. If you have any questions or concerns about these Terms and
+            Conditions or our Hotel Booking Application, please contact us at
+            1234567890.
           </Box>
         </>
       </Modal>
