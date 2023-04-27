@@ -35,6 +35,7 @@ const BookingPage: React.FC = () => {
   const reduxdispatch = useAppDispatch();
 
   useEffect(() => {
+    localStorage.removeItem('isBookingCanceled');
     Auth.currentSession()
       .then((session) => {
         if (session && session.isValid()) {
