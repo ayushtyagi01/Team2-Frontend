@@ -1,7 +1,7 @@
 @import "../../styles/variables.scss";
 
-body {
-  height: calc(100vh - 168px);
+.room-page-conatiner {
+  min-height: calc(100vh - 168px);
 }
 .room-banner {
   height: 10vh;
@@ -15,7 +15,7 @@ body {
       flex-direction: column;
       width: 100%;
       margin: 1% 4.5%;
-  }
+    }
   }
 }
 .stepper-container {
@@ -26,7 +26,7 @@ body {
     width: 30%;
     @media (max-width: 1000px) {
       width: 80%;
-  }
+    }
     path {
       color: $primary-dark-blue-color;
     }
@@ -41,9 +41,9 @@ body {
         display: none;
       }
     }
-   .MuiStepIcon-text{
-    display: none;
-   }
+    .MuiStepIcon-text {
+      display: none;
+    }
   }
 }
 
@@ -58,7 +58,7 @@ body {
       width: 3rem;
       @media (max-width: 1000px) {
         left: 44%;
-    }
+      }
     }
   }
 }
