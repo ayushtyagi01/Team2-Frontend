@@ -118,7 +118,7 @@ const RoomResultPage: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div className="room-page-conatiner">
       <div
         className="room-banner"
         style={{
@@ -148,7 +148,7 @@ const RoomResultPage: React.FC = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

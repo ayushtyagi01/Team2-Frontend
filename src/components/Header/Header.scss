@@ -17,6 +17,14 @@
     height: 100%;
     align-items: center;
     margin-left: 1%;
+    IconButton{
+      background-color: blue;
+      .MuiSvgIcon-root{
+        @media (min-width: 1000px) {
+          display: none!important;
+        }
+      }
+    }
     .header-title {
       display: flex;
       flex-basis: 50%;
