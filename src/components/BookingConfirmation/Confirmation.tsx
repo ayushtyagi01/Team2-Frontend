@@ -31,6 +31,7 @@ import {
 } from "../../redux/slice/InternationalisationSlice";
 import { getCurrencyLogo } from "../../util/GetCurrencyLogo";
 import { Auth } from "aws-amplify";
+import ReactGA from 'react-ga';
 
 const style = {
   position: "absolute" as "absolute",

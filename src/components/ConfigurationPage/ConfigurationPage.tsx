@@ -125,6 +125,7 @@ const ConfigurationPage: React.FC = () => {
       });
   };
   useEffect(() => {
+    localStorage.removeItem('isBookingCanceled');
     getRoles();
   }, []);
 
