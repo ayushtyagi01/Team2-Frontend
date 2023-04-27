@@ -64,6 +64,7 @@ const Card: React.FC<RoomResultProps> = (props) => {
   useEffect(() => {
     setCurrencyLogo(getCurrencyLogo(currency));
   }, [priceFactor]);
+  
   return (
     <div className="cards">
       <div className="carousel-container">

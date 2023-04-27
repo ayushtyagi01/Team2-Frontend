@@ -107,9 +107,13 @@ export default function Calender(props:any) {
     );
     setMinimumNightlyRates(minimumNightlyRatesFetched.data);
   };
+  const [months,setMonths] = useState(2);
 
   useEffect(() => {
     fetchMinimumNightlyRates();
+    if(window.innerWidth<1000){
+      setMonths(1);
+    }
   }, []);
 
   useEffect(() => {
@@ -159,7 +163,7 @@ export default function Calender(props:any) {
         }}
         showPreview={false}
         moveRangeOnFirstSelection={false}
-        months={2}
+        months={months}
         ranges={dateRange}
         direction="horizontal"
         preventSnapRefocus={true}

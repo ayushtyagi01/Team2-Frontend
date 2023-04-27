@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Booking } from "../../redux/slice/BookingConfirmationSlice";
-import { email, setJwtToken } from "../../redux/slice/UserSlice";
+import { email, jwtToken, setJwtToken } from "../../redux/slice/UserSlice";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import {
   selectedcurrency,
@@ -31,30 +31,7 @@ const monthNames = [
 ];
 
 const BookingPage: React.FC = () => {
-  const userEmail = useAppSelector(email);
-
   const [bookingData, setBookingData] = useState<Booking[]>([]);
-
-  const getUserBookings = async () => {
-    const response = await axios
-      .post(process.env.REACT_APP_GET_MY_BOOKING!, {
-        email: JSON.parse(
-          localStorage.getItem(
-            "CognitoIdentityServiceProvider.5mas2rith8mta1sa61a1eui38n.dbc46219-21b0-444d-ab18-f3869aec0896.userData"
-          )!
-        ).UserAttributes[3].Value,
-      })
-      .then((response) => response.data)
-      .catch((error) => console.log("error"));
-    setBookingData(response.myBookings);
-  };
-  useEffect(() => {
-    getUserBookings();
-  }, []);
-
-  const pricefactor = useAppSelector(selectedFactor);
-  const currency = useAppSelector(selectedcurrency);
-  const [currencyLogo, setCurrencyLogo] = useState<string>("$");
   const reduxdispatch = useAppDispatch();
 
   useEffect(() => {
@@ -65,14 +42,32 @@ const BookingPage: React.FC = () => {
           reduxdispatch(setJwtToken(idToken));
         }
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
   }, []);
+
+  const getUserBookings = async () => {
+    const response = await axios
+      .post(process.env.REACT_APP_GET_MY_BOOKING!, {
+        email: userEmail,
+      })
+      .then((response) => response.data)
+      .catch((error) => console.log("error"));
+    if (response) setBookingData(response.myBookings);
+  };
+  const token = useAppSelector(jwtToken);
+  const userEmail = useAppSelector(email);
+  useEffect(() => {
+    if (userEmail) getUserBookings();
+  }, [userEmail]);
+
+  const pricefactor = useAppSelector(selectedFactor);
+  const currency = useAppSelector(selectedcurrency);
+  const [currencyLogo, setCurrencyLogo] = useState<string>("$");
 
   useEffect(() => {
     setCurrencyLogo(getCurrencyLogo(currency));
   }, [pricefactor]);
+
   const navigate = useNavigate();
   const handleClick = (index: number) => {
     if (bookingData[index].isCancelled === 0) {
@@ -96,7 +91,7 @@ const BookingPage: React.FC = () => {
                 >
                   <div className="confirmation-container-room-detail">
                     <div className="room-type">
-                      <FormattedMessage id="room1" defaultMessage="Room" />
+                      <FormattedMessage id="room" defaultMessage="Room" />
                       {index + 1}: {item.roomType}
                     </div>
                     <div className="guest-logo">

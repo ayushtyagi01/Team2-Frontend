@@ -6,24 +6,42 @@
     display: flex;
     justify-content: space-between;
     margin: 2% 0.5% 0 1.2%;
+    @media (max-width: 800px) {
+      margin-right: 6%;
+    }
   }
   .room-card {
     .room-card-container {
       display: flex;
       width: 100%;
       flex-wrap: wrap;
+      @media (max-width: 800px) {
+        flex-direction: column;
+      }
     }
     display: flex;
+    justify-content: space-between;
   }
   .room-results {
     flex-basis: 83%;
+    @media (max-width: 800px) {
+      flex-basis: 10%;
+    }
   }
   .sort-heading {
     flex-basis: 25%;
     display: flex;
+    @media (max-width: 800px) {
+      flex-basis: 40%;
+      padding-left: 2%;
+    }
     .page-heading {
       padding-right: 7%;
       width: 13rem;
+      @media (max-width: 800px) {
+        padding-right: 0;
+        width: 100%;
+      }
     }
   }
 }
@@ -31,12 +49,15 @@
   display: flex;
   justify-content: space-between;
   margin: 1%;
+  @media (max-width: 800px) {
+    margin-right: 7%!important;
+  }
   .btn-page {
     background-color: $primary-dark-blue-color;
     width: 100px;
   }
-  .btn-page:hover{
-    background-color: $primary-dark-blue-color!important;
+  .btn-page:hover {
+    background-color: $primary-dark-blue-color !important;
   }
 }
 .no-result-div {

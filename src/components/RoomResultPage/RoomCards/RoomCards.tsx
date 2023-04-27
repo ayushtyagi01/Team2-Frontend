@@ -21,7 +21,8 @@ const RoomCards: React.FC = () => {
   const loader = useAppSelector(isLoading);
   const reduxDispatch = useAppDispatch();
   const showItenaryInCardsPageHere = useAppSelector(showItenaryInCardsPage);
-  const [showItenaryInCardspage,setshowItenaryInCardspageHere]=useState(false);
+  const [showItenaryInCardspage, setshowItenaryInCardspageHere] =
+    useState(false);
 
   const [isNext, setNext] = useState(false);
   const [isPrevious, setPrevious] = useState(false);
@@ -50,14 +51,16 @@ const RoomCards: React.FC = () => {
     reduxDispatch(getRoomData(roomPostData));
   };
 
-  useEffect(()=>{
-    if(localStorage.getItem('showItenary'))
+  useEffect(() => {
+    if (localStorage.getItem("showItenary"))
       setshowItenaryInCardspageHere(true);
-  },[]);
+  }, []);
 
-  useEffect(()=>{
-    localStorage.getItem('showItenary')?setshowItenaryInCardspageHere(true):setshowItenaryInCardspageHere(false);
-  },[showItenaryInCardsPageHere]);
+  useEffect(() => {
+    localStorage.getItem("showItenary")
+      ? setshowItenaryInCardspageHere(true)
+      : setshowItenaryInCardspageHere(false);
+  }, [showItenaryInCardsPageHere]);
 
   return (
     <div className="room-card-container">
@@ -71,8 +74,8 @@ const RoomCards: React.FC = () => {
             {(roomPostData.pageNumber - 1) * 3 + roomData.length} of {maxCount}{" "}
             Results
           </div>
-          <Price />
         </div>
+        <Price />
       </div>
       <div className="room-card">
         <div className="room-card-container">
