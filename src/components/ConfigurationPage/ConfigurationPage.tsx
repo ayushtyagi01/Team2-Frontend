@@ -209,7 +209,7 @@ const ConfigurationPage: React.FC = () => {
                   <Checkbox
                     value="Room"
                     defaultChecked={
-                      currentConfig && currentConfig.rooms.length > 0
+                      currentConfig && currentConfig.rooms==="true"
                     }
                     inputRef={roomsRef}
                   />

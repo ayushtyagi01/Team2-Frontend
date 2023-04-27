@@ -146,6 +146,10 @@ currency type in redux
   const handleHamburgerClose = () => {
     setAnchorEl(null);
   };
+  const [width,setWidth]=useState(1920);
+  useEffect(()=>{
+    setWidth(window.innerWidth);
+  },[window.innerWidth])
 
   return (
     <div className="header-container">
@@ -165,7 +169,7 @@ currency type in redux
         <div className="convertor-div">
           {isAdmin && token && (
             <div className="admin" onClick={() => navigate("/configuration")}>
-              Admin
+              <FormattedMessage id="admin" defaultMessage="Admin" />
             </div>
           )}
           <div className="booking" onClick={() => navigate("/my-booking")}>
@@ -211,7 +215,7 @@ currency type in redux
             {token && <FormattedMessage id="logout" defaultMessage="LogOut" />}
           </Button>
         </div>
-        {window.innerWidth <= 1000 && (
+        {width <= 1000 && 
           <>
             <IconButton
               aria-label="more"
@@ -312,7 +316,7 @@ currency type in redux
               </MenuItem>
             </Menu>
           </>
-        )}
+        }
       </div>
     </div>
   );

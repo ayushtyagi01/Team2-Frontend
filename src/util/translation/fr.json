@@ -109,6 +109,17 @@
   " Please enter a valid CVV Code":"Veuillez entrer un code CVV valide",
   " Please agree to Terms and Conditions":"Veuillez accepter les termes et conditions",
   "need-help":"Besoin d'aide?",
-  "cancel-booking":"Réservation annulée avec succès"
+  "cancel-booking":"Réservation annulée avec succès",
+  "review":"commentaires",
+  "inclusive":"Compris",
+  "queen":"Lit de reine",
+  "king":"Lit Kings",
+  "specialdeal":"Offre spéciale",
+  "pernight":"par nuit",
+  "selectRoom":"Sélectionnez la chambre",
+  "location":"Près du centre-ville",
+  "showing":"Montrant",
+  "result":"Résult",
+  "admin":"Administrateur"
 
 }

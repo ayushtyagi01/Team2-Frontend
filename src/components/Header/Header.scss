@@ -24,6 +24,7 @@
       justify-content: flex-start;
       @media (max-width: 1000px) {
           margin-left: 2rem;
+          flex-direction: column;
       }
       .img-container {
         width: 98px;
@@ -31,14 +32,14 @@
         align-self: center;
         @media (max-width: 600px) {
           width: fit-content;
-          height: 50px;
+          // height: 50px;
         }
         .header-logo {
           width: 100%;
           cursor: pointer;
           @media (max-width: 600px) {
             width: 80%;
-            height: 50px;
+            // height: 50px;
           }
         }
       }
@@ -50,10 +51,10 @@
         width: 217px;
         color: $primary-dark-blue-color;
         @media (max-width: 1000px) {
-          font-size: 1.2rem;
-          width: 180px;
-          margin-left: -15px;
-          margin-top: 5px;
+          font-size: 1rem;
+          // width: 180px;
+          margin-left: -18px;
+          margin-top: -15px;
         }
       }
     }
@@ -62,9 +63,7 @@
       flex-basis: 50%;
       justify-content: space-around;
       margin-right: 3%;
-      svg{
-        display: none;
-      }
+      
       @media (max-width: 1000px) {
         display: none;
       }
@@ -118,12 +117,7 @@
     }
   }
 }
-IconButton{
-  display: none!important;
-  @media (min-width: 1000px) {
-    display: none!important;
-  }
-}
+
 Menu{
   MenuItem{
     .admin {

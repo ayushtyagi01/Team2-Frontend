@@ -77,29 +77,36 @@ const Card: React.FC<RoomResultProps> = (props) => {
           {props.result.ratings.toFixed(1)}<br/>
         </div>
       </div>
-      <div className="rating-count">{props.result.ratingCount} reviews</div>
+      <div className="rating-count">{props.result.ratingCount} <FormattedMessage id="review" defaultMessage="reviews" /></div>
       <div className="logo-div">
-        <LocationOnIcon className="location-icon" /> Near City Center
+        <LocationOnIcon className="location-icon" /> <FormattedMessage id="location" defaultMessage="Near City Center" />
       </div>
       <div className="logo-div room-size">
-        <div className="room-type">Inclusive</div>
+        <div className="room-type"><FormattedMessage id="inclusive" defaultMessage="Inclusive" /></div>
         <div>{props.result.areaInSqFeet} ft</div>
       </div>
       <div className="logo-div">
         <PermIdentityIcon /> 1-{props.result.maxCapacity}
       </div>
       <div className="logo-div">
-        <SingleBedIcon />{" "}
-        {props.result.doubleBedCount > 0
-          ? props.result.doubleBedCount + " Queens Bed"
-          : ""}{" "}
-        {props.result.singleBedCount > 0
-          ? props.result.singleBedCount + " Kings Bed"
-          : ""}
-      </div>
+  <SingleBedIcon />
+  {props.result.doubleBedCount > 0 && (
+    <>
+      {props.result.doubleBedCount}{" "}
+      <FormattedMessage id="queen" defaultMessage="Queens Bed" />
+    </>
+  )}
+  {props.result.singleBedCount > 0 && (
+    <>
+      {props.result.singleBedCount}{" "}
+      <FormattedMessage id="king" defaultMessage="Kings Bed" />
+    </>
+  )}
+</div>
+
       {props.result.specialOffer && props.result.specialOfferCode && (
         <div>
-          <div className="special_deal">Special deal</div>
+          <div className="special_deal"><FormattedMessage id="specialdeal" defaultMessage="Special Deal" /></div>
           <div className="special_deal_desc">
             {props.result.specialOffer} - {props.result.specialOfferCode}
           </div>
@@ -110,13 +117,13 @@ const Card: React.FC<RoomResultProps> = (props) => {
         {currencyLogo}
         {Math.round(props.result.averageNightlyRateInDuration * priceFactor)}
       </div>
-      <div className="per-night-div">per night</div>
+      <div className="per-night-div"><FormattedMessage id="pernight" defaultMessage="per night" /></div>
       <Button
         variant="contained"
         className="button-select"
         onClick={handleOpen}
       >
-        <FormattedMessage id="Searchi" defaultMessage="Select Room" />
+        <FormattedMessage id="selectRoom" defaultMessage="Select Room" />
       </Button>
 
       <Modal

@@ -154,3 +154,8 @@
   justify-content: flex-end;
   cursor: pointer;
 }
+.container_itenary_box{
+  @media (max-width: 800px) {
+    width: 93.5%!important;
+  }
+}
