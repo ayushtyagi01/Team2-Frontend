@@ -2,9 +2,15 @@
   display: flex;
   margin-left: 8%;
   box-sizing: border-box;
+  @media (max-width: 800px) {
+    flex-direction: column-reverse;
+}
 
   .checkout-form {
     width: 67%;
+    @media (max-width: 800px) {
+      width: 100%;
+  }
   }
   .itenary_box {
     width: 30%;

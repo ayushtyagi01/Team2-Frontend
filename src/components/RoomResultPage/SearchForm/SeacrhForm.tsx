@@ -53,7 +53,7 @@ const SearchForm: React.FC = () => {
     <>
       <div className="search-containers">
         <GuestDropdown isInside={true} margin={3} width={"20%"} top={1.5} />
-        <RoomDropdown isInside={true} margin={2} width={"15%"} top={1.5} />
+        <RoomDropdown isInside={true} margin={3} width={"15%"} top={1.5} />
         <Beds />
         <CalenderDropdown
           register={register}

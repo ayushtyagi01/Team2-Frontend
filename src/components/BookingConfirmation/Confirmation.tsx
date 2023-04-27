@@ -23,7 +23,7 @@ import {
 } from "../../redux/slice/BookingConfirmationSlice";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { email, setJwtToken, user } from "../../redux/slice/UserSlice";
+import { email, jwtToken, setJwtToken, user } from "../../redux/slice/UserSlice";
 import { isLoading, setLoader } from "../../redux/slice/CheckoutDataSlice";
 import {
   selectedcurrency,
@@ -64,7 +64,7 @@ const Confirmation = () => {
   const [totalBill, setTotalBill] = useState(0);
   const handleOpen = () => {
     setOpen(true);
-    if (!username) handeleGenerateOtp();
+    if (!token) handeleGenerateOtp();
   };
   const handleClose = () => {
     setOpen(false);
@@ -182,7 +182,7 @@ const Confirmation = () => {
     setOpen1(false);
   };
 
-  const username = useAppSelector(user);
+  const token = useAppSelector(jwtToken);
   const [error, setError] = useState(false);
   const generateOtp = async () => {
     const response = await axios
@@ -194,7 +194,7 @@ const Confirmation = () => {
       .catch((error) => console.log(error));
   };
   const handeleGenerateOtp = () => {
-    if (!username) generateOtp();
+    if (!token) generateOtp();
   };
 
   const handeleVerifyOtp = async () => {
@@ -263,6 +263,7 @@ const Confirmation = () => {
           </Alert>
         </Snackbar>
       )}
+      <div className="container-booking-conf">
       <div className="confirmation-header">
         <div className="confirmation">
           <FormattedMessage
@@ -291,7 +292,7 @@ const Confirmation = () => {
             <PermIdentityIcon /> {data.guests}
           </div>
           <div className="cancel-room" onClick={handleOpen}>
-            <FormattedMessage id="cancel" defaultMessage="CancelRoom" />
+            <FormattedMessage id="cancel" defaultMessage="Cancel Room" />
           </div>
         </div>
         <div className="room-info">
@@ -330,7 +331,7 @@ const Confirmation = () => {
                   defaultMessage="Copy explaining the cancellation policy, if applicable"
                 />
               </div>
-              <div>
+              <div className="total-price">
                 {currencyLogo}
                 {(+data.nightlyRates * pricefactor).toFixed(2)}{" "}
                 <FormattedMessage
@@ -613,7 +614,7 @@ const Confirmation = () => {
             GET OTP
           </Button> */}
 
-          {!username && (
+          {!token && (
             <>
               <div>Enter OTP for cancelling the room booking</div>
               <input
@@ -631,7 +632,7 @@ const Confirmation = () => {
               </Button>
             </>
           )}
-          {username && (
+          {token && (
             <>
               <div>Are you sure you want to cancel?</div>
               <Button
@@ -645,6 +646,7 @@ const Confirmation = () => {
           )}
         </Box>
       </Modal>
+      </div>
     </>
   );
 };

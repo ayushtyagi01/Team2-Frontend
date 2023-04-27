@@ -1,5 +1,5 @@
 @import "../../../../styles/variables.scss";
-$width:370px;
+$width: 370px;
 
 .cards {
   min-width: 400px;
@@ -10,9 +10,15 @@ $width:370px;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   margin: 1% 1% 1% 1%;
-  height:fit-content;
-  &:last-child{
+  height: fit-content;
+  &:last-child {
     margin-right: 0;
+  }
+  @media (max-width: 800px) {
+    width: 328px;
+    min-width: auto;
+    max-width: none;
+    flex: none;
   }
 }
 
@@ -35,9 +41,9 @@ $width:370px;
     padding-right: 2%;
   }
 }
-.rating-count{
+.rating-count {
   text-align: end;
-  padding-right:0.6rem;
+  padding-right: 0.6rem;
   margin-top: -0.5rem;
   color: $primary-border-grey;
 }

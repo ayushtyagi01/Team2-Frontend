@@ -1,5 +1,9 @@
 .container_itenary_box {
   width: 30rem;
+  @media (max-width: 800px) {
+  width: 20rem;
+  margin-top: 1rem;
+  }
 
   .itenary {
     background-color: #eef0f0;
@@ -79,6 +83,9 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 30%;
+    @media (max-width: 800px) {
+      display: none;
+  }
 
     .help_text {
       font-size: 1.6rem;
@@ -103,7 +110,7 @@
   margin-top: 0.5rem;
 }
 
-.on-req-page{
+.on-req-page {
   //font-size: 0.1rem;
 }
 
