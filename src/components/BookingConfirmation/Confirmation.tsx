@@ -220,7 +220,10 @@ const Confirmation = () => {
       })
       .then((response) => response.data)
       .catch((error) => console.log(error));
-    localStorage.clear();
+      localStorage.removeItem('startDate');
+      localStorage.removeItem('endDate');
+      localStorage.removeItem('room');
+      localStorage.removeItem('guest');
     if (response) localStorage.setItem("isBookingCanceled", "true");
     else {
       localStorage.setItem("isBookingCanceled", "false");
@@ -229,18 +232,17 @@ const Confirmation = () => {
   };
 
   const handeleCancelforLoggedIn = async () => {
-    console.log({
-      email: emailLooged,
-      bookingId: localStorage.getItem("bookingId")!,
-    });
     const response = await axios
-      .post(process.env.REACT_APP_CANCEL_BOOKING!, {
-        email: emailLooged,
+      .put("https://ua9cc168uj.execute-api.ap-south-1.amazonaws.com/default/Team2-config", {
+        token,
         bookingId: localStorage.getItem("bookingId")!,
       })
-      .then((response) => response.data)
-      .catch((error) => console.log("Failed to cancel"));
-    localStorage.clear();
+      .then((response) => {console.log(response.data.data); return response.data.data})
+      .catch((error) => {console.log(error);console.log("Failed to cancel")});
+    localStorage.removeItem('startDate');
+    localStorage.removeItem('endDate');
+    localStorage.removeItem('room');
+    localStorage.removeItem('guest');
     if (response) localStorage.setItem("isBookingCanceled", "true");
     else {
       localStorage.setItem("isBookingCanceled", "false");
@@ -292,7 +294,7 @@ const Confirmation = () => {
             <PermIdentityIcon /> {data.guests}
           </div>
           <div className="cancel-room" onClick={handleOpen}>
-            <FormattedMessage id="cancel" defaultMessage="Cancel Room" />
+            <FormattedMessage id="cancel" defaultMessage="CancelRoom" />
           </div>
         </div>
         <div className="room-info">

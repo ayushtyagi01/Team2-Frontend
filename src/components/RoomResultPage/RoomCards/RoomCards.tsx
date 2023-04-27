@@ -70,9 +70,9 @@ const RoomCards: React.FC = () => {
         </div>
         <div className="sort-heading">
           <div className="page-heading">
-            Showing {(roomPostData.pageNumber - 1) * 3 + 1}-
+          <FormattedMessage id="showing" defaultMessage="Showing" /> {(roomPostData.pageNumber - 1) * 3 + 1}-
             {(roomPostData.pageNumber - 1) * 3 + roomData.length} of {maxCount}{" "}
-            Results
+            <FormattedMessage id="result" defaultMessage="Results" />
           </div>
         </div>
         <Price />

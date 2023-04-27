@@ -7,7 +7,12 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "./CalenderDropdown.scss";
 import Calender from "./Calender";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { end_date, setEndDate, setStartDate, start_date } from "../../../redux/slice/SearchFormSlice";
+import {
+  end_date,
+  setEndDate,
+  setStartDate,
+  start_date,
+} from "../../../redux/slice/SearchFormSlice";
 import { useEffect, useState } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { Alert } from "@mui/material";
@@ -32,7 +37,6 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
   let startdate = format(new Date(startDate), "yyyy-MM-dd");
   let enddate = format(new Date(endDate), "yyyy-MM-dd");
 
-
   useEffect(() => {
     if (
       startdate !== format(new Date(), "yyyy-MM-dd") &&
@@ -51,18 +55,22 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if(searchParams.get('start_date')!==null && searchParams.get('end_date')!=null){
-    reduxDispatch(setStartDate(searchParams.get('start_date')));
-    reduxDispatch(setEndDate(searchParams.get('end_date')));
-  }
-  else if(localStorage.getItem('startDate')!==null && localStorage.getItem('endDate')!==null){
-    reduxDispatch(setStartDate(localStorage.getItem('startDate')));
-    reduxDispatch(setEndDate(localStorage.getItem('endDate')));
-  }
-  else if(location.pathname==='/room-search-results'){
+  if (
+    searchParams.get("start_date") !== null &&
+    searchParams.get("end_date") != null
+  ) {
+    reduxDispatch(setStartDate(searchParams.get("start_date")));
+    reduxDispatch(setEndDate(searchParams.get("end_date")));
+  } else if (
+    localStorage.getItem("startDate") !== null &&
+    localStorage.getItem("endDate") !== null
+  ) {
+    reduxDispatch(setStartDate(localStorage.getItem("startDate")));
+    reduxDispatch(setEndDate(localStorage.getItem("endDate")));
+  } else if (location.pathname === "/room-search-results") {
     navigate("/");
   }
-  
+
   return (
     <>
       <FormControl sx={{ m: props.margin, width: props.width, mt: props.top }}>
@@ -94,32 +102,42 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
             return (
               <div className="calender-content">
                 <div>
-                  {props.isInside ? <div>Check-in</div> : ""}
+                  {props.isInside ? (
+                    <FormattedMessage id="checkin" defaultMessage="Check-in" />
+                  ) : (
+                    ""
+                  )}
                   {props.isInside ? (
                     <b>
-                      {!localStorage.getItem('startDate') ? (
+                      {!localStorage.getItem("startDate") ? (
                         <div>{props.start}</div>
                       ) : (
                         <div>{startdate}</div>
                       )}
                     </b>
                   ) : (
-                    <div>{!localStorage.getItem('startDate') ? props.start : startdate}</div>
+                    <div>
+                      {!localStorage.getItem("startDate")
+                        ? props.start
+                        : startdate}
+                    </div>
                   )}
                 </div>
                 <ArrowForwardIcon />
                 <div>
-                  {props.isInside ? <div>Check-out</div> : ""}
+                  {props.isInside ? <FormattedMessage id="checkout" defaultMessage="Check-out" /> : ""}
                   {props.isInside ? (
                     <b>
-                      {!localStorage.getItem('endDate') ? (
+                      {!localStorage.getItem("endDate") ? (
                         <div>{props.end}</div>
                       ) : (
                         <div>{enddate}</div>
                       )}
                     </b>
                   ) : (
-                    <div>{!localStorage.getItem('endDate') ? props.end : enddate}</div>
+                    <div>
+                      {!localStorage.getItem("endDate") ? props.end : enddate}
+                    </div>
                   )}
                 </div>
                 <CalendarMonthIcon />
@@ -127,7 +145,7 @@ const CalenderDropdown: React.FC<CalenderDropdownProps> = (props) => {
             );
           }}
         >
-          <Calender showCalender={setShowSelect}/>
+          <Calender showCalender={setShowSelect} />
         </Select>
         {showDate === 0 && props.errors.startDate && (
           <Alert severity="error">

@@ -21,6 +21,14 @@
     }
     display: flex;
     justify-content: space-between;
+    @media (max-width: 800px) {
+      flex-direction: column;
+    }
+    .itenary-room{
+      @media (max-width: 800px) {
+        width: 100%!important;
+      }
+    }
   }
   .room-results {
     flex-basis: 83%;
